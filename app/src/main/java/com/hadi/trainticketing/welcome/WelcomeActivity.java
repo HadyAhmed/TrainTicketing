@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.hadi.trainticketing.R;
-import com.hadi.trainticketing.passenger.PassengerLoginActivity;
+import com.hadi.trainticketing.passenger.view.activities.PassengerSignInActivity;
 import com.hadi.trainticketing.validator.ValidatorLoginActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +48,7 @@ public class WelcomeActivity extends AppCompatActivity
         if (rule == Choices.VALIDATOR) {
             startActivity(new Intent(WelcomeActivity.this, ValidatorLoginActivity.class));
         } else if (rule == Choices.PASSENGER) {
-            startActivity(new Intent(WelcomeActivity.this, PassengerLoginActivity.class));
+            startActivity(new Intent(WelcomeActivity.this, PassengerSignInActivity.class));
         }
     }
 }

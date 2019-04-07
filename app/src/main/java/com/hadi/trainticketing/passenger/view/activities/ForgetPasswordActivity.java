@@ -1,4 +1,4 @@
-package com.hadi.trainticketing.passenger;
+package com.hadi.trainticketing.passenger.view.activities;
 
 import android.os.Bundle;
 import android.view.View;

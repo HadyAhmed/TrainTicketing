@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.databinding.LoginActivityBinding;
-import com.hadi.trainticketing.passenger.ForgetPasswordActivity;
+import com.hadi.trainticketing.passenger.view.activities.ForgetPasswordActivity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

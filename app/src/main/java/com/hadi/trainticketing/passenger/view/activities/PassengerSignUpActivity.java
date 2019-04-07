@@ -1,4 +1,4 @@
-package com.hadi.trainticketing.passenger;
+package com.hadi.trainticketing.passenger.view.activities;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-public class SignUpActivity extends AppCompatActivity {
+public class PassengerSignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding signUpBinding;
 
     @Override

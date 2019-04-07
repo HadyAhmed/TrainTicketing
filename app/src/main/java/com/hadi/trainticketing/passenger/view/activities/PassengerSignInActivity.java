@@ -1,4 +1,4 @@
-package com.hadi.trainticketing.passenger;
+package com.hadi.trainticketing.passenger.view.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-public class PassengerLoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class PassengerSignInActivity extends AppCompatActivity implements View.OnClickListener {
     private LoginActivityBinding activityBinding;
 
     @Override
@@ -29,11 +29,11 @@ public class PassengerLoginActivity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         int viewId = v.getId();
         if (viewId == activityBinding.forgetPassBtn.getId()) {
-            startActivity(new Intent(PassengerLoginActivity.this, ForgetPasswordActivity.class));
+            startActivity(new Intent(PassengerSignInActivity.this, ForgetPasswordActivity.class));
         } else if (viewId == activityBinding.signInBtn.getId()) {
-
+            startActivity(new Intent(PassengerSignInActivity.this, PassengerMainActivity.class));
         } else if (viewId == activityBinding.signUpBtn.getId()) {
-            startActivity(new Intent(PassengerLoginActivity.this, SignUpActivity.class));
+            startActivity(new Intent(PassengerSignInActivity.this, PassengerSignUpActivity.class));
         }
     }
 }

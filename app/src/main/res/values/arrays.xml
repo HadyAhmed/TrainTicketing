@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Account Type Spinner Entries-->
+
+    <!-- Destination Spinner Entries-->
+    <string-array name="destination_spinner">
+        <item>@string/aswan</item>
+        <item>@string/alex</item>
+        <item>@string/ismalielia</item>
+        <item>@string/auxor</item>
+        <item>@string/cairo</item>
+    </string-array>
+
+    <!-- Gender Spinner Entries -->
+    <string-array name="gender_entries">
+        <item>@string/male</item>
+        <item>@string/female</item>
+    </string-array>
+
+</resources>
