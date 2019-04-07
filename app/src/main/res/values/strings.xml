@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Train Ticketing</string>
+    <string name="accountRuleDesc"><b>Passenger:</b> is the person who will use the application to enquire about trips, reserve tickets and more.\n<b>Validator:</b> is the person who works for the railway and will scan and validate tickets.</string>
+    <string name="forgetPassword">Forget Password?</string>
+</resources>

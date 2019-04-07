@@ -1,0 +1,57 @@
+package com.hadi.trainticketing.welcome;
+
+import android.content.Intent;
+import android.os.Bundle;
+
+import com.hadi.trainticketing.R;
+import com.hadi.trainticketing.passenger.PassengerLoginActivity;
+import com.hadi.trainticketing.validator.ValidatorLoginActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+/**
+ * This is the entry point for the application where the user will be able to know some
+ * application features and demonstrate his rule.
+ *
+ * @author Hady Ahmed
+ * @version 1.0
+ */
+public class WelcomeActivity extends AppCompatActivity
+        implements WelcomeFragment.OnStartFragmentListener, AccountRuleChoiceFragment.AccountChoice {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_welcome);
+
+        if (savedInstanceState == null) {
+            changeFragment(new WelcomeFragment());
+        }
+    }
+
+    private void changeFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.fragment_container, fragment)
+                .commit();
+    }
+
+    @Override
+    public void navigateToAccountRuleChoose() {
+        changeFragment(new AccountRuleChoiceFragment());
+    }
+
+    @Override
+    public void startAccountRule(Enum<Choices> rule) {
+        if (rule == Choices.VALIDATOR) {
+            startActivity(new Intent(WelcomeActivity.this, ValidatorLoginActivity.class));
+        } else if (rule == Choices.PASSENGER) {
+            startActivity(new Intent(WelcomeActivity.this, PassengerLoginActivity.class));
+        }
+    }
+}
+
+
+
