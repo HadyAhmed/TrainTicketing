@@ -36,12 +36,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/signUpAppBar">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:id="@+id/nameEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName|textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
@@ -70,7 +70,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fullNameTextInputLayout">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:id="@+id/emailEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordTextInputLayout">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:id="@+id/nationalIdEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emailTextInputLayout">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:id="@+id/passEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -20,27 +20,23 @@
     <string name="all_string">All</string>
     <string name="class_a_string">Class A</string>
     <string name="class_b_string">Class B</string>
-    <string name="search_btn_string">Search</string>
     <!-- Destination Spinner -->
-    <!--todo add more countries-->
-    <string name="auxor">Luxor</string>
-    <string name="aswan">Aswan</string>
-    <string name="ismalielia">Ismailia</string>
-    <string name="alex">Alexandria</string>
     <string name="cairo">Cairo</string>
-    <!--<string name="asuit">Asuit</string>-->
-    <!--<string name="giza">Giza</string>-->
-    <!--<string name="zagazeeg">Zagazeeg</string>-->
-    <!--<string name="mansoura">Mansoura</string>-->
-    <!--<string name="menia">Menia</string>-->
-    <!--<string name="banha">Banha</string>-->
-    <!--<string name="bani_swief">Bani Sweif</string>-->
-    <!--<string name="damnhour">Damnhour</string>-->
-    <!--<string name="dumita">Dumita</string>-->
-    <!--<string name="sohag">Sohag</string>-->
-    <!--<string name="sidi_gaber">Sidi Gaber</string>-->
-    <!--<string name="tanta">Tanta</string>-->
-    <!--<string name="qena">Qena</string>-->
-
-    <!-- Validator main view strings-->
+    <string name="shubra">Shubra El Khema</string>
+    <string name="qalyoub">Klyob</string>
+    <string name="banha">Banha</string>
+    <string name="koesna">koesna</string>
+    <string name="tanta">Tanta</string>
+    <string name="damnhour">Dmnhor</string>
+    <string name="kafrDwar">kfr al dwar</string>
+    <string name="sediGaber">Sede gaber</string>
+    <string name="alex">Alexandria</string>
+    <string name="maryout">Mryot</string>
+    <string name="elAlameen">Elalamen</string>
+    <string name="marsaMatrouh">Marsa mtrouh</string>
+    <string name="isamilia">Ismalia</string>
+    <string name="elMansoura">Elmnsora</string>
+    <string name="portSaied">Port said</string>
+    <string name="luxor">Luxor</string>
+    <string name="aswan">Aswan</string>
 </resources>

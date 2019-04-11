@@ -1,7 +1,9 @@
 package com.hadi.trainticketing.passenger.view.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -62,7 +64,10 @@ public class PassengerMainActivity extends AppCompatActivity implements OnWelcom
             Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
             return true;
         } else if (item.getItemId() == R.id.action_logout) {
-            Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            preferences.edit().clear().apply();
+            startActivity(new Intent(PassengerMainActivity.this, PassengerSignInActivity.class));
+            finish();
             return true;
         } else
             return false;

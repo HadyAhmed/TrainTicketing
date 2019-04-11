@@ -3,10 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="ticket"
+            type="com.hadi.trainticketing.passenger.pojo.enquire.Result" />
+    </data>
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
         app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +34,7 @@
                 android:id="@+id/from_result"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="@{ticket.ticket.from.name}"
                 app:layout_constraintBaseline_toBaselineOf="@+id/from_label"
                 app:layout_constraintEnd_toStartOf="@+id/to_label"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -64,6 +73,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:text="@{ticket.trip.arrivelTime.substring(11,16)}"
                 app:layout_constraintBaseline_toBaselineOf="@+id/arrival_time"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -84,8 +94,8 @@
             <TextView
                 android:id="@+id/date_result"
                 style="@style/ticket_label_style"
-
                 android:layout_marginEnd="8dp"
+                android:text="@{ticket.trip.arrivelTime.substring(0,10)}"
                 app:layout_constraintBaseline_toBaselineOf="@+id/date_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -96,6 +106,7 @@
                 android:id="@+id/start_tiem_result"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="@{ticket.trip.startTime.substring(11,16)}"
                 app:layout_constraintBaseline_toBaselineOf="@+id/start_time_label"
                 app:layout_constraintEnd_toStartOf="@+id/arrival_time"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -107,6 +118,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:text="@{Integer.toString(ticket.ticket.price)+`LE`}"
                 app:layout_constraintBaseline_toBaselineOf="@+id/price_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -117,6 +129,7 @@
                 android:id="@+id/class_type_resut"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="@{String.valueOf(ticket.ticket.classType)}"
                 app:layout_constraintBaseline_toBaselineOf="@+id/class_type"
                 app:layout_constraintEnd_toStartOf="@+id/price_label"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -146,6 +159,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:text="@{ticket.ticket.to.name}"
                 app:layout_constraintBaseline_toBaselineOf="@+id/to_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"

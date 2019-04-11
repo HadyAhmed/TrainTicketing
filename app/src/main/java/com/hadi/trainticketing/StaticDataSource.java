@@ -1,17 +1,29 @@
 package com.hadi.trainticketing;
 
-import com.hadi.trainticketing.passenger.model.PassengerCards;
+import com.hadi.trainticketing.passenger.pojo.PassengerCards;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * this class will hold static data for the application
+ * to share it with {@link com.hadi.trainticketing.welcome.WelcomeActivity} for the welcome view pager
+ * and {@link com.hadi.trainticketing.passenger.view.activities.PassengerMainActivity} for the passenger
+ * cards
+ *
+ * @author Hady Ahmed
+ * @version 1.0
+ * @since 09th, April 2019
+ */
 public abstract class StaticDataSource {
-    private StaticDataSource() {
-    }
-
+    /**
+     * list that holds the list of {@link PassengerCards} welcome list of features
+     */
+    public static final List<PassengerCards> passengerCardsList;
+    // number of the list item in the list
+    public static final int ENQUIRE_ITEM = 0;
+    // is a list that holding the text description for the page in welcome screens
     private static final List<String> contentDescription;
-    private static final List<Integer> contentResources;
-
 
     public static List<String> getContentDescription() {
         return contentDescription;
@@ -21,7 +33,10 @@ public abstract class StaticDataSource {
         return contentResources;
     }
 
+    // is a list that holding the image resources for the page in welcome screens
+    private static final List<Integer> contentResources;
 
+    // initialize static list variables
     static {
         contentDescription = new ArrayList<>();
         contentResources = new ArrayList<>();
@@ -33,14 +48,21 @@ public abstract class StaticDataSource {
         addItems("Now validation your ticket is so easy, just let the validator scan your ticket and that's it", R.drawable.ic_validation);
     }
 
+    private StaticDataSource() {
+        // to prevent from instantiating instance from this class
+    }
+
+    /**
+     * this method will add items in the list of contentDescription and contentResources
+     *
+     * @param desc       is the text item to add in the {@link com.hadi.trainticketing.welcome.WelcomeContent}
+     * @param resourceId is the image resource item to add in the {@link com.hadi.trainticketing.welcome.WelcomeContent}
+     */
     private static void addItems(String desc, int resourceId) {
         contentDescription.add(desc);
         contentResources.add(resourceId);
     }
 
-    public static final List<PassengerCards> passengerCardsList;
-
-    public static final int ENQUIRE_ITEM = 0;
     public static final int RESERVE_ITEM = 1;
     public static final int BALANCE_ITEM = 2;
     public static final int TICKET_ITEM = 3;
@@ -65,8 +87,12 @@ public abstract class StaticDataSource {
                 "A History for all you need, track your trips, tickets and your receipts all the time"));
     }
 
-    private static void addWelcomeItemList(PassengerCards itemModel) {
-        passengerCardsList.add(itemModel);
+    /**
+     * will add items of {@link PassengerCards} into the static list
+     * to show up in the adapter of the {@link com.hadi.trainticketing.passenger.view.activities.PassengerMainActivity}
+     */
+    private static void addWelcomeItemList(PassengerCards passengerCards) {
+        passengerCardsList.add(passengerCards);
     }
 
 }

@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 
 import com.hadi.trainticketing.databinding.PassengerWelcomeItemBinding;
 import com.hadi.trainticketing.passenger.interfaces.OnWelcomeItemClickListener;
-import com.hadi.trainticketing.passenger.model.PassengerCards;
+import com.hadi.trainticketing.passenger.pojo.PassengerCards;
 import com.hadi.trainticketing.passenger.viewholder.WelcomeItemViewHolder;
 
 import java.util.List;

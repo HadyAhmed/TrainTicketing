@@ -1,9 +1,12 @@
 package com.hadi.trainticketing.welcome;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
 import com.hadi.trainticketing.R;
+import com.hadi.trainticketing.passenger.view.activities.PassengerMainActivity;
 import com.hadi.trainticketing.passenger.view.activities.PassengerSignInActivity;
 import com.hadi.trainticketing.validator.ValidatorLoginActivity;
 
@@ -22,6 +25,11 @@ public class WelcomeActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (preferences.getBoolean(PassengerSignInActivity.IS_SIGNED_IN, false)) {
+            startActivity(new Intent(this, PassengerMainActivity.class));
+            finish();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
