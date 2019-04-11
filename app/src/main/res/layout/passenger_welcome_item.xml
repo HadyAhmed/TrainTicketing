@@ -11,7 +11,7 @@
 
         <variable
             name="itemClickHandler"
-            type="com.hadi.trainticketing.passenger.interfaces.OnWelcomeItemClickListener" />
+            type="com.hadi.trainticketing.passenger.adapter.WelcomeAdapter.OnWelcomeItemClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -27,6 +27,19 @@
             android:background="?attr/selectableItemBackground"
             android:onClick="@{(v)-> itemClickHandler.onWelcomeItemClick(itemVariable.itemPosition)}"
             app:cardBackgroundColor="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:iconSrc="@{itemVariable.imageResource}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/ic_enquire_item" />
 
             <TextView
                 android:id="@+id/welcome_head"
@@ -47,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/raleway_semibold"
                 android:text="@{itemVariable.body}"
@@ -55,7 +68,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/welcome_head"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2"
                 tools:text="now you can enquire easy for any trips your need and any time" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

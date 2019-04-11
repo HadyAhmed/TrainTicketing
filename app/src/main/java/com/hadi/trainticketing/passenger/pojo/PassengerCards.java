@@ -3,13 +3,17 @@ package com.hadi.trainticketing.passenger.pojo;
 public class PassengerCards {
     private String header;
     private String body;
-    private int itemPosition;
+    private int itemPosition, imageResource;
 
-
-    public PassengerCards(int itemPosition, String header, String body) {
+    public PassengerCards(int itemPosition, String header, String body, int imageResource) {
         this.header = header;
         this.body = body;
         this.itemPosition = itemPosition;
+        this.imageResource = imageResource;
+    }
+
+    public int getImageResource() {
+        return imageResource;
     }
 
     public String getHeader() {

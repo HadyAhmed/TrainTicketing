@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.databinding.LoginActivityBinding;
-import com.hadi.trainticketing.datasource.WebServices;
+import com.hadi.trainticketing.datasource.webservice.WebServices;
 import com.hadi.trainticketing.passenger.pojo.login.LoginResponse;
 import com.hadi.trainticketing.passenger.pojo.login.UserSignIn;
 

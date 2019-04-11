@@ -1,5 +1,6 @@
-package com.hadi.trainticketing;
+package com.hadi.trainticketing.datasource.database;
 
+import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.passenger.pojo.PassengerCards;
 
 import java.util.ArrayList;
@@ -19,11 +20,31 @@ public abstract class StaticDataSource {
     /**
      * list that holds the list of {@link PassengerCards} welcome list of features
      */
-    public static final List<PassengerCards> passengerCardsList;
+    private static final List<PassengerCards> passengerCardsList;
     // number of the list item in the list
     public static final int ENQUIRE_ITEM = 0;
     // is a list that holding the text description for the page in welcome screens
     private static final List<String> contentDescription;
+
+    static {
+        passengerCardsList = new ArrayList<>();
+        addWelcomeItemList(new PassengerCards(ENQUIRE_ITEM,
+                "Enquire",
+                "You Can Enquire For Any Trip You like so easy any time without wasting time on phone call, or going your self to the train station and ask for trips and tickets price", R.drawable.ic_enquire_item));
+
+        addWelcomeItemList(new PassengerCards(RESERVE_ITEM,
+                "Reserve",
+                "We present powerful way to reserve train tickets so easy, and you can hold your ticket in your phone without any additional papers, just search, choose and confirm", R.drawable.ic_reserve));
+        addWelcomeItemList(new PassengerCards(BALANCE_ITEM,
+                "Balance",
+                "Your wallet for our services is secure with us, use your balance to buy tickets, reserve for others and enjoy with our train services", R.drawable.ic_wallet));
+        addWelcomeItemList(new PassengerCards(TICKET_ITEM,
+                "Tickets",
+                "Use your tickets to validate it, when you reach your trip, the validator will ask to scan it, so easy right ?", R.drawable.ic_ticket));
+        addWelcomeItemList(new PassengerCards(HISTORY_ITEM,
+                "History",
+                "A History for all you need, track your trips, tickets and your receipts all the time", R.drawable.ic_history));
+    }
 
     public static List<String> getContentDescription() {
         return contentDescription;
@@ -68,23 +89,8 @@ public abstract class StaticDataSource {
     public static final int TICKET_ITEM = 3;
     public static final int HISTORY_ITEM = 4;
 
-    static {
-        passengerCardsList = new ArrayList<>();
-        addWelcomeItemList(new PassengerCards(ENQUIRE_ITEM,
-                "Enquire",
-                "You Can Enquire For Any Trip You like so easy any time without wasting time on phone call, or going your self to the train station and ask for trips and tickets price"));
-        addWelcomeItemList(new PassengerCards(RESERVE_ITEM,
-                "Reserve",
-                "We present powerful way to reserve train tickets so easy, and you can hold your ticket in your phone without any additional papers, just search, choose and confirm"));
-        addWelcomeItemList(new PassengerCards(BALANCE_ITEM,
-                "Balance",
-                "Your wallet for our services is secure with us, use your balance to buy tickets, reserve for others and enjoy with our train services"));
-        addWelcomeItemList(new PassengerCards(TICKET_ITEM,
-                "Tickets",
-                "Use your tickets to validate it, when you reach your trip, the validator will ask to scan it, so easy right ?"));
-        addWelcomeItemList(new PassengerCards(HISTORY_ITEM,
-                "History",
-                "A History for all you need, track your trips, tickets and your receipts all the time"));
+    public static List<PassengerCards> getPassengerCardsList() {
+        return passengerCardsList;
     }
 
     /**

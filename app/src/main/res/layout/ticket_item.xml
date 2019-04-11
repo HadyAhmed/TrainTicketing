@@ -8,13 +8,19 @@
         <variable
             name="ticket"
             type="com.hadi.trainticketing.passenger.pojo.enquire.Result" />
+
+        <variable
+            name="ticketClickListener"
+            type="com.hadi.trainticketing.passenger.adapter.EnquireAdapter.OnTicketClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
+        android:onClick="@{()-> ticketClickListener.onTicketClick(ticket.ticket.id)}"
+        app:cardBackgroundColor="@color/primary_light"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="6dp"
         app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout

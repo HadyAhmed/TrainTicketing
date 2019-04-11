@@ -8,10 +8,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.hadi.trainticketing.R;
-import com.hadi.trainticketing.StaticDataSource;
 import com.hadi.trainticketing.databinding.ActivityPassengerMainBinding;
+import com.hadi.trainticketing.datasource.database.StaticDataSource;
 import com.hadi.trainticketing.passenger.adapter.WelcomeAdapter;
-import com.hadi.trainticketing.passenger.interfaces.OnWelcomeItemClickListener;
 import com.hadi.trainticketing.passenger.view.navigations.BalanceActivity;
 import com.hadi.trainticketing.passenger.view.navigations.EnquireActivity;
 import com.hadi.trainticketing.passenger.view.navigations.HistoryActivity;
@@ -24,7 +23,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-public class PassengerMainActivity extends AppCompatActivity implements OnWelcomeItemClickListener, Toolbar.OnMenuItemClickListener {
+public class PassengerMainActivity extends AppCompatActivity
+        implements WelcomeAdapter.OnWelcomeItemClickListener, Toolbar.OnMenuItemClickListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class PassengerMainActivity extends AppCompatActivity implements OnWelcom
         passengerMainBinding.mainToolbar.setOnMenuItemClickListener(this);
 
         passengerMainBinding.passengerFeaturesRv.setLayoutManager(new LinearLayoutManager(this));
-        passengerMainBinding.passengerFeaturesRv.setAdapter(new WelcomeAdapter(StaticDataSource.passengerCardsList, this));
+        passengerMainBinding.passengerFeaturesRv.setAdapter(new WelcomeAdapter(StaticDataSource.getPassengerCardsList(), this));
     }
 
     @Override

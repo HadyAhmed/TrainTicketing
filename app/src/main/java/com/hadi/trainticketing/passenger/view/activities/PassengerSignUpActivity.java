@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.databinding.ActivitySignUpBinding;
-import com.hadi.trainticketing.datasource.WebServices;
+import com.hadi.trainticketing.datasource.webservice.WebServices;
 import com.hadi.trainticketing.passenger.pojo.signup.SignUpResponse;
 import com.hadi.trainticketing.passenger.pojo.signup.UserSignUp;
 

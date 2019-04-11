@@ -5,19 +5,31 @@ import android.view.ViewGroup;
 
 import com.hadi.trainticketing.databinding.TicketItemBinding;
 import com.hadi.trainticketing.passenger.pojo.enquire.Result;
-import com.hadi.trainticketing.passenger.viewholder.TicketViewHolder;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class EnquireAdapter extends RecyclerView.Adapter<TicketViewHolder> {
+public class EnquireAdapter extends RecyclerView.Adapter<EnquireAdapter.TicketViewHolder> {
     private LayoutInflater inflater;
     private List<Result> resultList;
 
     public EnquireAdapter() {
         // TODO: 4/9/2019 add listener for the reservation
+    }
+
+    private OnTicketClickListener ticketClickListener;
+
+    public EnquireAdapter(OnTicketClickListener ticketClickListener) {
+        this.ticketClickListener = ticketClickListener;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull TicketViewHolder holder, int position) {
+        Result currentTicket = resultList.get(position);
+        holder.setTicket(currentTicket);
+        holder.setTicketClickListener(ticketClickListener);
     }
 
     public void setResultList(List<Result> resultList) {
@@ -34,10 +46,8 @@ public class EnquireAdapter extends RecyclerView.Adapter<TicketViewHolder> {
         return new TicketViewHolder(TicketItemBinding.inflate(inflater, parent, false));
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull TicketViewHolder holder, int position) {
-        Result currentTicket = resultList.get(position);
-        holder.setTicket(currentTicket);
+    public interface OnTicketClickListener {
+        void onTicketClick(String id);
     }
 
     @Override
@@ -48,4 +58,22 @@ public class EnquireAdapter extends RecyclerView.Adapter<TicketViewHolder> {
             return resultList.size();
         }
     }
+
+    class TicketViewHolder extends RecyclerView.ViewHolder {
+        private TicketItemBinding itemBinding;
+
+        TicketViewHolder(@NonNull TicketItemBinding itemView) {
+            super(itemView.getRoot());
+            this.itemBinding = itemView;
+        }
+
+        void setTicket(Result tickets) {
+            this.itemBinding.setTicket(tickets);
+        }
+
+        void setTicketClickListener(OnTicketClickListener ticketClickListener) {
+            this.itemBinding.setTicketClickListener(ticketClickListener);
+        }
+    }
+
 }
