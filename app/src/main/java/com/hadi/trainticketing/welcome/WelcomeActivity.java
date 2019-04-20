@@ -5,13 +5,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.passenger.view.activities.PassengerMainActivity;
 import com.hadi.trainticketing.passenger.view.activities.PassengerSignInActivity;
 import com.hadi.trainticketing.validator.ValidatorLoginActivity;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 /**
  * This is the entry point for the application where the user will be able to know some
@@ -55,8 +55,10 @@ public class WelcomeActivity extends AppCompatActivity
     public void startAccountRule(Enum<Choices> rule) {
         if (rule == Choices.VALIDATOR) {
             startActivity(new Intent(WelcomeActivity.this, ValidatorLoginActivity.class));
+            finish();
         } else if (rule == Choices.PASSENGER) {
             startActivity(new Intent(WelcomeActivity.this, PassengerSignInActivity.class));
+            finish();
         }
     }
 }

@@ -70,6 +70,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".passenger.view.activities.PassengerMainActivity" />
         </activity>
+        <activity android:name=".passenger.view.navigations.AddCreditCardActivity" />
     </application>
 
 </manifest>

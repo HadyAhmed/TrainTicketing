@@ -9,16 +9,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.hadi.trainticketing.R;
-import com.hadi.trainticketing.databinding.LoginActivityBinding;
-import com.hadi.trainticketing.datasource.webservice.WebServices;
-import com.hadi.trainticketing.passenger.pojo.login.LoginResponse;
-import com.hadi.trainticketing.passenger.pojo.login.UserSignIn;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+
+import com.hadi.trainticketing.R;
+import com.hadi.trainticketing.databinding.LoginActivityBinding;
+import com.hadi.trainticketing.datasource.webservice.WebServices;
+import com.hadi.trainticketing.passenger.pojo.login.SignInFields;
+import com.hadi.trainticketing.passenger.pojo.login.SignInResponse;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,22 +51,22 @@ public class PassengerSignInActivity extends AppCompatActivity implements View.O
         if (viewId == activityBinding.forgetPassBtn.getId()) {
             startActivity(new Intent(PassengerSignInActivity.this, ForgetPasswordActivity.class));
         } else if (viewId == activityBinding.signInBtn.getId()) {
-            checkForCredentials(new UserSignIn(activityBinding.userNameEt.getText().toString(), activityBinding.passwordEt.getText().toString()));
+            checkForCredentials(new SignInFields(activityBinding.userNameEt.getText().toString(), activityBinding.passwordEt.getText().toString()));
         } else if (viewId == activityBinding.signUpBtn.getId()) {
             startActivity(new Intent(PassengerSignInActivity.this, PassengerSignUpActivity.class));
         }
     }
 
-    private void checkForCredentials(UserSignIn user) {
+    private void checkForCredentials(SignInFields user) {
         // progress dialog as message for the user
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Signing In...");
         progressDialog.show();
         progressDialog.setCancelable(false);
 
-        WebServices.serverConnection.create(WebServices.class).getLoginResponse(user).enqueue(new Callback<LoginResponse>() {
+        WebServices.serverConnection.create(WebServices.class).getLoginResponse(user).enqueue(new Callback<SignInResponse>() {
             @Override
-            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
+            public void onResponse(@NonNull Call<SignInResponse> call, @NonNull Response<SignInResponse> response) {
                 if (response.body() != null) {
                     progressDialog.dismiss();
                     Log.d(TAG, "onResponse: success");
@@ -84,7 +85,7 @@ public class PassengerSignInActivity extends AppCompatActivity implements View.O
             }
 
             @Override
-            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<SignInResponse> call, @NonNull Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(PassengerSignInActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onFailure: " + t.getMessage());
@@ -92,7 +93,7 @@ public class PassengerSignInActivity extends AppCompatActivity implements View.O
         });
     }
 
-    private void saveUserInfo(@NonNull Response<LoginResponse> response) {
+    private void saveUserInfo(@NonNull Response<SignInResponse> response) {
         if (response.body() != null) {
             // saving data to shared pref if the user selected remember me
             SharedPreferences userPrefs = PreferenceManager.getDefaultSharedPreferences(PassengerSignInActivity.this);

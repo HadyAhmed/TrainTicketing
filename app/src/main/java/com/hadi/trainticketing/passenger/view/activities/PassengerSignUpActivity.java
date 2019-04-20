@@ -13,17 +13,18 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.material.textfield.TextInputLayout;
-import com.hadi.trainticketing.R;
-import com.hadi.trainticketing.databinding.ActivitySignUpBinding;
-import com.hadi.trainticketing.datasource.webservice.WebServices;
-import com.hadi.trainticketing.passenger.pojo.signup.SignUpResponse;
-import com.hadi.trainticketing.passenger.pojo.signup.UserSignUp;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+
+import com.google.android.material.textfield.TextInputLayout;
+import com.hadi.trainticketing.R;
+import com.hadi.trainticketing.databinding.ActivitySignUpBinding;
+import com.hadi.trainticketing.datasource.webservice.WebServices;
+import com.hadi.trainticketing.passenger.pojo.signup.SignUpFields;
+import com.hadi.trainticketing.passenger.pojo.signup.SignUpResponse;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,7 +57,7 @@ public class PassengerSignUpActivity extends AppCompatActivity implements Adapte
             @Override
             public void onClick(View v) {
                 if (checkForEntries()) {
-                    UserSignUp user = new UserSignUp(
+                    SignUpFields user = new SignUpFields(
                             signUpBinding.nationalIdEt.getText().toString(),
                             signUpBinding.emailEt.getText().toString(),
                             signUpBinding.passEt.getText().toString(),
@@ -88,7 +89,7 @@ public class PassengerSignUpActivity extends AppCompatActivity implements Adapte
         });
     }
 
-    private void checkForExistingMail(UserSignUp user) {
+    private void checkForExistingMail(SignUpFields user) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
@@ -105,7 +106,11 @@ public class PassengerSignUpActivity extends AppCompatActivity implements Adapte
                             Log.d(TAG, "onResponse: not null");
                             SharedPreferences userPref = PreferenceManager.getDefaultSharedPreferences(PassengerSignUpActivity.this);
                             userPref.edit()
-                                    .putBoolean(PassengerSignInActivity.IS_SIGNED_IN, true).apply();
+                                    .putString(PassengerSignInActivity.USER_EMAIL_PREF_KEY, response.body().getUser().getEmail())
+                                    .putBoolean(PassengerSignInActivity.IS_SIGNED_IN, true)
+                                    .putString(PassengerSignInActivity.USER_NAME_PREF_KEY, response.body().getUser().getName())
+                                    .putString(PassengerSignInActivity.USER_ID_PREF_KEY, response.body().getUser().getId())
+                                    .apply();
                             Toast.makeText(PassengerSignUpActivity.this, "Successfully Created", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(PassengerSignUpActivity.this, PassengerMainActivity.class));
                             finish();

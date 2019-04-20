@@ -4,7 +4,7 @@ package com.hadi.trainticketing.passenger.pojo.signup;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserSignUp {
+public class SignUpFields {
 
     @SerializedName("nationalID")
     @Expose
@@ -34,7 +34,7 @@ public class UserSignUp {
     @Expose
     private Address address;
 
-    public UserSignUp(String nationalID, String email, String password, String gender, String name) {
+    public SignUpFields(String nationalID, String email, String password, String gender, String name) {
         this.nationalID = nationalID;
         this.email = email;
         this.password = password;
@@ -80,7 +80,7 @@ public class UserSignUp {
 
     @Override
     public String toString() {
-        return "UserSignUp{" +
+        return "SignUpFields{" +
                 "nationalID='" + nationalID + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +

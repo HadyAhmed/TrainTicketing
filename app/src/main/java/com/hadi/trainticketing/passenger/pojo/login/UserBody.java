@@ -18,7 +18,6 @@ public class UserBody {
     @Expose
     private String email;
 
-    // todo check for the sign up object changes
     public UserBody(String name, String username, String email) {
         this.name = name;
         this.username = username;

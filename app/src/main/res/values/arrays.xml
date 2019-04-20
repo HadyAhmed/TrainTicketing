@@ -51,4 +51,31 @@
         <item>@string/female</item>
     </string-array>
 
+    <string-array name="yearEntries">
+        <item>@string/year</item>
+        <item>@string/year2019</item>
+        <item>@string/year2020</item>
+        <item>@string/year2021</item>
+        <item>@string/year2022</item>
+        <item>@string/year2023</item>
+        <item>@string/year2024</item>
+        <item>@string/year2025</item>
+    </string-array>
+
+    <string-array name="monthEntries">
+        <item>@string/month</item>
+        <item>@string/month2019</item>
+        <item>@string/month2020</item>
+        <item>@string/month2021</item>
+        <item>@string/month2022</item>
+        <item>@string/month2023</item>
+        <item>@string/month2024</item>
+        <item>@string/month2025</item>
+        <item>@string/month2026</item>
+        <item>@string/month2027</item>
+        <item>@string/month2028</item>
+        <item>@string/month2029</item>
+        <item>@string/month2030</item>
+    </string-array>
+
 </resources>

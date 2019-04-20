@@ -2,11 +2,11 @@ package com.hadi.trainticketing.datasource.webservice;
 
 import com.google.gson.Gson;
 import com.hadi.trainticketing.passenger.pojo.enquire.EnquireResponse;
-import com.hadi.trainticketing.passenger.pojo.login.LoginResponse;
-import com.hadi.trainticketing.passenger.pojo.login.UserSignIn;
+import com.hadi.trainticketing.passenger.pojo.login.SignInFields;
+import com.hadi.trainticketing.passenger.pojo.login.SignInResponse;
 import com.hadi.trainticketing.passenger.pojo.profile.UserResponse;
+import com.hadi.trainticketing.passenger.pojo.signup.SignUpFields;
 import com.hadi.trainticketing.passenger.pojo.signup.SignUpResponse;
-import com.hadi.trainticketing.passenger.pojo.signup.UserSignUp;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -40,12 +40,12 @@ public interface WebServices {
             .build();
 
     @POST("user/signin")
-    Call<LoginResponse> getLoginResponse(@Body UserSignIn user);
+    Call<SignInResponse> getLoginResponse(@Body SignInFields user);
 
     @POST("user/signup")
-    Call<SignUpResponse> getSignUpResponse(@Body UserSignUp user);
+    Call<SignUpResponse> getSignUpResponse(@Body SignUpFields user);
 
-    @GET("user/" + "{email}")
+    @GET("user/search/" + "{email}")
     Call<UserResponse> getUserData(@Path("email") String userEmail);
 
     @GET(SEARCH_TRIP)

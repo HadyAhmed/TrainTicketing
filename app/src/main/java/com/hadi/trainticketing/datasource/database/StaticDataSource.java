@@ -23,6 +23,10 @@ public abstract class StaticDataSource {
     private static final List<PassengerCards> passengerCardsList;
     // number of the list item in the list
     public static final int ENQUIRE_ITEM = 0;
+    public static final int RESERVE_ITEM = 1;
+    public static final int BALANCE_ITEM = 2;
+    public static final int TICKET_ITEM = 3;
+    public static final int HISTORY_ITEM = 4;
     // is a list that holding the text description for the page in welcome screens
     private static final List<String> contentDescription;
 
@@ -83,11 +87,6 @@ public abstract class StaticDataSource {
         contentDescription.add(desc);
         contentResources.add(resourceId);
     }
-
-    public static final int RESERVE_ITEM = 1;
-    public static final int BALANCE_ITEM = 2;
-    public static final int TICKET_ITEM = 3;
-    public static final int HISTORY_ITEM = 4;
 
     public static List<PassengerCards> getPassengerCardsList() {
         return passengerCardsList;
