@@ -1,4 +1,4 @@
-package com.hadi.trainticketing.passenger.view.navigations;
+package com.hadi.trainticketing.passenger.view.features;
 
 import android.app.Activity;
 import android.app.AlertDialog;

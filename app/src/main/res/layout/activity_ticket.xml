@@ -36,7 +36,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="32dp"
             android:adjustViewBounds="true"
-            tools:srcCompat="@tools:sample/avatars[10]" />
+            android:src="@drawable/qr_code" />
 
         <View
             android:layout_width="match_parent"
@@ -52,6 +52,7 @@
             android:textAppearance="?android:textAppearanceLarge" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/previousRv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/ticket_item" />

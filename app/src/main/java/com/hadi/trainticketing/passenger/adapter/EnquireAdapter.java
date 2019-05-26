@@ -1,22 +1,22 @@
 package com.hadi.trainticketing.passenger.adapter;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.hadi.trainticketing.databinding.TicketItemBinding;
 import com.hadi.trainticketing.passenger.pojo.enquire.Result;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 public class EnquireAdapter extends RecyclerView.Adapter<EnquireAdapter.TicketViewHolder> {
     private LayoutInflater inflater;
     private List<Result> resultList;
 
     public EnquireAdapter() {
-        // TODO: 4/9/2019 add listener for the reservation
     }
 
     private OnTicketClickListener ticketClickListener;
@@ -47,7 +47,7 @@ public class EnquireAdapter extends RecyclerView.Adapter<EnquireAdapter.TicketVi
     }
 
     public interface OnTicketClickListener {
-        void onTicketClick(String id);
+        void onTicketClick(String id, View view);
     }
 
     @Override

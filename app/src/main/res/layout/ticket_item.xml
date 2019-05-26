@@ -15,9 +15,10 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/ticketView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{()-> ticketClickListener.onTicketClick(ticket.ticket.id)}"
+        android:onClick="@{(v)-> ticketClickListener.onTicketClick(ticket.ticket.id,v)}"
         app:cardBackgroundColor="@color/primary_light"
         app:cardCornerRadius="8dp"
         app:cardElevation="6dp"

@@ -24,11 +24,11 @@ import com.hadi.trainticketing.datasource.webservice.WebServices;
 import com.hadi.trainticketing.passenger.adapter.WelcomeAdapter;
 import com.hadi.trainticketing.passenger.pojo.profile.Result;
 import com.hadi.trainticketing.passenger.pojo.profile.UserResponse;
-import com.hadi.trainticketing.passenger.view.navigations.BalanceActivity;
-import com.hadi.trainticketing.passenger.view.navigations.EnquireActivity;
-import com.hadi.trainticketing.passenger.view.navigations.HistoryActivity;
-import com.hadi.trainticketing.passenger.view.navigations.ReserveActivity;
-import com.hadi.trainticketing.passenger.view.navigations.TicketActivity;
+import com.hadi.trainticketing.passenger.view.features.BalanceActivity;
+import com.hadi.trainticketing.passenger.view.features.EnquireActivity;
+import com.hadi.trainticketing.passenger.view.features.HistoryActivity;
+import com.hadi.trainticketing.passenger.view.features.ReserveActivity;
+import com.hadi.trainticketing.passenger.view.features.TicketActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;

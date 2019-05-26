@@ -1,8 +1,14 @@
-package com.hadi.trainticketing.passenger.view.navigations;
+package com.hadi.trainticketing.passenger.view.features;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.databinding.EnquireLayoutBinding;
@@ -10,28 +16,23 @@ import com.hadi.trainticketing.datasource.webservice.WebServices;
 import com.hadi.trainticketing.passenger.adapter.EnquireAdapter;
 import com.hadi.trainticketing.passenger.pojo.enquire.EnquireResponse;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReserveActivity extends AppCompatActivity implements View.OnClickListener, EnquireAdapter.OnTicketClickListener {
+public class EnquireActivity extends AppCompatActivity implements View.OnClickListener {
     private EnquireLayoutBinding layoutBinding;
-    private EnquireAdapter enquireAdapter = new EnquireAdapter(this);
+    private EnquireAdapter enquireAdapter = new EnquireAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         layoutBinding = DataBindingUtil.setContentView(this, R.layout.enquire_layout);
-        layoutBinding.enquireToolbar.setTitle("Book Ticket");
+        layoutBinding.enquireToolbar.setTitle("Enquire");
         layoutBinding.enquireToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavUtils.navigateUpFromSameTask(ReserveActivity.this);
+                NavUtils.navigateUpFromSameTask(EnquireActivity.this);
             }
         });
 
@@ -61,7 +62,7 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
                     if (!response.body().getResult().isEmpty()) {
                         enquireAdapter.setResultList(response.body().getResult());
                     } else {
-                        Toast.makeText(ReserveActivity.this, "No trip was found at the moment", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EnquireActivity.this, "No trip was found at the moment", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -69,7 +70,7 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onFailure(@NonNull Call<EnquireResponse> call, @NonNull Throwable t) {
                 layoutBinding.searchProgress.setVisibility(View.INVISIBLE);
-                Toast.makeText(ReserveActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(EnquireActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -96,8 +97,4 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    @Override
-    public void onTicketClick(String id) {
-        Toast.makeText(this, "ticket id: " + id, Toast.LENGTH_SHORT).show();
-    }
 }

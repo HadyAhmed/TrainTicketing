@@ -36,41 +36,42 @@
         </activity>
         <activity android:name=".passenger.view.activities.PassengerMainActivity" />
         <activity
-            android:name=".passenger.view.navigations.BalanceActivity"
+            android:name=".passenger.view.features.BalanceActivity"
             android:parentActivityName=".passenger.view.activities.PassengerMainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".passenger.view.activities.PassengerMainActivity" />
         </activity>
         <activity
-            android:name=".passenger.view.navigations.EnquireActivity"
+            android:name=".passenger.view.features.EnquireActivity"
             android:parentActivityName=".passenger.view.activities.PassengerMainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".passenger.view.activities.PassengerMainActivity" />
         </activity>
         <activity
-            android:name=".passenger.view.navigations.HistoryActivity"
+            android:name=".passenger.view.features.HistoryActivity"
             android:parentActivityName=".passenger.view.activities.PassengerMainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".passenger.view.activities.PassengerMainActivity" />
         </activity>
         <activity
-            android:name=".passenger.view.navigations.ReserveActivity"
+            android:name=".passenger.view.features.ReserveActivity"
             android:parentActivityName=".passenger.view.activities.PassengerMainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".passenger.view.activities.PassengerMainActivity" />
         </activity>
         <activity
-            android:name=".passenger.view.navigations.TicketActivity"
+            android:name=".passenger.view.features.TicketActivity"
             android:parentActivityName=".passenger.view.activities.PassengerMainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".passenger.view.activities.PassengerMainActivity" />
         </activity>
-        <activity android:name=".passenger.view.navigations.AddCreditCardActivity" />
+        <activity android:name=".passenger.view.features.AddCreditCardActivity" />
+        <activity android:name=".validator.view.ValidatorMainActivity" />
     </application>
 
 </manifest>
