@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Account Type Spinner Entries-->
+
+    <!-- Destination Spinner Entries-->
+    <string-array name="destination_spinner_from">
+        <item>@string/banha</item>
+        <item>@string/alex</item>
+        <item>@string/aswan</item>
+        <item>@string/cairo</item>
+        <item>@string/damnhour</item>
+        <item>@string/elAlameen</item>
+        <item>@string/elMansoura</item>
+        <item>@string/shubra</item>
+        <item>@string/qalyoub</item>
+        <item>@string/koesna</item>
+        <item>@string/tanta</item>
+        <item>@string/kafrDwar</item>
+        <item>@string/sediGaber</item>
+        <item>@string/maryout</item>
+        <item>@string/marsaMatrouh</item>
+        <item>@string/isamilia</item>
+        <item>@string/portSaied</item>
+        <item>@string/luxor</item>
+    </string-array>
+
+    <string-array name="destination_spinner_to">
+        <item>@string/tanta</item>
+        <item>@string/aswan</item>
+        <item>@string/alex</item>
+        <item>@string/banha</item>
+        <item>@string/cairo</item>
+        <item>@string/damnhour</item>
+        <item>@string/elAlameen</item>
+        <item>@string/elMansoura</item>
+        <item>@string/shubra</item>
+        <item>@string/qalyoub</item>
+        <item>@string/koesna</item>
+        <item>@string/kafrDwar</item>
+        <item>@string/sediGaber</item>
+        <item>@string/maryout</item>
+        <item>@string/marsaMatrouh</item>
+        <item>@string/isamilia</item>
+        <item>@string/portSaied</item>
+        <item>@string/luxor</item>
+    </string-array>
+
+    <!-- Gender Spinner Entries -->
+    <string-array name="gender_entries">
+        <item>@string/male</item>
+        <item>@string/female</item>
+    </string-array>
+
+    <string-array name="yearEntries">
+        <item>@string/year</item>
+        <item>@string/year2019</item>
+        <item>@string/year2020</item>
+        <item>@string/year2021</item>
+        <item>@string/year2022</item>
+        <item>@string/year2023</item>
+        <item>@string/year2024</item>
+        <item>@string/year2025</item>
+    </string-array>
+
+    <string-array name="monthEntries">
+        <item>@string/month</item>
+        <item>@string/month2019</item>
+        <item>@string/month2020</item>
+        <item>@string/month2021</item>
+        <item>@string/month2022</item>
+        <item>@string/month2023</item>
+        <item>@string/month2024</item>
+        <item>@string/month2025</item>
+        <item>@string/month2026</item>
+        <item>@string/month2027</item>
+        <item>@string/month2028</item>
+        <item>@string/month2029</item>
+        <item>@string/month2030</item>
+    </string-array>
+
+</resources>

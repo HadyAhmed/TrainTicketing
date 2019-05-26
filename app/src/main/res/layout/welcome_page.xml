@@ -15,7 +15,7 @@
         android:layout_marginBottom="32dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_train"
+        tools:src="@drawable/ic_train"
         app:layout_constraintBottom_toTopOf="@+id/contentBody"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

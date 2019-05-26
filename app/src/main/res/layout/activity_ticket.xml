@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".passenger.ui.activity.TicketActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/ticket_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?colorPrimary"
+            android:elevation="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="?homeAsUpIndicator"
+            app:title="Tickets" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:fontFamily="@font/raleway_semibold"
+            android:text="Current Ticket"
+            android:textAppearance="?android:textAppearanceLarge" />
+
+        <ImageView
+            android:id="@+id/ticket_qr_code_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/qr_code" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="16dp"
+            android:background="@android:color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Previous Tickets"
+            android:textAppearance="?android:textAppearanceLarge" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/previousRv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/ticket_item" />
+    </LinearLayout>
+</layout>

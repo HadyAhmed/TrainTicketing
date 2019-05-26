@@ -4,7 +4,10 @@
     package="com.hadi.trainticketing">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".application.TrainTicketApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,17 +23,55 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".passenger.PassengerLoginActivity"
+            android:name=".passenger.view.activities.PassengerSignInActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".passenger.ForgetPasswordActivity" />
+        <activity android:name=".passenger.view.activities.ForgetPasswordActivity" />
         <activity android:name=".validator.ValidatorLoginActivity" />
         <activity
-            android:name=".passenger.SignUpActivity"
-            android:parentActivityName=".passenger.PassengerLoginActivity">
+            android:name=".passenger.view.activities.PassengerSignUpActivity"
+            android:parentActivityName=".passenger.view.activities.PassengerSignInActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".passenger.PassengerLoginActivity" />
+                android:value=".passenger.view.activities.PassengerSignInActivity" />
         </activity>
+        <activity android:name=".passenger.view.activities.PassengerMainActivity" />
+        <activity
+            android:name=".passenger.view.features.BalanceActivity"
+            android:parentActivityName=".passenger.view.activities.PassengerMainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".passenger.view.activities.PassengerMainActivity" />
+        </activity>
+        <activity
+            android:name=".passenger.view.features.EnquireActivity"
+            android:parentActivityName=".passenger.view.activities.PassengerMainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".passenger.view.activities.PassengerMainActivity" />
+        </activity>
+        <activity
+            android:name=".passenger.view.features.HistoryActivity"
+            android:parentActivityName=".passenger.view.activities.PassengerMainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".passenger.view.activities.PassengerMainActivity" />
+        </activity>
+        <activity
+            android:name=".passenger.view.features.ReserveActivity"
+            android:parentActivityName=".passenger.view.activities.PassengerMainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".passenger.view.activities.PassengerMainActivity" />
+        </activity>
+        <activity
+            android:name=".passenger.view.features.TicketActivity"
+            android:parentActivityName=".passenger.view.activities.PassengerMainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".passenger.view.activities.PassengerMainActivity" />
+        </activity>
+        <activity android:name=".passenger.view.features.AddCreditCardActivity" />
+        <activity android:name=".validator.view.ValidatorMainActivity" />
     </application>
 
 </manifest>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/reservation_nav_graph"
+    app:startDestination="@id/reservationMainFragment">
+
+    <fragment
+        android:id="@+id/reservationMainFragment"
+        android:name="com.hadi.trainticketing.passenger.view.navigation.ReservationMainFragment"
+        android:label="ReservationSeatFragment"
+        tools:layout="@layout/fragment_reservation_main">
+        <action
+            android:id="@+id/moveToSeatFragment"
+            app:destination="@id/seatReservationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/seatReservationFragment"
+        android:name="com.hadi.trainticketing.passenger.view.navigation.SeatReservationFragment"
+        android:label="fragment_seat_reservation"
+        tools:layout="@layout/fragment_seat_reservation">
+        <action
+            android:id="@+id/moveToTicketHolderNames"
+            app:destination="@id/ticketNameDetails" />
+        <action
+            android:id="@+id/moveToTicketDetail"
+            app:destination="@id/ticketDetail" />
+        <argument
+            android:name="ticketNumber"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/ticketNameDetails"
+        android:name="com.hadi.trainticketing.passenger.view.navigation.TicketNameDetails"
+        android:label="fragment_ticket_name_details"
+        tools:layout="@layout/fragment_ticket_name_details">
+        <action
+            android:id="@+id/moveToTicketConfirmFragment"
+            app:destination="@id/confirmTicket" />
+    </fragment>
+    <fragment
+        android:id="@+id/ticketDetail"
+        android:name="com.hadi.trainticketing.passenger.view.navigation.TicketDetail"
+        android:label="fragment_ticket_detail"
+        tools:layout="@layout/fragment_ticket_detail">
+        <action
+            android:id="@+id/action_ticketDetail_to_confirmTicket"
+            app:destination="@id/confirmTicket" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmTicket"
+        android:name="com.hadi.trainticketing.passenger.view.navigation.ConfirmTicket"
+        android:label="fragment_confirm_ticket"
+        tools:layout="@layout/fragment_confirm_ticket" />
+</navigation>

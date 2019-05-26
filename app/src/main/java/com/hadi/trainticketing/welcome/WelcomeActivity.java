@@ -1,14 +1,17 @@
 package com.hadi.trainticketing.welcome;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import com.hadi.trainticketing.R;
-import com.hadi.trainticketing.passenger.PassengerLoginActivity;
-import com.hadi.trainticketing.validator.ValidatorLoginActivity;
+import android.preference.PreferenceManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.hadi.trainticketing.R;
+import com.hadi.trainticketing.passenger.view.activities.PassengerMainActivity;
+import com.hadi.trainticketing.passenger.view.activities.PassengerSignInActivity;
+import com.hadi.trainticketing.validator.ValidatorLoginActivity;
 
 /**
  * This is the entry point for the application where the user will be able to know some
@@ -22,6 +25,11 @@ public class WelcomeActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (preferences.getBoolean(PassengerSignInActivity.IS_SIGNED_IN, false)) {
+            startActivity(new Intent(this, PassengerMainActivity.class));
+            finish();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
@@ -47,8 +55,10 @@ public class WelcomeActivity extends AppCompatActivity
     public void startAccountRule(Enum<Choices> rule) {
         if (rule == Choices.VALIDATOR) {
             startActivity(new Intent(WelcomeActivity.this, ValidatorLoginActivity.class));
+            finish();
         } else if (rule == Choices.PASSENGER) {
-            startActivity(new Intent(WelcomeActivity.this, PassengerLoginActivity.class));
+            startActivity(new Intent(WelcomeActivity.this, PassengerSignInActivity.class));
+            finish();
         }
     }
 }

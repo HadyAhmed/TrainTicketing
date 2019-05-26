@@ -16,4 +16,20 @@
         <item name="boxCornerRadiusTopEnd">16dp</item>
         <item name="boxCornerRadiusTopStart">16dp</item>
     </style>
+    <!-- Style For Text Input Layout in the Sign In Fragment -->
+
+    <style name="enquire_title_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+
+    <style name="ticket_label_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
 </resources>

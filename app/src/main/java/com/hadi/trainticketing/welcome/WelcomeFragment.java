@@ -10,8 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hadi.trainticketing.R;
-import com.hadi.trainticketing.StaticDataSource;
 import com.hadi.trainticketing.databinding.FragmentWelcomeBinding;
+import com.hadi.trainticketing.datasource.database.StaticDataSource;
 import com.rd.animation.type.AnimationType;
 
 import java.util.List;

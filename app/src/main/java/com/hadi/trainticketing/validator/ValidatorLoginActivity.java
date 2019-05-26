@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.hadi.trainticketing.R;
-import com.hadi.trainticketing.databinding.LoginActivityBinding;
-import com.hadi.trainticketing.passenger.ForgetPasswordActivity;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+
+import com.hadi.trainticketing.R;
+import com.hadi.trainticketing.databinding.LoginActivityBinding;
+import com.hadi.trainticketing.passenger.view.activities.ForgetPasswordActivity;
+import com.hadi.trainticketing.validator.view.ValidatorMainActivity;
 
 public class ValidatorLoginActivity extends AppCompatActivity implements View.OnClickListener {
     private LoginActivityBinding activityBinding;
@@ -32,7 +33,7 @@ public class ValidatorLoginActivity extends AppCompatActivity implements View.On
         if (viewId == activityBinding.forgetPassBtn.getId()) {
             startActivity(new Intent(ValidatorLoginActivity.this, ForgetPasswordActivity.class));
         } else if (viewId == activityBinding.signInBtn.getId()) {
-
+            startActivity(new Intent(ValidatorLoginActivity.this, ValidatorMainActivity.class));
         }
     }
 
