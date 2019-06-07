@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,8 @@ import com.hadi.trainticketing.passenger.model.pojo.reservation.response.reserva
 import com.hadi.trainticketing.passenger.model.pojo.reservation.response.reserve_seat.ReservationResponse;
 import com.hadi.trainticketing.passenger.view.activities.PassengerSignInActivity;
 import com.hadi.trainticketing.passenger.view.features.TicketActivity;
+
+import java.util.Random;
 
 
 public class SeatReservationFragment extends Fragment implements SeatsAdapter.OnSeatClickListener {
@@ -98,21 +101,28 @@ public class SeatReservationFragment extends Fragment implements SeatsAdapter.On
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ReservationRequest reservation = new ReservationRequest(uid, ticketId, reservationIds, seatId);
-                        passengerViewModel.getReservationResult(reservation).observe(getViewLifecycleOwner(), new Observer<Reservation>() {
+                        seatReservationBinding.loadingSeats.setVisibility(View.VISIBLE);
+                        final ReservationRequest reservation = new ReservationRequest(uid, ticketId, reservationIds, seatId);
+                        new Handler().postDelayed(new Runnable() {
                             @Override
-                            public void onChanged(Reservation reservation) {
-                                if (reservation != null) {
-                                    Toast.makeText(context, "reservation successfully done", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(context, TicketActivity.class));
-                                    if (getActivity() != null) {
-                                        getActivity().finish();
+                            public void run() {
+                                passengerViewModel.getReservationResult(reservation).observe(getViewLifecycleOwner(), new Observer<Reservation>() {
+                                    @Override
+                                    public void onChanged(Reservation reservation) {
+                                        seatReservationBinding.loadingSeats.setVisibility(View.INVISIBLE);
+                                        if (reservation != null) {
+                                            Toast.makeText(context, "reservation successfully done", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(context, TicketActivity.class));
+                                            if (getActivity() != null) {
+                                                getActivity().finish();
+                                            }
+                                        } else {
+                                            Toast.makeText(context, "seat was already reserved", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                } else {
-                                    Toast.makeText(context, "seat was already reserved", Toast.LENGTH_SHORT).show();
-                                }
+                                });
                             }
-                        });
+                        }, new Random().nextInt(2000) * 2);
                     }
                 })
                 .setNeutralButton("Cancel", null)
