@@ -12,7 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -20,7 +19,6 @@ import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.databinding.ActivitySignUpBinding;
 import com.hadi.trainticketing.passenger.model.PassengerViewModel;
 import com.hadi.trainticketing.passenger.model.pojo.signup.SignUpFields;
-import com.hadi.trainticketing.passenger.model.pojo.signup.SignUpResponse;
 
 public class PassengerSignUpActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private ActivitySignUpBinding signUpBinding;
@@ -34,12 +32,7 @@ public class PassengerSignUpActivity extends AppCompatActivity implements Adapte
         passengerViewModel = ViewModelProviders.of(this).get(PassengerViewModel.class);
 
         signUpBinding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
-        signUpBinding.signUpToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        signUpBinding.signUpToolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         signUpBinding.genderSpinner.setOnItemSelectedListener(this);
 
@@ -48,19 +41,16 @@ public class PassengerSignUpActivity extends AppCompatActivity implements Adapte
         removeErrors(signUpBinding.emailTextInputLayout, signUpBinding.emailEt);
         removeErrors(signUpBinding.passwordTextInputLayout, signUpBinding.passEt);
 
-        signUpBinding.submitRegistrationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkForEntries()) {
-                    SignUpFields user = new SignUpFields(
-                            signUpBinding.nationalIdEt.getText().toString(),
-                            signUpBinding.emailEt.getText().toString(),
-                            signUpBinding.passEt.getText().toString(),
-                            gender,
-                            signUpBinding.nameEt.getText().toString()
-                    );
-                    checkForExistingMail(user);
-                }
+        signUpBinding.submitRegistrationBtn.setOnClickListener(v -> {
+            if (checkForEntries()) {
+                SignUpFields user = new SignUpFields(
+                        signUpBinding.nationalIdEt.getText().toString(),
+                        signUpBinding.emailEt.getText().toString(),
+                        signUpBinding.passEt.getText().toString(),
+                        gender,
+                        signUpBinding.nameEt.getText().toString()
+                );
+                checkForExistingMail(user);
             }
         });
     }
@@ -91,16 +81,13 @@ public class PassengerSignUpActivity extends AppCompatActivity implements Adapte
         progressDialog.show();
 
         passengerViewModel.registerNewAccount(user)
-                .observe(this, new Observer<SignUpResponse>() {
-                    @Override
-                    public void onChanged(SignUpResponse signUpResponse) {
-                        progressDialog.dismiss();
-                        if (signUpResponse != null) {
-                            Toast.makeText(PassengerSignUpActivity.this, "Successfully Created", Toast.LENGTH_SHORT).show();
-                            onBackPressed();
-                        } else {
-                            Toast.makeText(PassengerSignUpActivity.this, "Account Already Exists", Toast.LENGTH_SHORT).show();
-                        }
+                .observe(this, signUpResponse -> {
+                    progressDialog.dismiss();
+                    if (signUpResponse != null) {
+                        Toast.makeText(PassengerSignUpActivity.this, "Successfully Created", Toast.LENGTH_SHORT).show();
+                        onBackPressed();
+                    } else {
+                        Toast.makeText(PassengerSignUpActivity.this, "Account Already Exists", Toast.LENGTH_SHORT).show();
                     }
                 });
 

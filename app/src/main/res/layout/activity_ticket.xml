@@ -21,35 +21,12 @@
             app:navigationIcon="?homeAsUpIndicator"
             app:title="Tickets" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:fontFamily="@font/raleway_semibold"
-            android:text="Current Ticket"
-            android:textAppearance="?android:textAppearanceLarge" />
-
-        <ImageView
-            android:id="@+id/ticket_qr_code_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="32dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/qr_code" />
-
-        <View
+        <ProgressBar
+            android:id="@+id/ticketProgress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_margin="16dp"
-            android:background="@android:color/black" />
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="Previous Tickets"
-            android:textAppearance="?android:textAppearanceLarge" />
+            android:indeterminate="true" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/previousRv"

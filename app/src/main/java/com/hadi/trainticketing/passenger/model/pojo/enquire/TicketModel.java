@@ -5,14 +5,15 @@ import java.util.List;
 public class TicketModel {
     private String launchTime;
     private String arrivalTime;
+    private com.hadi.trainticketing.passenger.model.pojo.ticket.Ticket reservationTicket;
+    private String reservationId;
     private Ticket ticket;
     private List<ArrayResult> arrayResults;
-    private String reservationId;
 
-    public TicketModel(String launchTime, String arrivalTime, Ticket ticket, String reservationId) {
+    public TicketModel(String launchTime, String arrivalTime, com.hadi.trainticketing.passenger.model.pojo.ticket.Ticket ticket, String reservationId) {
         this.launchTime = launchTime;
         this.arrivalTime = arrivalTime;
-        this.ticket = ticket;
+        this.reservationTicket = ticket;
         this.reservationId = reservationId;
     }
 

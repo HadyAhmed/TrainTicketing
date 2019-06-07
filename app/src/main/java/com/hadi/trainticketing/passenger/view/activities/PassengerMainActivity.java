@@ -70,14 +70,11 @@ public class PassengerMainActivity extends AppCompatActivity
             AlertDialog.Builder builder = new AlertDialog.Builder(PassengerMainActivity.this);
             builder.setTitle("Logout!")
                     .setMessage("Are you sure to logout ?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(PassengerMainActivity.this);
-                            preferences.edit().clear().apply();
-                            startActivity(new Intent(PassengerMainActivity.this, PassengerSignInActivity.class));
-                            finish();
-                        }
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(PassengerMainActivity.this);
+                        preferences.edit().clear().apply();
+                        startActivity(new Intent(PassengerMainActivity.this, PassengerSignInActivity.class));
+                        finish();
                     }).setNegativeButton("Cancel", null)
                     .show();
             return true;

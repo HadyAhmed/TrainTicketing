@@ -68,12 +68,7 @@ public class WelcomeFragment extends Fragment implements ViewPager.OnPageChangeL
         welcomeBinding.viewPager.addOnPageChangeListener(this);
 
         // click listener for the get start button on the landing page
-        welcomeBinding.startBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentListener.navigateToAccountRuleChoose();
-            }
-        });
+        welcomeBinding.startBtn.setOnClickListener(v -> fragmentListener.navigateToAccountRuleChoose());
 
         return welcomeBinding.getRoot();
     }

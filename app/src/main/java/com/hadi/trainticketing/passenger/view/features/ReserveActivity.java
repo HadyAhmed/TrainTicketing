@@ -1,7 +1,6 @@
 package com.hadi.trainticketing.passenger.view.features;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
@@ -19,12 +18,7 @@ public class ReserveActivity extends AppCompatActivity {
 
         layoutBinding.enquireToolbar.setTitle("Book Ticket");
 
-        layoutBinding.enquireToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavUtils.navigateUpFromSameTask(ReserveActivity.this);
-            }
-        });
+        layoutBinding.enquireToolbar.setNavigationOnClickListener(v -> NavUtils.navigateUpFromSameTask(ReserveActivity.this));
 
     }
 }

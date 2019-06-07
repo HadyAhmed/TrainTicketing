@@ -41,12 +41,7 @@ public class ValidatorScanFragment extends Fragment {
         // Inflate the layout for this fragment
         scanBinding = FragmentValidatorScanBinding.inflate(inflater, container, false);
 
-        scanBinding.scanTicketBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scanTicket();
-            }
-        });
+        scanBinding.scanTicketBtn.setOnClickListener(v -> scanTicket());
 
 
         return scanBinding.getRoot();

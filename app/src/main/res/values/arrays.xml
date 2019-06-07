@@ -3,23 +3,6 @@
     <!-- Account Type Spinner Entries-->
 
     <!-- Destination Spinner Entries-->
-    <string-array name="destination_spinner_from">
-        <item>@string/banha</item>
-        <item>@string/alex</item>
-        <item>@string/cairo</item>
-        <item>@string/tanta</item>
-        <item>@string/marsaMatrouh</item>
-        <item>@string/isamilia</item>
-    </string-array>
-
-    <string-array name="destination_spinner_to">
-        <item>@string/tanta</item>
-        <item>@string/alex</item>
-        <item>@string/banha</item>
-        <item>@string/cairo</item>
-        <item>@string/marsaMatrouh</item>
-        <item>@string/isamilia</item>
-    </string-array>
 
     <!-- Gender Spinner Entries -->
     <string-array name="gender_entries">

@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.hadi.trainticketing.R;
@@ -72,20 +71,17 @@ public class PassengerSignInActivity extends AppCompatActivity implements View.O
         progressDialog.setCancelable(false);
 
         viewModel.loginWithCredentials(user)
-                .observe(this, new Observer<SignInResponse>() {
-                    @Override
-                    public void onChanged(SignInResponse signInResponse) {
-                        progressDialog.dismiss();
-                        if (signInResponse != null && signInResponse.isSuccess()) {
-                            saveUserInfo(signInResponse);
-                            Toast.makeText(PassengerSignInActivity.this, "Welcome " + signInResponse.getUser().getName(), Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(PassengerSignInActivity.this, PassengerMainActivity.class));
-                            finish();
-                        } else if (signInResponse != null && !signInResponse.isSuccess()) {
-                            Toast.makeText(PassengerSignInActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(PassengerSignInActivity.this, "something went wring with our server side", Toast.LENGTH_SHORT).show();
-                        }
+                .observe(this, signInResponse -> {
+                    progressDialog.dismiss();
+                    if (signInResponse != null && signInResponse.isSuccess()) {
+                        saveUserInfo(signInResponse);
+                        Toast.makeText(PassengerSignInActivity.this, "Welcome " + signInResponse.getUser().getName(), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(PassengerSignInActivity.this, PassengerMainActivity.class));
+                        finish();
+                    } else if (signInResponse != null && !signInResponse.isSuccess()) {
+                        Toast.makeText(PassengerSignInActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(PassengerSignInActivity.this, "something went wring with our server side", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

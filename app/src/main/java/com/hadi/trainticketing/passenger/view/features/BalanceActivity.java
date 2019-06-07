@@ -11,13 +11,11 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.databinding.ActivityBalanceBinding;
 import com.hadi.trainticketing.passenger.model.PassengerViewModel;
-import com.hadi.trainticketing.passenger.model.pojo.profile.UserResponse;
 import com.hadi.trainticketing.passenger.view.activities.PassengerSignInActivity;
 
 public class BalanceActivity extends AppCompatActivity implements AlertDialog.OnClickListener {
@@ -28,34 +26,21 @@ public class BalanceActivity extends AppCompatActivity implements AlertDialog.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         balanceBinding = DataBindingUtil.setContentView(this, R.layout.activity_balance);
-        balanceBinding.balanceToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavUtils.navigateUpFromSameTask(BalanceActivity.this);
-            }
-        });
+        balanceBinding.balanceToolbar.setNavigationOnClickListener(v -> NavUtils.navigateUpFromSameTask(BalanceActivity.this));
 
         passengerViewModel = ViewModelProviders.of(this).get(PassengerViewModel.class);
 
         passengerViewModel.requestUserInfo(PreferenceManager.getDefaultSharedPreferences(this).getString(PassengerSignInActivity.USER_TOKEN, ""));
 
-        passengerViewModel.getUserInfo().observe(this, new Observer<UserResponse>() {
-            @Override
-            public void onChanged(UserResponse userResponse) {
-                balanceBinding.balanceProgress.setVisibility(View.INVISIBLE);
-                if (userResponse != null) {
-                    balanceBinding.userBalanceTv.setText(String.format(getString(R.string.creditEg), userResponse.getResult().getBalance()));
-                }
+        passengerViewModel.getUserInfo().observe(this, userResponse -> {
+            balanceBinding.balanceProgress.setVisibility(View.INVISIBLE);
+            if (userResponse != null) {
+                balanceBinding.userBalanceTv.setText(String.format(getString(R.string.creditEg), userResponse.getResult().getBalance()));
             }
         });
 
 
-        balanceBinding.materialButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showUpPaymentMethodDialog(BalanceActivity.this);
-            }
-        });
+        balanceBinding.materialButton.setOnClickListener(v -> showUpPaymentMethodDialog(BalanceActivity.this));
     }
 
     private void showUpPaymentMethodDialog(Activity activity) {

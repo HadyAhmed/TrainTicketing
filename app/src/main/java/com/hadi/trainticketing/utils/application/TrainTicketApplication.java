@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 /**
  * @author Hady Ahmed
@@ -20,7 +21,7 @@ public class TrainTicketApplication extends Application {
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 // prevent the user from capture the screen (screenshots or recording)
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-//                activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+                activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
             }
 
             @Override

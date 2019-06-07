@@ -9,8 +9,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.hadi.trainticketing.datasource.webservice.WebServices;
 import com.hadi.trainticketing.passenger.model.pojo.enquire.EnquireResponse;
 import com.hadi.trainticketing.passenger.model.pojo.enquire.ResultArray;
-import com.hadi.trainticketing.passenger.model.pojo.enquire.Ticket;
-import com.hadi.trainticketing.passenger.model.pojo.enquire.TicketModel;
 import com.hadi.trainticketing.passenger.model.pojo.login.SignInFields;
 import com.hadi.trainticketing.passenger.model.pojo.login.SignInResponse;
 import com.hadi.trainticketing.passenger.model.pojo.profile.UserResponse;
@@ -22,6 +20,8 @@ import com.hadi.trainticketing.passenger.model.pojo.signup.SignUpFields;
 import com.hadi.trainticketing.passenger.model.pojo.signup.SignUpResponse;
 import com.hadi.trainticketing.passenger.model.pojo.stations.Station;
 import com.hadi.trainticketing.passenger.model.pojo.stations.StationsResponse;
+import com.hadi.trainticketing.passenger.model.pojo.ticket.Ticket;
+import com.hadi.trainticketing.passenger.model.pojo.ticket.TicketHistoryModel;
 import com.hadi.trainticketing.passenger.model.pojo.ticket.TicketHistoryResponse;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class PassengerRepo {
     private MutableLiveData<ReservationResponse> seats;
     private MutableLiveData<UserResponse> profileInfo;
     private MutableLiveData<Reservation> reservationResult;
-    private MutableLiveData<List<TicketModel>> ticketsHistory;
+    private MutableLiveData<List<TicketHistoryModel>> ticketsHistory;
 
     private WebServices webServices = WebServices.serverConnection.create(WebServices.class);
 
@@ -202,7 +202,7 @@ public class PassengerRepo {
         return reservationResult;
     }
 
-    public LiveData<List<TicketModel>> getTicketHistory(String uid) {
+    public LiveData<List<TicketHistoryModel>> getTicketHistory(String uid) {
         if (ticketsHistory == null) {
             ticketsHistory = new MutableLiveData<>();
         }
@@ -211,14 +211,17 @@ public class PassengerRepo {
             @Override
             public void onResponse(@NonNull Call<TicketHistoryResponse> call, @NonNull Response<TicketHistoryResponse> response) {
                 if (response.body() != null) {
-                    Log.d(TAG, "onResponse: " + response.body().getReservation().get(0).getTicket().getFrom());
-                    List<TicketModel> ticketModels = new ArrayList<>();
+                    List<TicketHistoryModel> ticketModels = new ArrayList<>();
                     for (int i = 0; i < response.body().getReservation().size(); i++) {
+                        boolean ticketValidation = response.body().getReservation().get(i).getValid();
                         String startTime = response.body().getReservation().get(i).getArrivalTime();
-                        String arrivalTime = response.body().getReservation().get(i).getEndTime();
+                        String arrivalTime = response.body().getReservation().get(i).getEndTime().substring(11, 16);
                         Ticket ticket = response.body().getReservation().get(i).getTicket();
                         String reservationId = response.body().getReservation().get(i).getId();
-                        ticketModels.add(new TicketModel(startTime, arrivalTime, ticket, reservationId));
+
+                        ticketModels.add(new TicketHistoryModel(ticketValidation, startTime, arrivalTime, ticket, reservationId));
+
+                        Log.d(TAG, "start time" + startTime + " Arrival Time: " + arrivalTime);
                     }
                     ticketsHistory.setValue(ticketModels);
                 } else {

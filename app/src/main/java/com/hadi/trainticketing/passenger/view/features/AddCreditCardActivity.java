@@ -1,7 +1,6 @@
 package com.hadi.trainticketing.passenger.view.features;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,11 +17,6 @@ public class AddCreditCardActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.addCreditCardToolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 }

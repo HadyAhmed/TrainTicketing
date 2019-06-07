@@ -26,9 +26,11 @@ public class WelcomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (preferences.getBoolean(PassengerSignInActivity.IS_SIGNED_IN, false)) {
-            startActivity(new Intent(this, PassengerMainActivity.class));
-            finish();
+        if (preferences.contains(PassengerSignInActivity.IS_SIGNED_IN)) {
+            if (preferences.getBoolean(PassengerSignInActivity.IS_SIGNED_IN, false)) {
+                startActivity(new Intent(this, PassengerMainActivity.class));
+                finish();
+            }
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
