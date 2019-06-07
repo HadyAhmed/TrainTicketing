@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import java.util.Random;
 
 
 public class SeatReservationFragment extends Fragment implements SeatsAdapter.OnSeatClickListener {
+    private static final String TAG = "SeatReservationFragment";
     private Context context;
     private FragmentSeatReservationBinding seatReservationBinding;
     private SeatsAdapter seatsAdapter = new SeatsAdapter(this);
@@ -66,8 +68,6 @@ public class SeatReservationFragment extends Fragment implements SeatsAdapter.On
 
             observeTickets();
         }
-
-
         return seatReservationBinding.getRoot();
     }
 
@@ -93,23 +93,19 @@ public class SeatReservationFragment extends Fragment implements SeatsAdapter.On
                 .setPositiveButton("Yes", (dialog, which) -> {
                     seatReservationBinding.loadingSeats.setVisibility(View.VISIBLE);
                     final ReservationRequest reservation = new ReservationRequest(uid, ticketId, reservationIds, seatId);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            passengerViewModel.getReservationResult(reservation).observe(getViewLifecycleOwner(), reservation1 -> {
-                                seatReservationBinding.loadingSeats.setVisibility(View.INVISIBLE);
-                                if (reservation1 != null) {
-                                    Toast.makeText(context, "reservation successfully done", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(context, TicketActivity.class));
-                                    if (getActivity() != null) {
-                                        getActivity().finish();
-                                    }
-                                } else {
-                                    Toast.makeText(context, "seat was already reserved", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                    Log.d(TAG, "onSeatClick: " + reservation.toString());
+                    new Handler().postDelayed(() -> passengerViewModel.getReservationResult(reservation).observe(getViewLifecycleOwner(), reservation1 -> {
+                        seatReservationBinding.loadingSeats.setVisibility(View.INVISIBLE);
+                        if (reservation1 != null) {
+                            Toast.makeText(context, "reservation successfully done", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(context, TicketActivity.class));
+                            if (getActivity() != null) {
+                                getActivity().finish();
+                            }
+                        } else {
+                            Toast.makeText(context, "seat was already reserved", Toast.LENGTH_SHORT).show();
                         }
-                    }, new Random().nextInt(2000) * 2);
+                    }), new Random().nextInt(2000) * 2);
                 })
                 .setNeutralButton("Cancel", null)
                 .show();

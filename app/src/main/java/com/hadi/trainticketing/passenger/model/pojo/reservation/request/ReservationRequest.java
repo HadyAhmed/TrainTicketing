@@ -4,6 +4,8 @@ package com.hadi.trainticketing.passenger.model.pojo.reservation.request;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
+
 public class ReservationRequest {
 
     @SerializedName("user")
@@ -40,5 +42,15 @@ public class ReservationRequest {
 
     public String getSeat() {
         return seat;
+    }
+
+    @Override
+    public String toString() {
+        return "ReservationRequest{" +
+                "user='" + user + '\'' +
+                "\nticket='" + ticket + '\'' +
+                "\njustTrip=" + Arrays.toString(justTrip) +
+                "\nseat='" + seat + '\'' +
+                '}';
     }
 }

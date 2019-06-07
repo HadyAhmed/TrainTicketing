@@ -6,13 +6,19 @@ public class TicketHistoryModel {
     private String arrivalTime;
     private Ticket reservationTicket;
     private String reservationId;
+    private String seatNumber;
 
-    public TicketHistoryModel(boolean ticketValidation, String launchTime, String arrivalTime, Ticket reservationTicket, String reservationId) {
+    public TicketHistoryModel(boolean ticketValidation, String launchTime, String arrivalTime, Ticket reservationTicket, String reservationId, String seatNumber) {
         this.ticketValidation = ticketValidation;
         this.launchTime = launchTime;
         this.arrivalTime = arrivalTime;
         this.reservationTicket = reservationTicket;
         this.reservationId = reservationId;
+        this.seatNumber = seatNumber;
+    }
+
+    public String getSeatNumber() {
+        return seatNumber;
     }
 
     public String isTicketValidation() {

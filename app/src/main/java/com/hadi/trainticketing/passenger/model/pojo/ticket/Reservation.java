@@ -2,17 +2,18 @@ package com.hadi.trainticketing.passenger.model.pojo.ticket;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.hadi.trainticketing.passenger.model.pojo.signup.User;
 
 import java.util.List;
 
 public class Reservation {
 
-    @SerializedName("endTime")
-    @Expose
-    private String endTime;
     @SerializedName("arrivalTime")
     @Expose
     private String arrivalTime;
+    @SerializedName("endTime")
+    @Expose
+    private String endTime;
     @SerializedName("justTrip")
     @Expose
     private List<JustTrip> justTrip = null;
@@ -28,15 +29,15 @@ public class Reservation {
     @SerializedName("_id")
     @Expose
     private String id;
-    @SerializedName("seat")
+    @SerializedName("user")
     @Expose
-    private Seat seat;
+    private User user;
     @SerializedName("ticket")
     @Expose
     private Ticket ticket;
-    @SerializedName("user")
+    @SerializedName("seat")
     @Expose
-    private String user;
+    private Seat seat;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
@@ -44,12 +45,12 @@ public class Reservation {
     @Expose
     private Integer v;
 
-    public String getEndTime() {
-        return endTime;
-    }
-
     public String getArrivalTime() {
         return arrivalTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
     }
 
     public List<JustTrip> getJustTrip() {
@@ -72,16 +73,16 @@ public class Reservation {
         return id;
     }
 
-    public Seat getSeat() {
-        return seat;
+    public User getUser() {
+        return user;
     }
 
     public Ticket getTicket() {
         return ticket;
     }
 
-    public String getUser() {
-        return user;
+    public Seat getSeat() {
+        return seat;
     }
 
     public String getCreatedAt() {

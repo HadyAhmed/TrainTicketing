@@ -211,6 +211,7 @@ public class PassengerRepo {
             @Override
             public void onResponse(@NonNull Call<TicketHistoryResponse> call, @NonNull Response<TicketHistoryResponse> response) {
                 if (response.body() != null) {
+                    Log.d(TAG, "onResponse: body received");
                     List<TicketHistoryModel> ticketModels = new ArrayList<>();
                     for (int i = 0; i < response.body().getReservation().size(); i++) {
                         boolean ticketValidation = response.body().getReservation().get(i).getValid();
@@ -218,8 +219,9 @@ public class PassengerRepo {
                         String arrivalTime = response.body().getReservation().get(i).getEndTime().substring(11, 16);
                         Ticket ticket = response.body().getReservation().get(i).getTicket();
                         String reservationId = response.body().getReservation().get(i).getId();
+                        String seatNumber = response.body().getReservation().get(i).getSeat().getNumber().toString();
 
-                        ticketModels.add(new TicketHistoryModel(ticketValidation, startTime, arrivalTime, ticket, reservationId));
+                        ticketModels.add(new TicketHistoryModel(ticketValidation, startTime, arrivalTime, ticket, reservationId, seatNumber));
 
                         Log.d(TAG, "start time" + startTime + " Arrival Time: " + arrivalTime);
                     }
