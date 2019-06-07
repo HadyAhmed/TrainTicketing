@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.hadi.trainticketing.databinding.FragmentSeatReservationBinding;
 import com.hadi.trainticketing.passenger.adapter.SeatsAdapter;
 import com.hadi.trainticketing.passenger.model.PassengerViewModel;
-import com.hadi.trainticketing.passenger.model.pojo.profile.UserResponse;
 import com.hadi.trainticketing.passenger.model.pojo.reservation.request.ReservationRequest;
 import com.hadi.trainticketing.passenger.model.pojo.reservation.response.reservation.Reservation;
 import com.hadi.trainticketing.passenger.model.pojo.reservation.response.reserve_seat.ReservationResponse;
@@ -40,8 +38,6 @@ public class SeatReservationFragment extends Fragment implements SeatsAdapter.On
     private String[] reservationIds;
     private String ticketId;
     private int classType;
-    private int userBalance;
-    private int ticketPrice;
 
     public SeatReservationFragment() {
         // Required empty public constructor
@@ -68,27 +64,15 @@ public class SeatReservationFragment extends Fragment implements SeatsAdapter.On
             reservationIds = SeatReservationFragmentArgs.fromBundle(getArguments()).getSeatRequest().getReservationId();
             classType = SeatReservationFragmentArgs.fromBundle(getArguments()).getSeatRequest().getClassType();
             ticketId = SeatReservationFragmentArgs.fromBundle(getArguments()).getSeatRequest().getTicketId();
-            ticketPrice = SeatReservationFragmentArgs.fromBundle(getArguments()).getSeatRequest().getTicketPrice();
             uid = PreferenceManager.getDefaultSharedPreferences(context).getString(PassengerSignInActivity.USER_ID, "");
 
             observeTickets();
-            observeUserInfo();
         }
 
 
         return seatReservationBinding.getRoot();
     }
 
-    private void observeUserInfo() {
-        passengerViewModel.getUserInfo().observe(getViewLifecycleOwner(), new Observer<UserResponse>() {
-            @Override
-            public void onChanged(UserResponse userResponse) {
-                if (userResponse != null) {
-                    userBalance = userResponse.getResult().getBalance();
-                }
-            }
-        });
-    }
 
     private void observeTickets() {
         passengerViewModel.getReservationSeats(classType, trainId, reservationIds)
@@ -106,36 +90,31 @@ public class SeatReservationFragment extends Fragment implements SeatsAdapter.On
 
     @Override
     public void onSeatClick(View view, final String seatId, int seatNumber) {
-        Log.d(TAG, "onSeatClick: user balance: " + userBalance + " ticket price: " + ticketPrice);
-        if (userBalance < ticketPrice) {
-            Toast.makeText(context, "you don't have enough balance", Toast.LENGTH_SHORT).show();
-        } else {
-            AlertDialog.Builder confirmTicketDialog = new AlertDialog.Builder(context);
-            confirmTicketDialog.setTitle("Confirm Seat")
-                    .setMessage("Are you sure you want to confirm reservation to seat: " + seatNumber)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ReservationRequest reservation = new ReservationRequest(uid, ticketId, reservationIds, seatId);
-                            passengerViewModel.getReservationResult(reservation).observe(getViewLifecycleOwner(), new Observer<Reservation>() {
-                                @Override
-                                public void onChanged(Reservation reservation) {
-                                    if (reservation != null) {
-                                        Toast.makeText(context, "reservation successfully done", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(context, TicketActivity.class));
-                                        if (getActivity() != null) {
-                                            getActivity().finish();
-                                        }
-                                    } else {
-                                        Toast.makeText(context, "seat was already reserved", Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder confirmTicketDialog = new AlertDialog.Builder(context);
+        confirmTicketDialog.setTitle("Confirm Seat")
+                .setMessage("Are you sure you want to confirm reservation to seat: " + seatNumber)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ReservationRequest reservation = new ReservationRequest(uid, ticketId, reservationIds, seatId);
+                        passengerViewModel.getReservationResult(reservation).observe(getViewLifecycleOwner(), new Observer<Reservation>() {
+                            @Override
+                            public void onChanged(Reservation reservation) {
+                                if (reservation != null) {
+                                    Toast.makeText(context, "reservation successfully done", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(context, TicketActivity.class));
+                                    if (getActivity() != null) {
+                                        getActivity().finish();
                                     }
+                                } else {
+                                    Toast.makeText(context, "seat was already reserved", Toast.LENGTH_SHORT).show();
                                 }
-                            });
-                        }
-                    })
-                    .setNeutralButton("Cancel", null)
-                    .show();
-        }
+                            }
+                        });
+                    }
+                })
+                .setNeutralButton("Cancel", null)
+                .show();
     }
 }
 

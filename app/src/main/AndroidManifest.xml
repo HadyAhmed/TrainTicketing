@@ -73,6 +73,7 @@
         </activity>
         <activity android:name=".passenger.view.features.AddCreditCardActivity" />
         <activity android:name=".validator.view.ValidatorMainActivity" />
+        <activity android:name=".passenger.view.activities.PassengerProfilePage" />
     </application>
 
 </manifest>

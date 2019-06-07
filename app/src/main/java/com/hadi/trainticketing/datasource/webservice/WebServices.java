@@ -47,9 +47,6 @@ public interface WebServices {
     @POST("user/signup")
     Call<SignUpResponse> getSignUpResponse(@Body SignUpFields user);
 
-    @GET("user/search/" + "{email}")
-    Call<UserResponse> getUserData(@Path("email") String userEmail);
-
     @GET("station")
     Call<StationsResponse> getStations();
 
@@ -72,5 +69,5 @@ public interface WebServices {
     Call<ReservationResult> getReservationResult(@Body ReservationRequest reservation);
 
     @GET("reservation/byUser/{uid}")
-    Call<TicketHistoryResponse> getTicketHsitory(@Path("uid") String uid);
+    Call<TicketHistoryResponse> getTicketHistory(@Path("uid") String uid);
 }

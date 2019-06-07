@@ -41,6 +41,7 @@ public class ReservationMainFragment extends Fragment implements View.OnClickLis
     private Context context;
     private static final String TAG = "ReservationMainFragment";
     private PassengerViewModel passengerViewModel;
+    private Integer userBalance;
 
     @Override
     public void onAttach(Context context) {
@@ -61,6 +62,14 @@ public class ReservationMainFragment extends Fragment implements View.OnClickLis
 
         reservationMainBinding.searchBtn.setOnClickListener(this);
 
+        observeUserInfo();
+
+        observeSearchResult();
+
+        return reservationMainBinding.getRoot();
+    }
+
+    private void observeSearchResult() {
         passengerViewModel.getStations().observe(this, new Observer<List<Station>>() {
             @Override
             public void onChanged(List<Station> stations) {
@@ -76,7 +85,6 @@ public class ReservationMainFragment extends Fragment implements View.OnClickLis
                 }
             }
         });
-        return reservationMainBinding.getRoot();
     }
 
     @Override
@@ -91,6 +99,17 @@ public class ReservationMainFragment extends Fragment implements View.OnClickLis
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void observeUserInfo() {
+        passengerViewModel.getUserInfo().observe(getViewLifecycleOwner(), new Observer<UserResponse>() {
+            @Override
+            public void onChanged(UserResponse userResponse) {
+                if (userResponse != null) {
+                    userBalance = userResponse.getResult().getBalance();
+                }
+            }
+        });
     }
 
     private void fetchEnquireResults() {
@@ -151,22 +170,26 @@ public class ReservationMainFragment extends Fragment implements View.OnClickLis
 
     @Override
     public void onTicketClick(final View view, final int classType, final int ticketPrice, final String ticketId, final String trainId, List<ArrayResult> arrayResults) {
-        List<String> stringList = new ArrayList<>();
-        for (ArrayResult ar : arrayResults) {
-            stringList.add(ar.getId());
-        }
-        final SeatRequest seatRequest = new SeatRequest(classType, ticketPrice, trainId, ticketId, stringList.toArray(new String[0]));
-        passengerViewModel.getUserInfo().observe(getViewLifecycleOwner(), new Observer<UserResponse>() {
-            @Override
-            public void onChanged(UserResponse userResponse) {
-                if (userResponse != null) {
-                    if (userResponse.getResult().getValidation()) {
-                        Navigation.findNavController(view).navigate(ReservationMainFragmentDirections.moveToSeatFragment(seatRequest));
-                    } else {
-                        Toast.makeText(context, "you must validate your account before making any reservations", Toast.LENGTH_SHORT).show();
+        if (userBalance >= ticketPrice) {
+            List<String> stringList = new ArrayList<>();
+            for (ArrayResult ar : arrayResults) {
+                stringList.add(ar.getId());
+            }
+            final SeatRequest seatRequest = new SeatRequest(classType, trainId, ticketId, stringList.toArray(new String[0]));
+            passengerViewModel.getUserInfo().observe(getViewLifecycleOwner(), new Observer<UserResponse>() {
+                @Override
+                public void onChanged(UserResponse userResponse) {
+                    if (userResponse != null) {
+                        if (userResponse.getResult().getValidation()) {
+                            Navigation.findNavController(view).navigate(ReservationMainFragmentDirections.moveToSeatFragment(seatRequest));
+                        } else {
+                            Toast.makeText(context, "you must validate your account before making any reservations", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
-            }
-        });
+            });
+        } else {
+            Toast.makeText(context, "you don't have enough balance, please charge your wallet", Toast.LENGTH_SHORT).show();
+        }
     }
 }
