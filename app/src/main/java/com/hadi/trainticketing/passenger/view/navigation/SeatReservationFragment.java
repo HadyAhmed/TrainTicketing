@@ -80,8 +80,10 @@ public class SeatReservationFragment extends Fragment implements SeatsAdapter.On
                     @Override
                     public void onChanged(ReservationResponse reservationResponse) {
                         seatReservationBinding.loadingSeats.setVisibility(View.INVISIBLE);
-                        if (reservationResponse != null) {
+                        if (reservationResponse != null && !reservationResponse.getAvailableSeats().isEmpty()) {
                             seatsAdapter.setSeatList(reservationResponse.getAvailableSeats());
+                        } else {
+                            Toast.makeText(context, "all seats are completed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

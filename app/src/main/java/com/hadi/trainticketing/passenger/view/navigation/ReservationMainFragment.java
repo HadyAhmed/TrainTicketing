@@ -181,6 +181,7 @@ public class ReservationMainFragment extends Fragment implements View.OnClickLis
                 public void onChanged(UserResponse userResponse) {
                     if (userResponse != null) {
                         if (userResponse.getResult().getValidation()) {
+                            Log.d(TAG, "onChanged: " + view.getId());
                             Navigation.findNavController(view).navigate(ReservationMainFragmentDirections.moveToSeatFragment(seatRequest));
                         } else {
                             Toast.makeText(context, "you must validate your account before making any reservations", Toast.LENGTH_SHORT).show();
