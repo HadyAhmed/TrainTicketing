@@ -9,6 +9,10 @@
             name="ticket"
             type="com.hadi.trainticketing.passenger.model.pojo.ticket.TicketHistoryModel" />
 
+        <variable
+            name="onTicketClick"
+            type="com.hadi.trainticketing.passenger.adapter.TicketHistoryAdapter.OnTicketClickListener" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -23,7 +27,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?selectableItemBackground">
+            android:background="?selectableItemBackground"
+            android:onClick="@{()->onTicketClick.sendReservationId(ticket.reservationId)}">
 
             <TextView
                 android:id="@+id/seatNumberTv"

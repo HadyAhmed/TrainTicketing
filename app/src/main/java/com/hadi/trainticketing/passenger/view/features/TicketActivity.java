@@ -1,5 +1,6 @@
 package com.hadi.trainticketing.passenger.view.features;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -17,10 +18,10 @@ import com.hadi.trainticketing.passenger.adapter.TicketHistoryAdapter;
 import com.hadi.trainticketing.passenger.model.PassengerViewModel;
 import com.hadi.trainticketing.passenger.view.activities.PassengerSignInActivity;
 
-public class TicketActivity extends AppCompatActivity {
+public class TicketActivity extends AppCompatActivity implements TicketHistoryAdapter.OnTicketClickListener {
     private ActivityTicketBinding ticketBinding;
     // place holder for adapter holding past tickets
-    private TicketHistoryAdapter ticketHistoryAdapter = new TicketHistoryAdapter();
+    private TicketHistoryAdapter ticketHistoryAdapter = new TicketHistoryAdapter(this);
     private PassengerViewModel passengerViewModel;
 
     @Override
@@ -50,4 +51,9 @@ public class TicketActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void sendReservationId(String reservationId) {
+        startActivity(new Intent(TicketActivity.this, TicketQrCodeActivity.class).putExtra(TicketQrCodeActivity.RESERVATION_ID_EXTRA, reservationId));
+        finish();
+    }
 }

@@ -14,10 +14,21 @@ import java.util.List;
 public class TicketHistoryAdapter extends RecyclerView.Adapter<TicketHistoryAdapter.TicketViewHolder> {
     private LayoutInflater inflater;
     private List<TicketHistoryModel> ticketHistoryModels;
+    private OnTicketClickListener onTicketClickListener;
+
+    public TicketHistoryAdapter(OnTicketClickListener onTicketClickListener) {
+        this.onTicketClickListener = onTicketClickListener;
+    }
 
     public void setTicketHistoryModels(List<TicketHistoryModel> ticketHistoryModels) {
         this.ticketHistoryModels = ticketHistoryModels;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull TicketViewHolder holder, int position) {
+        holder.setTicket(ticketHistoryModels.get(position));
+        holder.setTicketClickListenr(onTicketClickListener);
     }
 
     @NonNull
@@ -29,9 +40,8 @@ public class TicketHistoryAdapter extends RecyclerView.Adapter<TicketHistoryAdap
         return new TicketViewHolder(TicketHistoryItemBinding.inflate(inflater, parent, false));
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull TicketViewHolder holder, int position) {
-        holder.setTicket(ticketHistoryModels.get(position));
+    public interface OnTicketClickListener {
+        void sendReservationId(String reservationId);
     }
 
     @Override
@@ -52,6 +62,10 @@ public class TicketHistoryAdapter extends RecyclerView.Adapter<TicketHistoryAdap
 
         void setTicket(TicketHistoryModel ticket) {
             this.historyItemBinding.setTicket(ticket);
+        }
+
+        void setTicketClickListenr(OnTicketClickListener clickListenr) {
+            this.historyItemBinding.setOnTicketClick(clickListenr);
         }
     }
 }
