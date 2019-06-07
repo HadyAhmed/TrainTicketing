@@ -1,4 +1,4 @@
-package com.hadi.trainticketing.passenger.pojo.login;
+package com.hadi.trainticketing.passenger.model.pojo.login;
 
 
 import com.google.gson.annotations.Expose;

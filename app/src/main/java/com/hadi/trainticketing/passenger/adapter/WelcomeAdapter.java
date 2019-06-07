@@ -4,14 +4,14 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.hadi.trainticketing.databinding.PassengerWelcomeItemBinding;
-import com.hadi.trainticketing.passenger.pojo.PassengerCards;
-
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.hadi.trainticketing.databinding.PassengerWelcomeItemBinding;
+import com.hadi.trainticketing.passenger.model.PassengerCards;
+
+import java.util.List;
 
 /**
  * @author Hady Ahmed

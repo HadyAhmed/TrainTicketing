@@ -3,31 +3,37 @@ package com.hadi.trainticketing.passenger.view.navigation;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
-import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.databinding.FragmentSeatReservationBinding;
 import com.hadi.trainticketing.passenger.adapter.SeatsAdapter;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.hadi.trainticketing.passenger.model.PassengerViewModel;
+import com.hadi.trainticketing.passenger.model.pojo.reservation.ReservationResponse;
+import com.hadi.trainticketing.passenger.model.pojo.reservation.request.ReservationRequest;
+import com.hadi.trainticketing.passenger.model.pojo.reservation.response.Reservation;
+import com.hadi.trainticketing.passenger.view.activities.PassengerSignInActivity;
 
 
 public class SeatReservationFragment extends Fragment implements SeatsAdapter.OnSeatClickListener {
     private static final String TAG = "SeatReservationTag";
-    private Map<Integer, Integer> seats = new HashMap<>();
     private Context context;
     private FragmentSeatReservationBinding seatReservationBinding;
-    private SeatsAdapter adapter = new SeatsAdapter(this);
+    private SeatsAdapter seatsAdapter = new SeatsAdapter(this);
+    private PassengerViewModel passengerViewModel;
+    private String uid;
+    private String trainId;
+    private String[] reservationIds;
+    private String ticketId;
 
     public SeatReservationFragment() {
         // Required empty public constructor
@@ -37,6 +43,7 @@ public class SeatReservationFragment extends Fragment implements SeatsAdapter.On
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
+        passengerViewModel = ViewModelProviders.of(this).get(PassengerViewModel.class);
     }
 
     @Override
@@ -45,43 +52,45 @@ public class SeatReservationFragment extends Fragment implements SeatsAdapter.On
         // Inflate the layout for this fragment
         seatReservationBinding = FragmentSeatReservationBinding.inflate(inflater, container, false);
 
-        seatReservationBinding.seatsRv.setLayoutManager(new GridLayoutManager(context, 2));
-        seatReservationBinding.seatsRv.setItemViewCacheSize(20);
-        seatReservationBinding.seatsRv.setAdapter(adapter);
+        seatReservationBinding.seatsRv.setAdapter(seatsAdapter);
 
-        seatReservationBinding.continueReservationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (seats.isEmpty()) {
-                    Toast.makeText(context, "you must choose seats to reserve", Toast.LENGTH_SHORT).show();
-                } else if (seats.size() == 1) {
-                    Navigation.findNavController(v).navigate(R.id.moveToTicketDetail);
-                } else {
-                    Bundle ticketNumbers = new Bundle();
-                    ticketNumbers.putInt("ticketNumber", seats.size());
-                    Navigation.findNavController(v).navigate(R.id.moveToTicketHolderNames, ticketNumbers);
-                }
-            }
-        });
-
+        if (getArguments() != null) {
+            trainId = SeatReservationFragmentArgs.fromBundle(getArguments()).getTrainId();
+            reservationIds = SeatReservationFragmentArgs.fromBundle(getArguments()).getReservationId();
+            ticketId = SeatReservationFragmentArgs.fromBundle(getArguments()).getTicketId();
+            uid = PreferenceManager.getDefaultSharedPreferences(context).getString(PassengerSignInActivity.USER_ID, "");
+            passengerViewModel.getReservationSeats(trainId, reservationIds)
+                    .observe(getViewLifecycleOwner(), new Observer<ReservationResponse>() {
+                        @Override
+                        public void onChanged(ReservationResponse reservationResponse) {
+                            seatReservationBinding.loadingSeats.setVisibility(View.INVISIBLE);
+                            if (reservationResponse != null) {
+                                seatsAdapter.setSeatList(reservationResponse.getAvailableSeats());
+                            }
+                        }
+                    });
+        }
         return seatReservationBinding.getRoot();
     }
 
     @Override
-    public void onSeatClick(View view, int seatId) {
-        // TODO: 4/20/2019 Change the click listener impl here
-        ToggleButton button = (ToggleButton) view;
-        if (!button.isChecked()) {
-            seats.put(seatId, seatId);
-            Toast.makeText(context, String.format("seat number %d was added", seatId), Toast.LENGTH_SHORT).show();
-            button.setChecked(false);
-        } else {
-            if (seats.containsKey(seatId)) {
-                seats.remove(seatId);
-                Toast.makeText(context, String.format("seat number %d was removed", seatId), Toast.LENGTH_SHORT).show();
-                button.setChecked(true);
-            }
+    public void onSeatClick(View view, String seatId) {
+        for (String ids : reservationIds) {
+            Log.d(TAG, "onSeatClick: " + ids);
         }
+        Log.d(TAG, "onSeatClick: uid " + uid + " ticketId: " + ticketId + " seatId " + seatId + " trainId " + trainId + " reservation ids: " + reservationIds.length);
+
+        ReservationRequest reservation = new ReservationRequest(uid, ticketId, reservationIds, seatId);
+        passengerViewModel.getReservationResult(reservation).observe(getViewLifecycleOwner(), new Observer<Reservation>() {
+            @Override
+            public void onChanged(Reservation reservation) {
+                if (reservation != null) {
+                    Toast.makeText(context, "reservation successfully done", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "seat was already reserved", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 }

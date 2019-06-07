@@ -46,7 +46,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:entries="@array/destination_spinner_from"
                 app:layout_constraintEnd_toStartOf="@+id/textView2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/textView"
@@ -58,7 +57,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:entries="@array/destination_spinner_to"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/textView2"
@@ -187,8 +185,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginTop="128dp"
-            android:visibility="invisible" />
+            android:layout_marginTop="128dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/search_btn"

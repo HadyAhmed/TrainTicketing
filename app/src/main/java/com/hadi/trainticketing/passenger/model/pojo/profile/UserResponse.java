@@ -1,19 +1,17 @@
-package com.hadi.trainticketing.passenger.pojo.profile;
+package com.hadi.trainticketing.passenger.model.pojo.profile;
 
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 
 public class UserResponse {
 
     @SerializedName("result")
     @Expose
-    private List<Result> result = null;
+    private Result result;
 
-    public List<Result> getResult() {
+    public Result getResult() {
         return result;
     }
 }

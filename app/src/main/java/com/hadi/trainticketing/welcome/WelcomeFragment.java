@@ -9,6 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.databinding.FragmentWelcomeBinding;
 import com.hadi.trainticketing.datasource.database.StaticDataSource;
@@ -16,18 +22,21 @@ import com.rd.animation.type.AnimationType;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
+/**
+ * @author Hady Ahmed
+ * @version 1.0
+ * this is the onBoarding screen <b>Landing Page</b> that show up the app features for the user
+ */
 public class WelcomeFragment extends Fragment implements ViewPager.OnPageChangeListener {
     private FragmentWelcomeBinding welcomeBinding;
     private WelcomeContent welcomeContent = new WelcomeContent(StaticDataSource.getContentDescription(), StaticDataSource.getContentResources());
     private Context context;
 
     private OnStartFragmentListener fragmentListener;
+
+    public WelcomeFragment() {
+
+    }
 
     public interface OnStartFragmentListener {
         void navigateToAccountRuleChoose();
@@ -49,14 +58,16 @@ public class WelcomeFragment extends Fragment implements ViewPager.OnPageChangeL
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         welcomeBinding = FragmentWelcomeBinding.inflate(inflater, container, false);
 
+        // setup view pager indicator
         welcomeBinding.pageIndicatorView.setAnimationDuration(2000);
         welcomeBinding.pageIndicatorView.setAnimationType(AnimationType.WORM);
         welcomeBinding.pageIndicatorView.setCount(3);
 
-        welcomeBinding.viewPager.setAdapter(
-                new ViewPagerAdapter(welcomeContent, context));
+        // setup view pager
+        welcomeBinding.viewPager.setAdapter(new ViewPagerAdapter(welcomeContent, context));
         welcomeBinding.viewPager.addOnPageChangeListener(this);
 
+        // click listener for the get start button on the landing page
         welcomeBinding.startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

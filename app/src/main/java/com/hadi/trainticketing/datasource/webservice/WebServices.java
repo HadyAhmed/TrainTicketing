@@ -1,18 +1,23 @@
 package com.hadi.trainticketing.datasource.webservice;
 
 import com.google.gson.Gson;
-import com.hadi.trainticketing.passenger.pojo.enquire.EnquireResponse;
-import com.hadi.trainticketing.passenger.pojo.login.SignInFields;
-import com.hadi.trainticketing.passenger.pojo.login.SignInResponse;
-import com.hadi.trainticketing.passenger.pojo.profile.UserResponse;
-import com.hadi.trainticketing.passenger.pojo.signup.SignUpFields;
-import com.hadi.trainticketing.passenger.pojo.signup.SignUpResponse;
+import com.hadi.trainticketing.passenger.model.pojo.enquire.EnquireResponse;
+import com.hadi.trainticketing.passenger.model.pojo.login.SignInFields;
+import com.hadi.trainticketing.passenger.model.pojo.login.SignInResponse;
+import com.hadi.trainticketing.passenger.model.pojo.profile.UserResponse;
+import com.hadi.trainticketing.passenger.model.pojo.reservation.ReservationResponse;
+import com.hadi.trainticketing.passenger.model.pojo.reservation.request.ReservationRequest;
+import com.hadi.trainticketing.passenger.model.pojo.reservation.response.ReservationResult;
+import com.hadi.trainticketing.passenger.model.pojo.signup.SignUpFields;
+import com.hadi.trainticketing.passenger.model.pojo.signup.SignUpResponse;
+import com.hadi.trainticketing.passenger.model.pojo.stations.StationsResponse;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -24,14 +29,10 @@ import retrofit2.http.Query;
 public interface WebServices {
     String BASE_UR = "https://trainres.herokuapp.com";
 
-    //https://trainres.herokuapp.com/?from=Cairo&to=Alexandria&date=pm&classChoosen=2
-    String SEARCH_TRIP = "trip/search";
     String METHOD_FROM = "from";
     String METHOD_TO = "to";
     String METHOD_DATE = "date";
     String METHOD_CLASS = "classChoosen";
-    //https://trainres.herokuapp.com/user/h.a7med2017@gmail.com
-
 
     Retrofit serverConnection = new Retrofit
             .Builder()
@@ -48,11 +49,24 @@ public interface WebServices {
     @GET("user/search/" + "{email}")
     Call<UserResponse> getUserData(@Path("email") String userEmail);
 
-    @GET(SEARCH_TRIP)
+    @GET("station")
+    Call<StationsResponse> getStations();
+
+    @GET("justTrip/search")
     Call<EnquireResponse> getTripEnquire(
             @Query(METHOD_FROM) String from,
             @Query(METHOD_TO) String to,
             @Query(METHOD_DATE) String date,
             @Query(METHOD_CLASS) String classType
     );
+
+    @GET("reservation/search")
+    Call<ReservationResponse> getSeats(@Query("train") String trainId, @Query("justTrip") String[] ids);
+
+
+    @GET("user/profile")
+    Call<UserResponse> getProfileInfo(@Header("Authorization") String userToken);
+
+    @POST("reservation")
+    Call<ReservationResult> getReservationResult(@Body ReservationRequest reservation);
 }

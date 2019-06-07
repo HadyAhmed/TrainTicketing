@@ -1,42 +1,37 @@
 package com.hadi.trainticketing.passenger.view.activities;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.databinding.ActivitySignUpBinding;
-import com.hadi.trainticketing.datasource.webservice.WebServices;
-import com.hadi.trainticketing.passenger.pojo.signup.SignUpFields;
-import com.hadi.trainticketing.passenger.pojo.signup.SignUpResponse;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.hadi.trainticketing.passenger.model.PassengerViewModel;
+import com.hadi.trainticketing.passenger.model.pojo.signup.SignUpFields;
+import com.hadi.trainticketing.passenger.model.pojo.signup.SignUpResponse;
 
 public class PassengerSignUpActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private ActivitySignUpBinding signUpBinding;
-    private static final String TAG = "PassengerSignUpTag";
     private String gender;
+    private PassengerViewModel passengerViewModel;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        passengerViewModel = ViewModelProviders.of(this).get(PassengerViewModel.class);
 
         signUpBinding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
         signUpBinding.signUpToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -94,37 +89,18 @@ public class PassengerSignUpActivity extends AppCompatActivity implements Adapte
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
 
-        Log.d(TAG, "checkForExistingMail: " + user.toString());
-
-        WebServices.serverConnection.create(WebServices.class)
-                .getSignUpResponse(user)
-                .enqueue(new Callback<SignUpResponse>() {
+        passengerViewModel.registerNewAccount(user)
+                .observe(this, new Observer<SignUpResponse>() {
                     @Override
-                    public void onResponse(@NonNull Call<SignUpResponse> call, @NonNull Response<SignUpResponse> response) {
+                    public void onChanged(SignUpResponse signUpResponse) {
                         progressDialog.dismiss();
-                        if (response.body() != null) {
-                            Log.d(TAG, "onResponse: not null");
-                            SharedPreferences userPref = PreferenceManager.getDefaultSharedPreferences(PassengerSignUpActivity.this);
-                            userPref.edit()
-                                    .putString(PassengerSignInActivity.USER_EMAIL_PREF_KEY, response.body().getUser().getEmail())
-                                    .putBoolean(PassengerSignInActivity.IS_SIGNED_IN, true)
-                                    .putString(PassengerSignInActivity.USER_NAME_PREF_KEY, response.body().getUser().getName())
-                                    .putString(PassengerSignInActivity.USER_ID_PREF_KEY, response.body().getUser().getId())
-                                    .apply();
+                        if (signUpResponse != null) {
                             Toast.makeText(PassengerSignUpActivity.this, "Successfully Created", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(PassengerSignUpActivity.this, PassengerMainActivity.class));
-                            finish();
+                            onBackPressed();
                         } else {
-                            Toast.makeText(PassengerSignUpActivity.this, "Mail Already Exists", Toast.LENGTH_SHORT).show();
-                            Log.d(TAG, "onResponse: Exists");
-                        }
-                    }
+                            Toast.makeText(PassengerSignUpActivity.this, "Account Already Exists", Toast.LENGTH_SHORT).show();
 
-                    @Override
-                    public void onFailure(@NonNull Call<SignUpResponse> call, @NonNull Throwable t) {
-                        progressDialog.dismiss();
-                        Log.d(TAG, "onFailure: ");
-                        Toast.makeText(PassengerSignUpActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
@@ -172,7 +148,6 @@ public class PassengerSignUpActivity extends AppCompatActivity implements Adapte
 
         } else if (position == 1) {
             gender = getString(R.string.female);
-
         }
     }
 

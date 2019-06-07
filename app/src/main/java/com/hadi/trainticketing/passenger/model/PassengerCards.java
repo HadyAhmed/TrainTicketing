@@ -1,4 +1,4 @@
-package com.hadi.trainticketing.passenger.pojo;
+package com.hadi.trainticketing.passenger.model;
 
 public class PassengerCards {
     private String header;

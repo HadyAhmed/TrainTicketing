@@ -1,4 +1,4 @@
-package com.hadi.trainticketing.application;
+package com.hadi.trainticketing.utils.application;
 
 import android.app.Activity;
 import android.app.Application;

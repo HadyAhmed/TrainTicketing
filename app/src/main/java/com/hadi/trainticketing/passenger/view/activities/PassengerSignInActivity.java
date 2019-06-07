@@ -5,39 +5,42 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.databinding.LoginActivityBinding;
-import com.hadi.trainticketing.datasource.webservice.WebServices;
-import com.hadi.trainticketing.passenger.pojo.login.SignInFields;
-import com.hadi.trainticketing.passenger.pojo.login.SignInResponse;
+import com.hadi.trainticketing.passenger.model.PassengerViewModel;
+import com.hadi.trainticketing.passenger.model.pojo.login.SignInFields;
+import com.hadi.trainticketing.passenger.model.pojo.login.SignInResponse;
+import com.hadi.trainticketing.utils.Utils;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
+/**
+ * @author Hady Ahmed
+ * @version 1.0
+ */
 public class PassengerSignInActivity extends AppCompatActivity implements View.OnClickListener {
     private LoginActivityBinding activityBinding;
     // preferences key for the user data
     public static final String IS_SIGNED_IN = "isSignedIn";
-    public static final String USER_EMAIL_PREF_KEY = "user_email_pref_key";
-    public static final String USER_NAME_PREF_KEY = "user_name_pref_key";
-    public static final String USER_ID_PREF_KEY = "user_id_pref_key";
-    private static final String TAG = "PassengerSignInTag";
+    public static final String USER_TOKEN = "user_id_pref_key";
+    public static final String USER_ID = "uid";
+
+    private PassengerViewModel viewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         activityBinding = DataBindingUtil.setContentView(this, R.layout.login_activity);
+
+        viewModel = ViewModelProviders.of(this).get(PassengerViewModel.class);
 
         activityBinding.forgetPassBtn.setOnClickListener(this);
         activityBinding.signInBtn.setOnClickListener(this);
@@ -51,7 +54,11 @@ public class PassengerSignInActivity extends AppCompatActivity implements View.O
         if (viewId == activityBinding.forgetPassBtn.getId()) {
             startActivity(new Intent(PassengerSignInActivity.this, ForgetPasswordActivity.class));
         } else if (viewId == activityBinding.signInBtn.getId()) {
-            checkForCredentials(new SignInFields(activityBinding.userNameEt.getText().toString(), activityBinding.passwordEt.getText().toString()));
+            if (Utils.isNetworkAvailable(PassengerSignInActivity.this)) {
+                checkForCredentials(new SignInFields(activityBinding.userNameEt.getText().toString(), activityBinding.passwordEt.getText().toString()));
+            } else {
+                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
         } else if (viewId == activityBinding.signUpBtn.getId()) {
             startActivity(new Intent(PassengerSignInActivity.this, PassengerSignUpActivity.class));
         }
@@ -64,45 +71,33 @@ public class PassengerSignInActivity extends AppCompatActivity implements View.O
         progressDialog.show();
         progressDialog.setCancelable(false);
 
-        WebServices.serverConnection.create(WebServices.class).getLoginResponse(user).enqueue(new Callback<SignInResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<SignInResponse> call, @NonNull Response<SignInResponse> response) {
-                if (response.body() != null) {
-                    progressDialog.dismiss();
-                    Log.d(TAG, "onResponse: success");
-                    if (response.body().isSuccess()) {
-                        saveUserInfo(response);
-                        Toast.makeText(PassengerSignInActivity.this, "Welcome " + response.body().getUser().getName(), Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(PassengerSignInActivity.this, PassengerMainActivity.class));
-                        finish();
-                    } else {
-                        Toast.makeText(PassengerSignInActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+        viewModel.loginWithCredentials(user)
+                .observe(this, new Observer<SignInResponse>() {
+                    @Override
+                    public void onChanged(SignInResponse signInResponse) {
+                        progressDialog.dismiss();
+                        if (signInResponse != null && signInResponse.isSuccess()) {
+                            saveUserInfo(signInResponse);
+                            Toast.makeText(PassengerSignInActivity.this, "Welcome " + signInResponse.getUser().getName(), Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(PassengerSignInActivity.this, PassengerMainActivity.class));
+                            finish();
+                        } else if (signInResponse != null && !signInResponse.isSuccess()) {
+                            Toast.makeText(PassengerSignInActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(PassengerSignInActivity.this, "something went wring with our server side", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                } else {
-                    progressDialog.hide();
-                    Toast.makeText(PassengerSignInActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<SignInResponse> call, @NonNull Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(PassengerSignInActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+                });
     }
 
-    private void saveUserInfo(@NonNull Response<SignInResponse> response) {
-        if (response.body() != null) {
-            // saving data to shared pref if the user selected remember me
-            SharedPreferences userPrefs = PreferenceManager.getDefaultSharedPreferences(PassengerSignInActivity.this);
-            userPrefs.edit()
-                    .putString(PassengerSignInActivity.USER_EMAIL_PREF_KEY, response.body().getUser().getEmail())
-                    .putBoolean(PassengerSignInActivity.IS_SIGNED_IN, true)
-                    .putString(PassengerSignInActivity.USER_NAME_PREF_KEY, response.body().getUser().getName())
-                    .putString(PassengerSignInActivity.USER_ID_PREF_KEY, response.body().getUser().getId())
-                    .apply();
-        }
+    private void saveUserInfo(SignInResponse response) {
+        // saving data to shared pref if the user selected remember me
+        SharedPreferences userPrefs = PreferenceManager.getDefaultSharedPreferences(PassengerSignInActivity.this);
+        userPrefs.edit()
+                .putBoolean(PassengerSignInActivity.IS_SIGNED_IN, true)
+                .putString(PassengerSignInActivity.USER_TOKEN, response.getToken())
+                .putString(PassengerSignInActivity.USER_ID, response.getUser().getId())
+                .apply();
     }
 }
+

@@ -8,13 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.hadi.trainticketing.databinding.AccountFragmentChoiceBinding;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.hadi.trainticketing.databinding.AccountFragmentChoiceBinding;
+
+/**
+ * @author Hady Ahmed
+ * @version 1.0
+ * this page show up accounts type to be selected by the user and make the app destination
+ */
 public class AccountRuleChoiceFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
     private AccountFragmentChoiceBinding choiceBinding;
     private Context context;
@@ -72,12 +77,10 @@ public class AccountRuleChoiceFragment extends Fragment implements View.OnClickL
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(200);
         if (v.getId() == choiceBinding.validatorBtn.getId()) {
-            Snackbar.make(v, "Validator is the person who works for the railway and scan electronic ticket", Snackbar.LENGTH_LONG)
-                    .show();
+            Snackbar.make(v, "Validator is the person who works for the railway and scan electronic ticket", Snackbar.LENGTH_INDEFINITE).show();
             return true;
         } else if (v.getId() == choiceBinding.passengerBtn.getId()) {
-            Snackbar.make(v, "Passenger will enjoy the railway services, enquire, reserve and more.", Snackbar.LENGTH_LONG)
-                    .show();
+            Snackbar.make(v, "Passenger will enjoy the railway services, enquire, reserve and more.", Snackbar.LENGTH_INDEFINITE).show();
             return true;
         } else {
             return false;

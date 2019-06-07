@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,19 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.databinding.ActivityPassengerMainBinding;
 import com.hadi.trainticketing.datasource.database.StaticDataSource;
-import com.hadi.trainticketing.datasource.webservice.WebServices;
 import com.hadi.trainticketing.passenger.adapter.WelcomeAdapter;
-import com.hadi.trainticketing.passenger.pojo.profile.Result;
-import com.hadi.trainticketing.passenger.pojo.profile.UserResponse;
 import com.hadi.trainticketing.passenger.view.features.BalanceActivity;
 import com.hadi.trainticketing.passenger.view.features.EnquireActivity;
 import com.hadi.trainticketing.passenger.view.features.HistoryActivity;
 import com.hadi.trainticketing.passenger.view.features.ReserveActivity;
 import com.hadi.trainticketing.passenger.view.features.TicketActivity;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class PassengerMainActivity extends AppCompatActivity
         implements WelcomeAdapter.OnWelcomeItemClickListener, Toolbar.OnMenuItemClickListener {
@@ -46,7 +37,7 @@ public class PassengerMainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         ActivityPassengerMainBinding passengerMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_passenger_main);
 
-        checkForSessionValidation(PreferenceManager.getDefaultSharedPreferences(this).getString(PassengerSignInActivity.USER_EMAIL_PREF_KEY, ""));
+//        checkForSessionValidation(PreferenceManager.getDefaultSharedPreferences(this).getString(PassengerSignInActivity.USER_EMAIL_PREF_KEY, ""));
 
         passengerMainBinding.mainToolbar.inflateMenu(R.menu.main_menu);
         passengerMainBinding.mainToolbar.setOnMenuItemClickListener(this);
@@ -55,38 +46,38 @@ public class PassengerMainActivity extends AppCompatActivity
         passengerMainBinding.passengerFeaturesRv.setAdapter(new WelcomeAdapter(StaticDataSource.getPassengerCardsList(), this));
     }
 
-    private void checkForSessionValidation(final String email) {
-
-        WebServices.serverConnection.create(WebServices.class)
-                .getUserData(email)
-                .enqueue(new Callback<UserResponse>() {
-                    @Override
-                    public void onResponse(@NonNull Call<UserResponse> call, @NonNull Response<UserResponse> response) {
-                        if (response.body() != null) {
-                            if (response.body().getResult().isEmpty()) {
-                                Toast.makeText(PassengerMainActivity.this, "Changes has been happened, relogin", Toast.LENGTH_SHORT).show();
-                                PreferenceManager.getDefaultSharedPreferences(PassengerMainActivity.this).getAll().clear();
-                                finish();
-                            } else {
-                                Result result = response.body().getResult().get(0);
-                                Log.d("userInfo", "onResponse: " + result.getEmail() + result.getNationalID() + result.getBalance());
-                                PreferenceManager.getDefaultSharedPreferences(PassengerMainActivity.this)
-                                        .edit()
-                                        .putInt(USER_BALANCE_PREF, response.body().getResult().get(0).getBalance())
-                                        .putString(USER_EMAIL_PREF, response.body().getResult().get(0).getEmail())
-                                        .putString(USER_NATIONAL_ID_PREF, response.body().getResult().get(0).getNationalID())
-                                        .apply();
-
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<UserResponse> call, @NonNull Throwable t) {
-                        Toast.makeText(PassengerMainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
+//    private void checkForSessionValidation(final String email) {
+//
+//        WebServices.serverConnection.create(WebServices.class)
+//                .getUserData(email)
+//                .enqueue(new Callback<UserResponse>() {
+//                    @Override
+//                    public void onResponse(@NonNull Call<UserResponse> call, @NonNull Response<UserResponse> response) {
+//                        if (response.body() != null) {
+//                            if (response.body().getResult().isEmpty()) {
+//                                Toast.makeText(PassengerMainActivity.this, "Changes has been happened, relogin", Toast.LENGTH_SHORT).show();
+//                                PreferenceManager.getDefaultSharedPreferences(PassengerMainActivity.this).getAll().clear();
+//                                finish();
+//                            } else {
+//                                Result result = response.body().getResult().get(0);
+//                                Log.d("userInfo", "onResponse: " + result.getEmail() + result.getNationalID() + result.getBalance());
+//                                PreferenceManager.getDefaultSharedPreferences(PassengerMainActivity.this)
+//                                        .edit()
+//                                        .putInt(USER_BALANCE_PREF, response.body().getResult().get(0).getBalance())
+//                                        .putString(USER_EMAIL_PREF, response.body().getResult().get(0).getEmail())
+//                                        .putString(USER_NATIONAL_ID_PREF, response.body().getResult().get(0).getNationalID())
+//                                        .apply();
+//
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(@NonNull Call<UserResponse> call, @NonNull Throwable t) {
+//                        Toast.makeText(PassengerMainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//    }
 
     @Override
     public void onWelcomeItemClick(int itemPosition) {

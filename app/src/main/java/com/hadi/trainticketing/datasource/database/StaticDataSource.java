@@ -1,7 +1,7 @@
 package com.hadi.trainticketing.datasource.database;
 
 import com.hadi.trainticketing.R;
-import com.hadi.trainticketing.passenger.pojo.PassengerCards;
+import com.hadi.trainticketing.passenger.model.PassengerCards;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,8 +80,8 @@ public abstract class StaticDataSource {
     /**
      * this method will add items in the list of contentDescription and contentResources
      *
-     * @param desc       is the text item to add in the {@link com.hadi.trainticketing.welcome.WelcomeContent}
-     * @param resourceId is the image resource item to add in the {@link com.hadi.trainticketing.welcome.WelcomeContent}
+     * @param desc       is the text item to add in the WelcomeContent
+     * @param resourceId is the image resource item to add in the WelcomeContent
      */
     private static void addItems(String desc, int resourceId) {
         contentDescription.add(desc);

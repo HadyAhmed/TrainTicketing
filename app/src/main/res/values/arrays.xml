@@ -6,43 +6,19 @@
     <string-array name="destination_spinner_from">
         <item>@string/banha</item>
         <item>@string/alex</item>
-        <item>@string/aswan</item>
         <item>@string/cairo</item>
-        <item>@string/damnhour</item>
-        <item>@string/elAlameen</item>
-        <item>@string/elMansoura</item>
-        <item>@string/shubra</item>
-        <item>@string/qalyoub</item>
-        <item>@string/koesna</item>
         <item>@string/tanta</item>
-        <item>@string/kafrDwar</item>
-        <item>@string/sediGaber</item>
-        <item>@string/maryout</item>
         <item>@string/marsaMatrouh</item>
         <item>@string/isamilia</item>
-        <item>@string/portSaied</item>
-        <item>@string/luxor</item>
     </string-array>
 
     <string-array name="destination_spinner_to">
         <item>@string/tanta</item>
-        <item>@string/aswan</item>
         <item>@string/alex</item>
         <item>@string/banha</item>
         <item>@string/cairo</item>
-        <item>@string/damnhour</item>
-        <item>@string/elAlameen</item>
-        <item>@string/elMansoura</item>
-        <item>@string/shubra</item>
-        <item>@string/qalyoub</item>
-        <item>@string/koesna</item>
-        <item>@string/kafrDwar</item>
-        <item>@string/sediGaber</item>
-        <item>@string/maryout</item>
         <item>@string/marsaMatrouh</item>
         <item>@string/isamilia</item>
-        <item>@string/portSaied</item>
-        <item>@string/luxor</item>
     </string-array>
 
     <!-- Gender Spinner Entries -->

@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
         tools:context=".passenger.view.navigation.SeatReservationFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/seatsRv"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
             android:scrollbars="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3"
+            tools:itemCount="30"
             tools:listitem="@layout/seats_item" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/continueReservationBtn"
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/loadingSeats"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="Continue" />
-    </LinearLayout>
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
 </layout>

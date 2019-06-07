@@ -7,7 +7,7 @@
 
         <variable
             name="itemVariable"
-            type="com.hadi.trainticketing.passenger.pojo.PassengerCards" />
+            type="com.hadi.trainticketing.passenger.model.PassengerCards" />
 
         <variable
             name="itemClickHandler"

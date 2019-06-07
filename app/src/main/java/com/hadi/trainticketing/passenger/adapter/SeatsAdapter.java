@@ -8,18 +8,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hadi.trainticketing.databinding.SeatsItemBinding;
+import com.hadi.trainticketing.passenger.model.pojo.reservation.AvailableSeat;
+
+import java.util.List;
 
 public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHolder> {
 
-    private static final int TRAIN_SEATS_NUMBER = 20;
     private LayoutInflater inflater;
-    private int seatNumber = 1;
+    private List<AvailableSeat> seatList;
     private OnSeatClickListener onSeatClickListener;
 
     public SeatsAdapter(OnSeatClickListener onSeatClickListener) {
         this.onSeatClickListener = onSeatClickListener;
     }
 
+    public void setSeatList(List<AvailableSeat> seatList) {
+        this.seatList = seatList;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -32,35 +38,35 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHold
 
     @Override
     public void onBindViewHolder(@NonNull SeatViewHolder holder, int position) {
-        holder.setSeatNumber(seatNumber);
+        holder.setSeatNumber(seatList.get(position));
         holder.setOnSeatClickListener(onSeatClickListener);
-        seatNumber++;
     }
 
     @Override
     public int getItemCount() {
-        return TRAIN_SEATS_NUMBER;
+        if (seatList == null) {
+            return 0;
+        }
+        return seatList.size();
     }
 
     public interface OnSeatClickListener {
-        // TODO: 4/20/2019 Changle the seat id to your logic
-        void onSeatClick(View view, int seatId);
+        void onSeatClick(View view, String seatId);
     }
 
     class SeatViewHolder extends RecyclerView.ViewHolder {
         private SeatsItemBinding itemBinding;
 
-        public SeatViewHolder(@NonNull SeatsItemBinding itemView) {
+        SeatViewHolder(@NonNull SeatsItemBinding itemView) {
             super(itemView.getRoot());
             this.itemBinding = itemView;
         }
 
-        // TODO: 4/20/2019 change the seat setter
-        public void setSeatNumber(int seatNumber) {
-            this.itemBinding.setSeatInfo(String.valueOf(seatNumber));
+        void setSeatNumber(AvailableSeat seat) {
+            this.itemBinding.setSeat(seat);
         }
 
-        public void setOnSeatClickListener(OnSeatClickListener onSeatClickListener) {
+        void setOnSeatClickListener(OnSeatClickListener onSeatClickListener) {
             this.itemBinding.setSeatClickListener(onSeatClickListener);
         }
     }

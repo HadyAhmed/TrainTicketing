@@ -21,24 +21,12 @@
     <string name="class_a_string">Class A</string>
     <string name="class_b_string">Class B</string>
     <!-- Destination Spinner -->
-    <string name="cairo">Cairo</string>
-    <string name="shubra">Shubra El Khema</string>
-    <string name="qalyoub">Klyob</string>
-    <string name="banha">Banha</string>
-    <string name="koesna">koesna</string>
-    <string name="tanta">Tanta</string>
-    <string name="damnhour">Dmnhor</string>
-    <string name="kafrDwar">kfr al dwar</string>
-    <string name="sediGaber">Sede gaber</string>
-    <string name="alex">Alexandria</string>
-    <string name="maryout">Mryot</string>
-    <string name="elAlameen">Elalamen</string>
-    <string name="marsaMatrouh">Marsa mtrouh</string>
-    <string name="isamilia">Ismalia</string>
-    <string name="elMansoura">Elmnsora</string>
-    <string name="portSaied">Port said</string>
-    <string name="luxor">Luxor</string>
-    <string name="aswan">Aswan</string>
+    <string name="cairo">cairo</string>
+    <string name="banha">banha</string>
+    <string name="tanta">tanta</string>
+    <string name="alex">alexandria</string>
+    <string name="marsaMatrouh">marsa mtrouh</string>
+    <string name="isamilia">ismalia</string>
     <string name="creditEg">%d LE</string>
 
     <!-- Confirm Order -->

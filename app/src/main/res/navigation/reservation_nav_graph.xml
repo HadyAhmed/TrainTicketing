@@ -13,6 +13,7 @@
         <action
             android:id="@+id/moveToSeatFragment"
             app:destination="@id/seatReservationFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/seatReservationFragment"
@@ -20,23 +21,18 @@
         android:label="fragment_seat_reservation"
         tools:layout="@layout/fragment_seat_reservation">
         <action
-            android:id="@+id/moveToTicketHolderNames"
-            app:destination="@id/ticketNameDetails" />
-        <action
             android:id="@+id/moveToTicketDetail"
             app:destination="@id/ticketDetail" />
         <argument
-            android:name="ticketNumber"
-            app:argType="integer" />
-    </fragment>
-    <fragment
-        android:id="@+id/ticketNameDetails"
-        android:name="com.hadi.trainticketing.passenger.view.navigation.TicketNameDetails"
-        android:label="fragment_ticket_name_details"
-        tools:layout="@layout/fragment_ticket_name_details">
-        <action
-            android:id="@+id/moveToTicketConfirmFragment"
-            app:destination="@id/confirmTicket" />
+            android:name="trainId"
+            app:argType="string" />
+        <argument
+            android:name="ticketId"
+            app:argType="string" />
+        <argument
+            android:name="reservationId"
+            app:argType="string[]" />
+
     </fragment>
     <fragment
         android:id="@+id/ticketDetail"

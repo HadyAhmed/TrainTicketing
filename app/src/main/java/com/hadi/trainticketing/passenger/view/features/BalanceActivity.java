@@ -11,17 +11,23 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.databinding.ActivityBalanceBinding;
-import com.hadi.trainticketing.passenger.view.activities.PassengerMainActivity;
+import com.hadi.trainticketing.passenger.model.PassengerViewModel;
+import com.hadi.trainticketing.passenger.model.pojo.profile.UserResponse;
+import com.hadi.trainticketing.passenger.view.activities.PassengerSignInActivity;
 
 public class BalanceActivity extends AppCompatActivity implements AlertDialog.OnClickListener {
+    PassengerViewModel passengerViewModel;
+    private ActivityBalanceBinding balanceBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityBalanceBinding balanceBinding = DataBindingUtil.setContentView(this, R.layout.activity_balance);
+        balanceBinding = DataBindingUtil.setContentView(this, R.layout.activity_balance);
         balanceBinding.balanceToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -29,10 +35,20 @@ public class BalanceActivity extends AppCompatActivity implements AlertDialog.On
             }
         });
 
-        balanceBinding.userBalanceTv.setText(
-                String.format(getString(R.string.creditEg),
-                        PreferenceManager.getDefaultSharedPreferences(this).getInt(PassengerMainActivity.USER_BALANCE_PREF, 0))
-        );
+        passengerViewModel = ViewModelProviders.of(this).get(PassengerViewModel.class);
+
+        passengerViewModel.requestUserInfo(PreferenceManager.getDefaultSharedPreferences(this).getString(PassengerSignInActivity.USER_TOKEN, ""));
+
+        passengerViewModel.getUserInfo().observe(this, new Observer<UserResponse>() {
+            @Override
+            public void onChanged(UserResponse userResponse) {
+                balanceBinding.balanceProgress.setVisibility(View.INVISIBLE);
+                if (userResponse != null) {
+                    balanceBinding.userBalanceTv.setText(String.format(getString(R.string.creditEg), userResponse.getResult().getData().getBalance()));
+                }
+            }
+        });
+
 
         balanceBinding.materialButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,28 +1,36 @@
 package com.hadi.trainticketing.passenger.view.features;
 
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.databinding.EnquireLayoutBinding;
-import com.hadi.trainticketing.datasource.webservice.WebServices;
 import com.hadi.trainticketing.passenger.adapter.EnquireAdapter;
-import com.hadi.trainticketing.passenger.pojo.enquire.EnquireResponse;
+import com.hadi.trainticketing.passenger.model.PassengerViewModel;
+import com.hadi.trainticketing.passenger.model.pojo.enquire.ArrayResult;
+import com.hadi.trainticketing.passenger.model.pojo.enquire.ResultArray;
+import com.hadi.trainticketing.passenger.model.pojo.enquire.TicketModel;
+import com.hadi.trainticketing.passenger.model.pojo.stations.Station;
+import com.hadi.trainticketing.utils.Utils;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnquireActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = "EnquireActivityTag";
     private EnquireLayoutBinding layoutBinding;
-    private EnquireAdapter enquireAdapter = new EnquireAdapter();
+    private EnquireAdapter enquireAdapter = new EnquireAdapter(null);
+    private PassengerViewModel passengerViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,27 @@ public class EnquireActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
+        passengerViewModel = ViewModelProviders.of(this).get(PassengerViewModel.class);
+
+        passengerViewModel.requestStations();
+
+        passengerViewModel.getStations().observe(this, new Observer<List<Station>>() {
+            @Override
+            public void onChanged(List<Station> stations) {
+                layoutBinding.searchProgress.setVisibility(View.INVISIBLE);
+                if (stations != null) {
+                    List<String> stringList = new ArrayList<>();
+                    for (Station s : stations) {
+                        stringList.add(s.getName());
+                    }
+                    ArrayAdapter<String> stationsAdapter = new ArrayAdapter<>(EnquireActivity.this, android.R.layout.simple_spinner_dropdown_item, stringList);
+                    layoutBinding.spinnerFrom.setAdapter(stationsAdapter);
+                    layoutBinding.spinnerTo.setAdapter(stationsAdapter);
+                }
+            }
+        });
+
+
         layoutBinding.enquireRv.setLayoutManager(new LinearLayoutManager(this));
         layoutBinding.enquireRv.setAdapter(enquireAdapter);
 
@@ -44,35 +73,44 @@ public class EnquireActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        fetchEnquireResults();
+        if (Utils.isNetworkAvailable(EnquireActivity.this)) {
+            if (layoutBinding.spinnerFrom.getSelectedItem() == null) {
+                Toast.makeText(EnquireActivity.this, "Please Select Station", Toast.LENGTH_SHORT).show();
+            } else {
+                fetchEnquireResults();
+            }
+        } else {
+            Toast.makeText(EnquireActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void fetchEnquireResults() {
         layoutBinding.searchProgress.setVisibility(View.VISIBLE);
-        WebServices.serverConnection.create(WebServices.class)
-                .getTripEnquire(layoutBinding.spinnerFrom.getSelectedItem().toString(),
-                        layoutBinding.spinnerTo.getSelectedItem().toString(),
-                        getDateChosen(),
-                        getClassChosen()
-                ).enqueue(new Callback<EnquireResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<EnquireResponse> call, @NonNull Response<EnquireResponse> response) {
-                layoutBinding.searchProgress.setVisibility(View.INVISIBLE);
-                if (response.body() != null) {
-                    if (!response.body().getResult().isEmpty()) {
-                        enquireAdapter.setResultList(response.body().getResult());
-                    } else {
-                        Toast.makeText(EnquireActivity.this, "No trip was found at the moment", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
+        passengerViewModel.getEnquireSearchResult(layoutBinding.spinnerFrom.getSelectedItem().toString(),
+                layoutBinding.spinnerTo.getSelectedItem().toString(),
+                getDateChosen(),
+                getClassChosen())
+                .observe(this, new Observer<List<ResultArray>>() {
+                    @Override
+                    public void onChanged(List<ResultArray> resultArrays) {
+                        layoutBinding.searchProgress.setVisibility(View.INVISIBLE);
+                        List<TicketModel> ticketsModels = new ArrayList<>();
 
-            @Override
-            public void onFailure(@NonNull Call<EnquireResponse> call, @NonNull Throwable t) {
-                layoutBinding.searchProgress.setVisibility(View.INVISIBLE);
-                Toast.makeText(EnquireActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                        SparseArray<List<ArrayResult>> justTrip = new SparseArray<>();
+
+                        if (resultArrays != null && !resultArrays.isEmpty() && !resultArrays.get(0).getTickets().isEmpty()) {
+                            for (int i = 0; i < resultArrays.size(); i++) {
+                                justTrip.append(i, resultArrays.get(i).getArrayResult());
+                                for (int j = 0; j < resultArrays.get(i).getTickets().size(); j++) {
+                                    ticketsModels.add(new TicketModel(resultArrays.get(i).getArrivalTime(), resultArrays.get(i).getEndTime(), resultArrays.get(i).getTickets().get(j), resultArrays.get(i).getArrayResult()));
+                                }
+                            }
+                            enquireAdapter.setTicketResults(ticketsModels);
+                        } else {
+                            Toast.makeText(EnquireActivity.this, "no trip was found", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private String getDateChosen() {

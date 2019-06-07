@@ -1,19 +1,16 @@
-package com.hadi.trainticketing.passenger.pojo.profile;
+package com.hadi.trainticketing.passenger.model.pojo.signup;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Result {
+public class User {
 
     @SerializedName("validation")
     @Expose
-    private Boolean validation;
+    private boolean validation;
     @SerializedName("balance")
     @Expose
-    private Integer balance;
-    @SerializedName("userType")
-    @Expose
-    private String userType;
+    private int balance;
     @SerializedName("_id")
     @Expose
     private String id;
@@ -29,26 +26,34 @@ public class Result {
     @SerializedName("gender")
     @Expose
     private String gender;
+    @SerializedName("username")
+    @Expose
+    private String username;
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("dateOfBirth")
+    @Expose
+    private String dateOfBirth;
+    @SerializedName("phoneNumber")
+    @Expose
+    private String phoneNumber;
+    @SerializedName("userType")
+    @Expose
+    private String userType;
     @SerializedName("joinedOn")
     @Expose
     private String joinedOn;
     @SerializedName("__v")
     @Expose
-    private Integer v;
+    private int v;
 
-    public Boolean getValidation() {
+    public boolean isValidation() {
         return validation;
     }
 
-    public Integer getBalance() {
+    public int getBalance() {
         return balance;
-    }
-
-    public String getUserType() {
-        return userType;
     }
 
     public String getId() {
@@ -71,15 +76,32 @@ public class Result {
         return gender;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getUserType() {
+        return userType;
     }
 
     public String getJoinedOn() {
         return joinedOn;
     }
 
-    public Integer getV() {
+    public int getV() {
         return v;
     }
 }
+
