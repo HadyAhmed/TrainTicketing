@@ -7,7 +7,7 @@
 
         <variable
             name="seat"
-            type="com.hadi.trainticketing.passenger.model.pojo.reservation.AvailableSeat" />
+            type="com.hadi.trainticketing.passenger.model.pojo.reservation.response.seats.AvailableSeat" />
 
         <variable
             name="seatClickListener"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:background="?selectableItemBackground"
             android:gravity="center_horizontal"
-            android:onClick="@{(v) ->seatClickListener.onSeatClick(v,seat.id)}"
+            android:onClick="@{(v) ->seatClickListener.onSeatClick(v,seat.id,seat.number)}"
             android:padding="8dp"
             android:text="@{`Seat (`+seat.number.toString()+`)`}"
             android:textAppearance="?android:textAppearanceMedium"

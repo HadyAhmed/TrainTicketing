@@ -44,7 +44,7 @@ public class BalanceActivity extends AppCompatActivity implements AlertDialog.On
             public void onChanged(UserResponse userResponse) {
                 balanceBinding.balanceProgress.setVisibility(View.INVISIBLE);
                 if (userResponse != null) {
-                    balanceBinding.userBalanceTv.setText(String.format(getString(R.string.creditEg), userResponse.getResult().getData().getBalance()));
+                    balanceBinding.userBalanceTv.setText(String.format(getString(R.string.creditEg), userResponse.getResult().getBalance()));
                 }
             }
         });

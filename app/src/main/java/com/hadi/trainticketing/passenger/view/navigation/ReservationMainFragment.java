@@ -2,6 +2,7 @@ package com.hadi.trainticketing.passenger.view.navigation;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -25,7 +26,10 @@ import com.hadi.trainticketing.passenger.model.PassengerViewModel;
 import com.hadi.trainticketing.passenger.model.pojo.enquire.ArrayResult;
 import com.hadi.trainticketing.passenger.model.pojo.enquire.ResultArray;
 import com.hadi.trainticketing.passenger.model.pojo.enquire.TicketModel;
+import com.hadi.trainticketing.passenger.model.pojo.profile.UserResponse;
+import com.hadi.trainticketing.passenger.model.pojo.reservation.response.seats.SeatRequest;
 import com.hadi.trainticketing.passenger.model.pojo.stations.Station;
+import com.hadi.trainticketing.passenger.view.activities.PassengerSignInActivity;
 import com.hadi.trainticketing.utils.Utils;
 
 import java.util.ArrayList;
@@ -44,6 +48,7 @@ public class ReservationMainFragment extends Fragment implements View.OnClickLis
         this.context = context;
         passengerViewModel = ViewModelProviders.of(this).get(PassengerViewModel.class);
         passengerViewModel.requestStations();
+        passengerViewModel.requestUserInfo(PreferenceManager.getDefaultSharedPreferences(context).getString(PassengerSignInActivity.USER_TOKEN, ""));
     }
 
     @Nullable
@@ -90,6 +95,10 @@ public class ReservationMainFragment extends Fragment implements View.OnClickLis
 
     private void fetchEnquireResults() {
         reservationMainBinding.searchProgress.setVisibility(View.VISIBLE);
+        Log.d(TAG, "fetchEnquireResults: " + reservationMainBinding.spinnerFrom.getSelectedItem().toString() +
+                reservationMainBinding.spinnerTo.getSelectedItem().toString() +
+                getDateChosen() +
+                getClassChosen());
         passengerViewModel.getEnquireSearchResult(reservationMainBinding.spinnerFrom.getSelectedItem().toString(),
                 reservationMainBinding.spinnerTo.getSelectedItem().toString(),
                 getDateChosen(),
@@ -141,13 +150,23 @@ public class ReservationMainFragment extends Fragment implements View.OnClickLis
 
 
     @Override
-    public void onTicketClick(View view, String ticketId, String trainId, List<ArrayResult> arrayResults) {
-        Log.d(TAG, "onTicketClick: " + trainId + " reservation ids: " + arrayResults.size());
+    public void onTicketClick(final View view, final int classType, final int ticketPrice, final String ticketId, final String trainId, List<ArrayResult> arrayResults) {
         List<String> stringList = new ArrayList<>();
         for (ArrayResult ar : arrayResults) {
             stringList.add(ar.getId());
         }
-        String[] ids = stringList.toArray(new String[0]);
-        Navigation.findNavController(view).navigate(ReservationMainFragmentDirections.moveToSeatFragment(trainId, ticketId, ids));
+        final SeatRequest seatRequest = new SeatRequest(classType, ticketPrice, trainId, ticketId, stringList.toArray(new String[0]));
+        passengerViewModel.getUserInfo().observe(getViewLifecycleOwner(), new Observer<UserResponse>() {
+            @Override
+            public void onChanged(UserResponse userResponse) {
+                if (userResponse != null) {
+                    if (userResponse.getResult().getValidation()) {
+                        Navigation.findNavController(view).navigate(ReservationMainFragmentDirections.moveToSeatFragment(seatRequest));
+                    } else {
+                        Toast.makeText(context, "you must validate your account before making any reservations", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
     }
 }

@@ -84,9 +84,10 @@ public class PassengerSignUpActivity extends AppCompatActivity implements Adapte
         });
     }
 
-    private void checkForExistingMail(SignUpFields user) {
+    private void checkForExistingMail(final SignUpFields user) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Creating Account...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
 
         passengerViewModel.registerNewAccount(user)
@@ -99,7 +100,6 @@ public class PassengerSignUpActivity extends AppCompatActivity implements Adapte
                             onBackPressed();
                         } else {
                             Toast.makeText(PassengerSignUpActivity.this, "Account Already Exists", Toast.LENGTH_SHORT).show();
-
                         }
                     }
                 });

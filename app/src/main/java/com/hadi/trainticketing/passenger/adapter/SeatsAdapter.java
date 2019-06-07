@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hadi.trainticketing.databinding.SeatsItemBinding;
-import com.hadi.trainticketing.passenger.model.pojo.reservation.AvailableSeat;
+import com.hadi.trainticketing.passenger.model.pojo.reservation.response.seats.AvailableSeat;
 
 import java.util.List;
 
@@ -17,6 +17,10 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHold
     private LayoutInflater inflater;
     private List<AvailableSeat> seatList;
     private OnSeatClickListener onSeatClickListener;
+
+    public interface OnSeatClickListener {
+        void onSeatClick(View view, String seatId, int seatNumber);
+    }
 
     public SeatsAdapter(OnSeatClickListener onSeatClickListener) {
         this.onSeatClickListener = onSeatClickListener;
@@ -48,10 +52,6 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsAdapter.SeatViewHold
             return 0;
         }
         return seatList.size();
-    }
-
-    public interface OnSeatClickListener {
-        void onSeatClick(View view, String seatId);
     }
 
     class SeatViewHolder extends RecyclerView.ViewHolder {

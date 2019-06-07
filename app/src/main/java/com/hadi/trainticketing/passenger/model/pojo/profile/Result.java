@@ -5,25 +5,82 @@ import com.google.gson.annotations.SerializedName;
 
 public class Result {
 
-    @SerializedName("data")
-    @Expose
-    private Data data;
-    @SerializedName("iat")
-    @Expose
-    private Integer iat;
-    @SerializedName("exp")
-    @Expose
-    private Integer exp;
 
-    public Data getData() {
-        return data;
+    @SerializedName("validation")
+    @Expose
+    private Boolean validation;
+    @SerializedName("balance")
+    @Expose
+    private Integer balance;
+    @SerializedName("userType")
+    @Expose
+    private String userType;
+    @SerializedName("_id")
+    @Expose
+    private String id;
+    @SerializedName("nationalID")
+    @Expose
+    private String nationalID;
+    @SerializedName("email")
+    @Expose
+    private String email;
+    @SerializedName("password")
+    @Expose
+    private String password;
+    @SerializedName("gender")
+    @Expose
+    private String gender;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("joinedOn")
+    @Expose
+    private String joinedOn;
+    @SerializedName("__v")
+    @Expose
+    private Integer v;
+
+    public Boolean getValidation() {
+        return validation;
     }
 
-    public Integer getIat() {
-        return iat;
+    public Integer getBalance() {
+        return balance;
     }
 
-    public Integer getExp() {
-        return exp;
+    public String getUserType() {
+        return userType;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getNationalID() {
+        return nationalID;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getJoinedOn() {
+        return joinedOn;
+    }
+
+    public Integer getV() {
+        return v;
     }
 }

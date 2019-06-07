@@ -18,7 +18,6 @@
         android:id="@+id/ticketView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{(v)->ticketClickListener.onTicketClick(v,ticket.ticket.id,ticket.ticket.trian.id,ticket.arrayResults)}"
         app:cardBackgroundColor="@color/primary_light"
         app:cardCornerRadius="8dp"
         app:cardElevation="6dp"
@@ -26,7 +25,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:onClick="@{(v)->ticketClickListener.onTicketClick(v,ticket.ticket.classType,ticket.ticket.price,ticket.ticket.id,ticket.ticket.trian.id,ticket.arrayResults)}">
 
             <TextView
                 android:id="@+id/from_label"
@@ -41,6 +42,8 @@
                 android:id="@+id/from_result"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="@{ticket.ticket.from.name}"
                 app:layout_constraintBaseline_toBaselineOf="@+id/from_label"
                 app:layout_constraintEnd_toStartOf="@+id/to_label"
@@ -69,7 +72,7 @@
             <TextView
                 android:id="@+id/arrival_time"
                 style="@style/ticket_label_style"
-                android:text="Arrival Time"
+                android:text="Arrival"
                 app:layout_constraintBaseline_toBaselineOf="@+id/start_tiem_result"
                 app:layout_constraintEnd_toStartOf="@+id/arrival_time_result"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -101,6 +104,7 @@
                 android:id="@+id/date_result"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
                 android:layout_marginEnd="8dp"
                 android:text="@{ticket.launchTime.substring(0,10)}"
                 app:layout_constraintBaseline_toBaselineOf="@+id/date_label"
@@ -146,7 +150,7 @@
             <TextView
                 android:id="@+id/start_time_label"
                 style="@style/ticket_label_style"
-                android:text="Start Time"
+                android:text="Start"
                 app:layout_constraintEnd_toStartOf="@+id/start_tiem_result"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -166,6 +170,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="@{ticket.ticket.to.name}"
                 app:layout_constraintBaseline_toBaselineOf="@+id/to_label"
                 app:layout_constraintEnd_toEndOf="parent"

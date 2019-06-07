@@ -19,6 +19,10 @@ public class EnquireAdapter extends RecyclerView.Adapter<EnquireAdapter.TicketVi
 
     private OnTicketClickListener ticketClickListener;
 
+    public interface OnTicketClickListener {
+        void onTicketClick(View view, int classType, int ticketPrice, String ticketId, String trainId, List<ArrayResult> arrayResults);
+    }
+
     public EnquireAdapter(OnTicketClickListener ticketClickListener) {
         this.ticketClickListener = ticketClickListener;
     }
@@ -50,10 +54,6 @@ public class EnquireAdapter extends RecyclerView.Adapter<EnquireAdapter.TicketVi
         } else {
             return ticketResults.size();
         }
-    }
-
-    public interface OnTicketClickListener {
-        void onTicketClick(View view, String ticketId, String trainId, List<ArrayResult> arrayResults);
     }
 
     class TicketViewHolder extends RecyclerView.ViewHolder {

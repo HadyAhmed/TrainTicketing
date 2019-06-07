@@ -5,12 +5,13 @@ import com.hadi.trainticketing.passenger.model.pojo.enquire.EnquireResponse;
 import com.hadi.trainticketing.passenger.model.pojo.login.SignInFields;
 import com.hadi.trainticketing.passenger.model.pojo.login.SignInResponse;
 import com.hadi.trainticketing.passenger.model.pojo.profile.UserResponse;
-import com.hadi.trainticketing.passenger.model.pojo.reservation.ReservationResponse;
 import com.hadi.trainticketing.passenger.model.pojo.reservation.request.ReservationRequest;
-import com.hadi.trainticketing.passenger.model.pojo.reservation.response.ReservationResult;
+import com.hadi.trainticketing.passenger.model.pojo.reservation.response.reservation.ReservationResult;
+import com.hadi.trainticketing.passenger.model.pojo.reservation.response.reserve_seat.ReservationResponse;
 import com.hadi.trainticketing.passenger.model.pojo.signup.SignUpFields;
 import com.hadi.trainticketing.passenger.model.pojo.signup.SignUpResponse;
 import com.hadi.trainticketing.passenger.model.pojo.stations.StationsResponse;
+import com.hadi.trainticketing.passenger.model.pojo.ticket.TicketHistoryResponse;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -61,7 +62,7 @@ public interface WebServices {
     );
 
     @GET("reservation/search")
-    Call<ReservationResponse> getSeats(@Query("train") String trainId, @Query("justTrip") String[] ids);
+    Call<ReservationResponse> getSeats(@Query("classType") int classType, @Query("train") String trainId, @Query("justTrip") String[] ids);
 
 
     @GET("user/profile")
@@ -69,4 +70,7 @@ public interface WebServices {
 
     @POST("reservation")
     Call<ReservationResult> getReservationResult(@Body ReservationRequest reservation);
+
+    @GET("reservation/byUser/{uid}")
+    Call<TicketHistoryResponse> getTicketHsitory(@Path("uid") String uid);
 }

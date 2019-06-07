@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -28,16 +27,11 @@ import com.hadi.trainticketing.passenger.view.features.TicketActivity;
 public class PassengerMainActivity extends AppCompatActivity
         implements WelcomeAdapter.OnWelcomeItemClickListener, Toolbar.OnMenuItemClickListener {
 
-    public static final String USER_EMAIL_PREF = "email";
-    public static final String USER_BALANCE_PREF = "balance";
-    public static final String USER_NATIONAL_ID_PREF = "national_id";
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityPassengerMainBinding passengerMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_passenger_main);
 
-//        checkForSessionValidation(PreferenceManager.getDefaultSharedPreferences(this).getString(PassengerSignInActivity.USER_EMAIL_PREF_KEY, ""));
 
         passengerMainBinding.mainToolbar.inflateMenu(R.menu.main_menu);
         passengerMainBinding.mainToolbar.setOnMenuItemClickListener(this);
@@ -46,38 +40,6 @@ public class PassengerMainActivity extends AppCompatActivity
         passengerMainBinding.passengerFeaturesRv.setAdapter(new WelcomeAdapter(StaticDataSource.getPassengerCardsList(), this));
     }
 
-//    private void checkForSessionValidation(final String email) {
-//
-//        WebServices.serverConnection.create(WebServices.class)
-//                .getUserData(email)
-//                .enqueue(new Callback<UserResponse>() {
-//                    @Override
-//                    public void onResponse(@NonNull Call<UserResponse> call, @NonNull Response<UserResponse> response) {
-//                        if (response.body() != null) {
-//                            if (response.body().getResult().isEmpty()) {
-//                                Toast.makeText(PassengerMainActivity.this, "Changes has been happened, relogin", Toast.LENGTH_SHORT).show();
-//                                PreferenceManager.getDefaultSharedPreferences(PassengerMainActivity.this).getAll().clear();
-//                                finish();
-//                            } else {
-//                                Result result = response.body().getResult().get(0);
-//                                Log.d("userInfo", "onResponse: " + result.getEmail() + result.getNationalID() + result.getBalance());
-//                                PreferenceManager.getDefaultSharedPreferences(PassengerMainActivity.this)
-//                                        .edit()
-//                                        .putInt(USER_BALANCE_PREF, response.body().getResult().get(0).getBalance())
-//                                        .putString(USER_EMAIL_PREF, response.body().getResult().get(0).getEmail())
-//                                        .putString(USER_NATIONAL_ID_PREF, response.body().getResult().get(0).getNationalID())
-//                                        .apply();
-//
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(@NonNull Call<UserResponse> call, @NonNull Throwable t) {
-//                        Toast.makeText(PassengerMainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//    }
 
     @Override
     public void onWelcomeItemClick(int itemPosition) {
@@ -102,7 +64,7 @@ public class PassengerMainActivity extends AppCompatActivity
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.action_account_settings) {
-            Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(PassengerMainActivity.this, PassengerProfilePage.class));
             return true;
         } else if (item.getItemId() == R.id.action_logout) {
             AlertDialog.Builder builder = new AlertDialog.Builder(PassengerMainActivity.this);

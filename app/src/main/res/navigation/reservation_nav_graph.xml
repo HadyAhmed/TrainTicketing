@@ -24,14 +24,8 @@
             android:id="@+id/moveToTicketDetail"
             app:destination="@id/ticketDetail" />
         <argument
-            android:name="trainId"
-            app:argType="string" />
-        <argument
-            android:name="ticketId"
-            app:argType="string" />
-        <argument
-            android:name="reservationId"
-            app:argType="string[]" />
+            android:name="seatRequest"
+            app:argType="com.hadi.trainticketing.passenger.model.pojo.reservation.response.seats.SeatRequest" />
 
     </fragment>
     <fragment

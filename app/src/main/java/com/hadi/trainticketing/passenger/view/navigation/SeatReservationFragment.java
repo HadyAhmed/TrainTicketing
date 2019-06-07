@@ -1,7 +1,10 @@
 package com.hadi.trainticketing.passenger.view.navigation;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -18,10 +21,12 @@ import androidx.lifecycle.ViewModelProviders;
 import com.hadi.trainticketing.databinding.FragmentSeatReservationBinding;
 import com.hadi.trainticketing.passenger.adapter.SeatsAdapter;
 import com.hadi.trainticketing.passenger.model.PassengerViewModel;
-import com.hadi.trainticketing.passenger.model.pojo.reservation.ReservationResponse;
+import com.hadi.trainticketing.passenger.model.pojo.profile.UserResponse;
 import com.hadi.trainticketing.passenger.model.pojo.reservation.request.ReservationRequest;
-import com.hadi.trainticketing.passenger.model.pojo.reservation.response.Reservation;
+import com.hadi.trainticketing.passenger.model.pojo.reservation.response.reservation.Reservation;
+import com.hadi.trainticketing.passenger.model.pojo.reservation.response.reserve_seat.ReservationResponse;
 import com.hadi.trainticketing.passenger.view.activities.PassengerSignInActivity;
+import com.hadi.trainticketing.passenger.view.features.TicketActivity;
 
 
 public class SeatReservationFragment extends Fragment implements SeatsAdapter.OnSeatClickListener {
@@ -34,6 +39,9 @@ public class SeatReservationFragment extends Fragment implements SeatsAdapter.On
     private String trainId;
     private String[] reservationIds;
     private String ticketId;
+    private int classType;
+    private int userBalance;
+    private int ticketPrice;
 
     public SeatReservationFragment() {
         // Required empty public constructor
@@ -44,6 +52,7 @@ public class SeatReservationFragment extends Fragment implements SeatsAdapter.On
         super.onAttach(context);
         this.context = context;
         passengerViewModel = ViewModelProviders.of(this).get(PassengerViewModel.class);
+        passengerViewModel.requestUserInfo(PreferenceManager.getDefaultSharedPreferences(context).getString(PassengerSignInActivity.USER_TOKEN, ""));
     }
 
     @Override
@@ -55,43 +64,78 @@ public class SeatReservationFragment extends Fragment implements SeatsAdapter.On
         seatReservationBinding.seatsRv.setAdapter(seatsAdapter);
 
         if (getArguments() != null) {
-            trainId = SeatReservationFragmentArgs.fromBundle(getArguments()).getTrainId();
-            reservationIds = SeatReservationFragmentArgs.fromBundle(getArguments()).getReservationId();
-            ticketId = SeatReservationFragmentArgs.fromBundle(getArguments()).getTicketId();
+            trainId = SeatReservationFragmentArgs.fromBundle(getArguments()).getSeatRequest().getTrainId();
+            reservationIds = SeatReservationFragmentArgs.fromBundle(getArguments()).getSeatRequest().getReservationId();
+            classType = SeatReservationFragmentArgs.fromBundle(getArguments()).getSeatRequest().getClassType();
+            ticketId = SeatReservationFragmentArgs.fromBundle(getArguments()).getSeatRequest().getTicketId();
+            ticketPrice = SeatReservationFragmentArgs.fromBundle(getArguments()).getSeatRequest().getTicketPrice();
             uid = PreferenceManager.getDefaultSharedPreferences(context).getString(PassengerSignInActivity.USER_ID, "");
-            passengerViewModel.getReservationSeats(trainId, reservationIds)
-                    .observe(getViewLifecycleOwner(), new Observer<ReservationResponse>() {
-                        @Override
-                        public void onChanged(ReservationResponse reservationResponse) {
-                            seatReservationBinding.loadingSeats.setVisibility(View.INVISIBLE);
-                            if (reservationResponse != null) {
-                                seatsAdapter.setSeatList(reservationResponse.getAvailableSeats());
-                            }
-                        }
-                    });
+
+            observeTickets();
+            observeUserInfo();
         }
+
+
         return seatReservationBinding.getRoot();
     }
 
-    @Override
-    public void onSeatClick(View view, String seatId) {
-        for (String ids : reservationIds) {
-            Log.d(TAG, "onSeatClick: " + ids);
-        }
-        Log.d(TAG, "onSeatClick: uid " + uid + " ticketId: " + ticketId + " seatId " + seatId + " trainId " + trainId + " reservation ids: " + reservationIds.length);
-
-        ReservationRequest reservation = new ReservationRequest(uid, ticketId, reservationIds, seatId);
-        passengerViewModel.getReservationResult(reservation).observe(getViewLifecycleOwner(), new Observer<Reservation>() {
+    private void observeUserInfo() {
+        passengerViewModel.getUserInfo().observe(getViewLifecycleOwner(), new Observer<UserResponse>() {
             @Override
-            public void onChanged(Reservation reservation) {
-                if (reservation != null) {
-                    Toast.makeText(context, "reservation successfully done", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "seat was already reserved", Toast.LENGTH_SHORT).show();
+            public void onChanged(UserResponse userResponse) {
+                if (userResponse != null) {
+                    userBalance = userResponse.getResult().getBalance();
                 }
             }
         });
     }
 
+    private void observeTickets() {
+        passengerViewModel.getReservationSeats(classType, trainId, reservationIds)
+                .observe(getViewLifecycleOwner(), new Observer<ReservationResponse>() {
+                    @Override
+                    public void onChanged(ReservationResponse reservationResponse) {
+                        seatReservationBinding.loadingSeats.setVisibility(View.INVISIBLE);
+                        if (reservationResponse != null) {
+                            seatsAdapter.setSeatList(reservationResponse.getAvailableSeats());
+                        }
+                    }
+                });
+    }
+
+
+    @Override
+    public void onSeatClick(View view, final String seatId, int seatNumber) {
+        Log.d(TAG, "onSeatClick: user balance: " + userBalance + " ticket price: " + ticketPrice);
+        if (userBalance < ticketPrice) {
+            Toast.makeText(context, "you don't have enough balance", Toast.LENGTH_SHORT).show();
+        } else {
+            AlertDialog.Builder confirmTicketDialog = new AlertDialog.Builder(context);
+            confirmTicketDialog.setTitle("Confirm Seat")
+                    .setMessage("Are you sure you want to confirm reservation to seat: " + seatNumber)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ReservationRequest reservation = new ReservationRequest(uid, ticketId, reservationIds, seatId);
+                            passengerViewModel.getReservationResult(reservation).observe(getViewLifecycleOwner(), new Observer<Reservation>() {
+                                @Override
+                                public void onChanged(Reservation reservation) {
+                                    if (reservation != null) {
+                                        Toast.makeText(context, "reservation successfully done", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(context, TicketActivity.class));
+                                        if (getActivity() != null) {
+                                            getActivity().finish();
+                                        }
+                                    } else {
+                                        Toast.makeText(context, "seat was already reserved", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        }
+                    })
+                    .setNeutralButton("Cancel", null)
+                    .show();
+        }
+    }
 }
 
