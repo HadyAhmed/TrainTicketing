@@ -1,15 +1,16 @@
 package com.hadi.trainticketing.datasource.database;
 
 import com.hadi.trainticketing.R;
-import com.hadi.trainticketing.passenger.model.PassengerCards;
+import com.hadi.trainticketing.passenger.home.model.PassengerCards;
+import com.hadi.trainticketing.passenger.home.view.activities.PassengerMainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * this class will hold static data for the application
- * to share it with {@link com.hadi.trainticketing.welcome.WelcomeActivity} for the welcome home pager
- * and {@link com.hadi.trainticketing.passenger.view.activities.PassengerMainActivity} for the passenger
+ * to share it with {@link com.hadi.trainticketing.boarding.WelcomeActivity} for the boarding home pager
+ * and {@link PassengerMainActivity} for the passenger
  * cards
  *
  * @author Hady Ahmed
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public abstract class StaticDataSource {
     /**
-     * list that holds the list of {@link PassengerCards} welcome list of features
+     * list that holds the list of {@link PassengerCards} boarding list of features
      */
     private static final List<PassengerCards> passengerCardsList;
     // number of the list item in the list
@@ -26,8 +27,7 @@ public abstract class StaticDataSource {
     public static final int RESERVE_ITEM = 1;
     public static final int BALANCE_ITEM = 2;
     public static final int TICKET_ITEM = 3;
-    public static final int HISTORY_ITEM = 4;
-    // is a list that holding the text description for the page in welcome screens
+    // is a list that holding the text description for the page in boarding screens
     private static final List<String> contentDescription;
 
     static {
@@ -45,9 +45,6 @@ public abstract class StaticDataSource {
         addWelcomeItemList(new PassengerCards(TICKET_ITEM,
                 "Tickets",
                 "Use your tickets to validate it, when you reach your trip, the validator will ask to scan it, so easy right ?", R.drawable.ic_ticket));
-        addWelcomeItemList(new PassengerCards(HISTORY_ITEM,
-                "History",
-                "A History for all you need, track your trips, tickets and your receipts all the time", R.drawable.ic_history));
     }
 
     public static List<String> getContentDescription() {
@@ -58,7 +55,7 @@ public abstract class StaticDataSource {
         return contentResources;
     }
 
-    // is a list that holding the image resources for the page in welcome screens
+    // is a list that holding the image resources for the page in boarding screens
     private static final List<Integer> contentResources;
 
     // initialize static list variables
@@ -94,7 +91,7 @@ public abstract class StaticDataSource {
 
     /**
      * will add items of {@link PassengerCards} into the static list
-     * to show up in the adapter of the {@link com.hadi.trainticketing.passenger.view.activities.PassengerMainActivity}
+     * to show up in the adapter of the {@link PassengerMainActivity}
      */
     private static void addWelcomeItemList(PassengerCards passengerCards) {
         passengerCardsList.add(passengerCards);

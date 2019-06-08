@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -18,15 +20,15 @@
                 app:title="@string/app_name" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ScrollView
+        <fragment
+            android:id="@+id/fragment2"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:defaultNavHost="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:navGraph="@navigation/passenger_graph"
+            tools:layout="@layout/fragment_passenger_main" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/passengerFeaturesRv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </ScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

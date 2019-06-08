@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/passenger_login_graph"
+    app:startDestination="@id/passengerLoginFragment">
+
+    <fragment
+        android:id="@+id/passengerLoginFragment"
+        android:name="com.hadi.trainticketing.passenger.login.view.PassengerLoginFragment"
+        android:label="PassengerLoginFragment"
+        tools:layout="@layout/fragment_login_passenger">
+        <action
+            android:id="@+id/action_passengerLoginFragment_to_forgetPasswordFragment"
+            app:destination="@id/forgetPasswordFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_passengerLoginFragment_to_passengerRegisterFragment"
+            app:destination="@id/passengerRegisterFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgetPasswordFragment"
+        android:name="com.hadi.trainticketing.passenger.login.view.ForgetPasswordFragment"
+        android:label="ForgetPasswordFragment"
+        tools:layout="@layout/fragment_forget_password" />
+    <fragment
+        android:id="@+id/passengerRegisterFragment"
+        android:name="com.hadi.trainticketing.passenger.login.view.PassengerRegisterFragment"
+        android:label="PassengerRegisterFragment"
+        tools:layout="@layout/fragment_passenger_register" />
+</navigation>

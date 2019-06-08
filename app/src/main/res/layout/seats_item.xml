@@ -7,11 +7,11 @@
 
         <variable
             name="seat"
-            type="com.hadi.trainticketing.passenger.model.pojo.reservation.response.seats.AvailableSeat" />
+            type="com.hadi.trainticketing.passenger.home.model.pojo.reservation.response.seats.AvailableSeat" />
 
         <variable
             name="seatClickListener"
-            type="com.hadi.trainticketing.passenger.adapter.SeatsAdapter.OnSeatClickListener" />
+            type="com.hadi.trainticketing.passenger.home.adapter.SeatsAdapter.OnSeatClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

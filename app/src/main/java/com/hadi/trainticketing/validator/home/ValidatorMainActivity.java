@@ -19,11 +19,11 @@ import androidx.databinding.DataBindingUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.hadi.trainticketing.R;
+import com.hadi.trainticketing.boarding.WelcomeActivity;
 import com.hadi.trainticketing.databinding.ActivityValidatorMainBinding;
 import com.hadi.trainticketing.datasource.webservice.WebServices;
 import com.hadi.trainticketing.validator.home.pojo.request.ScanBody;
 import com.hadi.trainticketing.validator.home.pojo.response.ScanResponse;
-import com.hadi.trainticketing.welcome.WelcomeActivity;
 
 import java.util.Arrays;
 
