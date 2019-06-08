@@ -82,6 +82,9 @@ public class PassengerLoginFragment extends Fragment implements View.OnClickList
                             if (response.body() != null && response.body().isSuccess()) {
                                 saveUserInfo(response.body());
                                 startActivity(new Intent(context, PassengerMainActivity.class));
+                                if (getActivity() != null) {
+                                    getActivity().finish();
+                                }
                             } else {
                                 Toast.makeText(context, "Invalid Credentials", Toast.LENGTH_SHORT).show();
                             }

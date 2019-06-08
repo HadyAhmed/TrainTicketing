@@ -92,6 +92,9 @@ public class PassengerRegisterFragment extends Fragment implements AdapterView.O
                 .observe(this, signUpResponse -> {
                     progressDialog.dismiss();
                     if (signUpResponse != null) {
+                        if (getActivity() != null) {
+                            getActivity().onBackPressed();
+                        }
                         Toast.makeText(context, "Successfully Created", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(context, "Account Already Exists", Toast.LENGTH_SHORT).show();

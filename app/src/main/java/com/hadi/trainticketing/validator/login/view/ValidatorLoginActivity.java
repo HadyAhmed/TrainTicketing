@@ -51,9 +51,8 @@ public class ValidatorLoginActivity extends AppCompatActivity implements View.On
     }
 
     private void checkForLoginCredentials() {
-        // progress dialog as message for the user
-
         if (!activityBinding.userNameEt.getText().toString().equals("") || !activityBinding.passwordEt.getText().toString().equals("")) {
+            // progress dialog as message for the user
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setMessage("Signing In...");
             progressDialog.show();
