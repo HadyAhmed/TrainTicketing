@@ -1,6 +1,5 @@
 package com.hadi.trainticketing.passenger.view.features;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -25,8 +24,7 @@ public class TicketQrCodeActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.qrCodeToolbar);
         toolbar.setNavigationOnClickListener(v -> {
-            startActivity(new Intent(TicketQrCodeActivity.this, TicketActivity.class));
-            finish();
+            onBackPressed();
         });
 
         String reservationId = getIntent().getStringExtra(RESERVATION_ID_EXTRA);
@@ -39,11 +37,5 @@ public class TicketQrCodeActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(this, "couldn't load ticket qr code", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(TicketQrCodeActivity.this, TicketActivity.class));
-        finish();
     }
 }

@@ -19,6 +19,7 @@ import com.hadi.trainticketing.passenger.model.PassengerViewModel;
 import com.hadi.trainticketing.passenger.view.activities.PassengerSignInActivity;
 
 public class TicketActivity extends AppCompatActivity implements TicketHistoryAdapter.OnTicketClickListener {
+    private static final String TAG = "TicketActivityTag";
     private ActivityTicketBinding ticketBinding;
     // place holder for adapter holding past tickets
     private TicketHistoryAdapter ticketHistoryAdapter = new TicketHistoryAdapter(this);
@@ -51,9 +52,15 @@ public class TicketActivity extends AppCompatActivity implements TicketHistoryAd
         });
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        passengerViewModel.requestTickets(PreferenceManager.getDefaultSharedPreferences(this).getString(PassengerSignInActivity.USER_ID, ""));
+    }
+
     @Override
     public void sendReservationId(String reservationId) {
         startActivity(new Intent(TicketActivity.this, TicketQrCodeActivity.class).putExtra(TicketQrCodeActivity.RESERVATION_ID_EXTRA, reservationId));
-        finish();
     }
 }

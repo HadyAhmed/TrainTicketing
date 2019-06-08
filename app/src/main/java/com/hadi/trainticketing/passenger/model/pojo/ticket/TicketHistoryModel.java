@@ -22,7 +22,7 @@ public class TicketHistoryModel {
     }
 
     public String isTicketValidation() {
-        return ticketValidation ? "Valid" : "Not Valid";
+        return !ticketValidation ? "Valid" : "Not Valid";
     }
 
     public boolean isValidated() {
