@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackground"
-            android:onClick="@{(v)->onTicketClick.sendReservationId(v,ticket.validated,ticket.reservationId)}">
+            android:onClick="@{(v)->onTicketClick.sendReservationId(v,ticket,ticket.reservationId)}">
 
             <TextView
                 android:id="@+id/seatNumberTv"

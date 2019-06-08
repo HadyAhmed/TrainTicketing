@@ -106,5 +106,8 @@
         <argument
             android:name="reservationId"
             app:argType="string" />
+        <argument
+            android:name="ticket"
+            app:argType="com.hadi.trainticketing.passenger.home.model.pojo.ticket.TicketHistoryModel" />
     </fragment>
 </navigation>

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.hadi.trainticketing.R;
-import com.hadi.trainticketing.passenger.home.view.PassengerMainActivity;
+import com.hadi.trainticketing.passenger.home.view.activities.PassengerMainActivity;
 import com.hadi.trainticketing.passenger.login.view.PassengerSignInActivity;
 import com.hadi.trainticketing.validator.home.ValidatorMainActivity;
 import com.hadi.trainticketing.validator.login.view.ValidatorLoginActivity;
@@ -61,12 +61,15 @@ public class WelcomeActivity extends AppCompatActivity
     @Override
     public void startAccountRule(Enum<Choices> rule) {
         if (rule == Choices.VALIDATOR) {
-            startActivity(new Intent(WelcomeActivity.this, ValidatorLoginActivity.class));
-            finish();
+            selectDestination(ValidatorLoginActivity.class);
         } else if (rule == Choices.PASSENGER) {
-            startActivity(new Intent(WelcomeActivity.this, PassengerSignInActivity.class));
-            finish();
+            selectDestination(PassengerSignInActivity.class);
         }
+    }
+
+    private void selectDestination(Class<?> activity) {
+        startActivity(new Intent(WelcomeActivity.this, activity));
+        finish();
     }
 }
 

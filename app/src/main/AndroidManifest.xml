@@ -29,18 +29,10 @@
             android:name=".passenger.login.view.PassengerSignInActivity"
             android:launchMode="singleTop" />
         <activity android:name=".validator.login.view.ValidatorLoginActivity" />
-        <activity android:name=".passenger.home.view.PassengerMainActivity" />
-        <activity
-            android:name=".passenger.home.view.HistoryActivity"
-            android:parentActivityName=".passenger.home.view.PassengerMainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".passenger.home.view.PassengerMainActivity" />
-        </activity>
+        <activity android:name=".passenger.home.view.activities.PassengerMainActivity" />
         <activity android:name=".passenger.home.view.activities.AddCreditCardActivity" />
         <activity android:name=".validator.home.ValidatorMainActivity" />
         <activity android:name=".passenger.home.view.activities.PassengerProfilePage" />
-        <activity android:name=".passenger.home.view.TicketQrCodeFragment" />
     </application>
 
 </manifest>

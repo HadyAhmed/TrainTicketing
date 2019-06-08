@@ -1,17 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <data>
+
+        <variable
+            name="ticket"
+            type="com.hadi.trainticketing.passenger.home.model.pojo.ticket.TicketHistoryModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/ticketQrCodeIV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </FrameLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ticketQrCodeIV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/large_margin"
+                android:layout_marginBottom="@dimen/large_margin"
+                tools:layout_height="70dp"
+                tools:layout_width="70dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/ticketView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/primary_light"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="6dp"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground">
+
+                    <TextView
+                        android:id="@+id/seatNumberTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/small_margin"
+                        android:text='@{"Seat Number("+ticket.seatNumber+")"}'
+                        android:textAppearance="?android:textAppearanceLarge"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Seat Number(13)" />
+
+                    <TextView
+                        android:id="@+id/from_label"
+                        style="@style/ticket_label_style"
+                        android:text="@string/from_label"
+                        app:layout_constraintEnd_toStartOf="@+id/from_result"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/seatNumberTv" />
+
+                    <TextView
+                        android:id="@+id/from_result"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@{ticket.reservationTicket.from.name}"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/from_label"
+                        app:layout_constraintEnd_toStartOf="@+id/to_label"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/from_label"
+                        tools:text="@string/cairo" />
+
+                    <TextView
+                        android:id="@+id/to_label"
+                        style="@style/ticket_label_style"
+                        android:text="@string/to_label"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/from_result"
+                        app:layout_constraintEnd_toStartOf="@+id/to_result"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/from_result" />
+
+                    <TextView
+                        android:id="@+id/price_label"
+                        style="@style/ticket_label_style"
+                        android:text="Price"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/class_type_resut"
+                        app:layout_constraintEnd_toStartOf="@+id/price_result"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/class_type_resut" />
+
+                    <TextView
+                        android:id="@+id/arrival_time"
+                        style="@style/ticket_label_style"
+                        android:text="Arrival"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/start_tiem_result"
+                        app:layout_constraintEnd_toStartOf="@+id/arrival_time_result"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/start_tiem_result" />
+
+                    <TextView
+                        android:id="@+id/arrival_time_result"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="@{ticket.arrivalTime}"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/arrival_time"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/arrival_time"
+                        tools:text="12:30" />
+
+                    <TextView
+                        android:id="@+id/date_label"
+                        style="@style/ticket_label_style"
+                        android:layout_marginBottom="8dp"
+                        android:text="Date"
+                        app:layout_constraintEnd_toStartOf="@+id/date_result"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/class_type" />
+
+                    <TextView
+                        android:id="@+id/date_result"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_marginEnd="8dp"
+                        android:text="@{ticket.launchTime.substring(0, 10)}"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/date_label"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/date_label"
+                        tools:text="20/10/2019" />
+
+                    <TextView
+                        android:id="@+id/start_tiem_result"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@{ticket.launchTime.substring(11, 16)}"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/start_time_label"
+                        app:layout_constraintEnd_toStartOf="@+id/arrival_time"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/start_time_label"
+                        tools:text="10:00" />
+
+                    <TextView
+                        android:id="@+id/price_result"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="@{ticket.reservationTicket.price.toString()+`LE`}"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/price_label"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/price_label"
+                        tools:text="25LE" />
+
+                    <TextView
+                        android:id="@+id/class_type_resut"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@{ticket.reservationTicket.classType.toString()}"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/class_type"
+                        app:layout_constraintEnd_toStartOf="@+id/price_label"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/class_type"
+                        tools:text="A" />
+
+                    <TextView
+                        android:id="@+id/start_time_label"
+                        style="@style/ticket_label_style"
+                        android:text="Start"
+                        app:layout_constraintEnd_toStartOf="@+id/start_tiem_result"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/from_label" />
+
+                    <TextView
+                        android:id="@+id/class_type"
+                        style="@style/ticket_label_style"
+                        android:text="Class Type"
+                        app:layout_constraintEnd_toStartOf="@+id/class_type_resut"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/start_time_label" />
+
+                    <TextView
+                        android:id="@+id/to_result"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@{ticket.reservationTicket.to.name}"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/to_label"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/to_label"
+                        tools:text="@string/alex" />
+
+                    <TextView
+                        android:id="@+id/trainTypeLabel"
+                        style="@style/ticket_label_style"
+                        android:layout_marginBottom="16dp"
+                        android:text="Train Type"
+                        app:layout_constraintEnd_toStartOf="@+id/trainType"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/date_label" />
+
+                    <TextView
+                        android:id="@+id/trainType"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="@{ticket.reservationTicket.trian.name}"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/trainTypeLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/trainTypeLabel"
+                        tools:text="@string/alex" />
+
+                    <TextView
+                        android:id="@+id/ticketValidation"
+                        style="@style/ticket_label_style"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:text="Valid Ticket"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/textView9"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/trainType" />
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:text="@{ticket.isTicketValidation()}"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/ticketValidation"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/ticketValidation"
+                        tools:text="Valid" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

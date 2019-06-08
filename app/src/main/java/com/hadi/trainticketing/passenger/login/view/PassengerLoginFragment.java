@@ -19,7 +19,7 @@ import androidx.navigation.Navigation;
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.databinding.FragmentLoginPassengerBinding;
 import com.hadi.trainticketing.datasource.webservice.WebServices;
-import com.hadi.trainticketing.passenger.home.view.PassengerMainActivity;
+import com.hadi.trainticketing.passenger.home.view.activities.PassengerMainActivity;
 import com.hadi.trainticketing.passenger.login.pojo.login.PassengerLoginResponse;
 import com.hadi.trainticketing.passenger.login.pojo.login.SignInFields;
 import com.hadi.trainticketing.utils.Utils;

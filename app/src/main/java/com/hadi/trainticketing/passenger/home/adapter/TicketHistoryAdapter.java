@@ -42,7 +42,7 @@ public class TicketHistoryAdapter extends RecyclerView.Adapter<TicketHistoryAdap
     }
 
     public interface OnTicketClickListener {
-        void sendReservationId(View v, boolean validTicket, String reservationId);
+        void sendReservationId(View v, TicketHistoryModel historyModel, String reservationId);
     }
 
     @Override

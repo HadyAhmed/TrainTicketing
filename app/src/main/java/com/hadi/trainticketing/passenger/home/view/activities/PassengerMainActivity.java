@@ -1,4 +1,4 @@
-package com.hadi.trainticketing.passenger.home.view;
+package com.hadi.trainticketing.passenger.home.view.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,11 +11,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.boarding.WelcomeActivity;
 import com.hadi.trainticketing.databinding.ActivityPassengerMainBinding;
-import com.hadi.trainticketing.passenger.home.view.activities.PassengerProfilePage;
+import com.hadi.trainticketing.passenger.home.model.PassengerViewModel;
+import com.hadi.trainticketing.passenger.login.view.PassengerSignInActivity;
 
 public class PassengerMainActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
 
@@ -24,9 +26,18 @@ public class PassengerMainActivity extends AppCompatActivity implements Toolbar.
         super.onCreate(savedInstanceState);
         ActivityPassengerMainBinding passengerMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_passenger_main);
 
+        PassengerViewModel passengerViewModel = ViewModelProviders.of(this).get(PassengerViewModel.class);
+
+        passengerViewModel.requestUserInfo(PreferenceManager.getDefaultSharedPreferences(this).getString(PassengerSignInActivity.USER_TOKEN, ""));
+
+        passengerViewModel.getUserInfo().observe(this, userResponse -> {
+            if (userResponse != null) {
+                passengerMainBinding.mainToolbar.setSubtitle(userResponse.getResult().getName());
+            }
+        });
+
         passengerMainBinding.mainToolbar.inflateMenu(R.menu.main_menu);
         passengerMainBinding.mainToolbar.setOnMenuItemClickListener(this);
-
     }
 
     @Override

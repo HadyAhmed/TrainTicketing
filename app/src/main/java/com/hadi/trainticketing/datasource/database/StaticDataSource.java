@@ -2,7 +2,7 @@ package com.hadi.trainticketing.datasource.database;
 
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.passenger.home.model.PassengerCards;
-import com.hadi.trainticketing.passenger.home.view.PassengerMainActivity;
+import com.hadi.trainticketing.passenger.home.view.activities.PassengerMainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,6 @@ public abstract class StaticDataSource {
     public static final int RESERVE_ITEM = 1;
     public static final int BALANCE_ITEM = 2;
     public static final int TICKET_ITEM = 3;
-    public static final int HISTORY_ITEM = 4;
     // is a list that holding the text description for the page in boarding screens
     private static final List<String> contentDescription;
 
@@ -46,9 +45,6 @@ public abstract class StaticDataSource {
         addWelcomeItemList(new PassengerCards(TICKET_ITEM,
                 "Tickets",
                 "Use your tickets to validate it, when you reach your trip, the validator will ask to scan it, so easy right ?", R.drawable.ic_ticket));
-        addWelcomeItemList(new PassengerCards(HISTORY_ITEM,
-                "History",
-                "A History for all you need, track your trips, tickets and your receipts all the time", R.drawable.ic_history));
     }
 
     public static List<String> getContentDescription() {

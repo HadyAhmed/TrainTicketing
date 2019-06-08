@@ -1,11 +1,9 @@
 package com.hadi.trainticketing.passenger.home.view;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,13 +16,6 @@ import com.hadi.trainticketing.datasource.database.StaticDataSource;
 import com.hadi.trainticketing.passenger.home.adapter.WelcomeAdapter;
 
 public class PassengerMainFragment extends Fragment implements WelcomeAdapter.OnWelcomeItemClickListener {
-    private Context context;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
 
     @Nullable
     @Override
@@ -45,8 +36,6 @@ public class PassengerMainFragment extends Fragment implements WelcomeAdapter.On
             Navigation.findNavController(view).navigate(R.id.action_passengerMainFragment_to_balanceFragment);
         } else if (itemPosition == StaticDataSource.TICKET_ITEM) {
             Navigation.findNavController(view).navigate(R.id.action_passengerMainFragment_to_ticketFragment);
-        } else if (itemPosition == StaticDataSource.HISTORY_ITEM) {
-            Toast.makeText(context, "History", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -18,6 +18,7 @@ import androidx.navigation.Navigation;
 import com.hadi.trainticketing.databinding.FragmentTicketBinding;
 import com.hadi.trainticketing.passenger.home.adapter.TicketHistoryAdapter;
 import com.hadi.trainticketing.passenger.home.model.PassengerViewModel;
+import com.hadi.trainticketing.passenger.home.model.pojo.ticket.TicketHistoryModel;
 import com.hadi.trainticketing.passenger.login.view.PassengerSignInActivity;
 
 public class TicketFragment extends Fragment implements TicketHistoryAdapter.OnTicketClickListener {
@@ -67,9 +68,9 @@ public class TicketFragment extends Fragment implements TicketHistoryAdapter.OnT
     }
 
     @Override
-    public void sendReservationId(View v, boolean validTicket, String reservationId) {
-        if (!validTicket) {
-            Navigation.findNavController(v).navigate(TicketFragmentDirections.actionTicketFragmentToTicketQrCodeFragment(reservationId));
+    public void sendReservationId(View v, TicketHistoryModel historyModel, String reservationId) {
+        if (!historyModel.isValidated()) {
+            Navigation.findNavController(v).navigate(TicketFragmentDirections.actionTicketFragmentToTicketQrCodeFragment(reservationId, historyModel));
         } else {
             Toast.makeText(context, "this ticket is already validated", Toast.LENGTH_SHORT).show();
         }
