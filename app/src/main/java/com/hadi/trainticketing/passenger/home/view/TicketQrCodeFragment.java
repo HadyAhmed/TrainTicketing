@@ -34,7 +34,7 @@ public class TicketQrCodeFragment extends Fragment {
             qrCodeBinding.setTicket(TicketQrCodeFragmentArgs.fromBundle(getArguments()).getTicket());
             try {
                 BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-                Bitmap bitmap = barcodeEncoder.encodeBitmap(TicketQrCodeFragmentArgs.fromBundle(getArguments()).getReservationId(), BarcodeFormat.QR_CODE, 700, 700);
+                Bitmap bitmap = barcodeEncoder.encodeBitmap(TicketQrCodeFragmentArgs.fromBundle(getArguments()).getReservationId(), BarcodeFormat.QR_CODE, 400, 400);
                 qrCodeBinding.ticketQrCodeIV.setImageBitmap(bitmap);
             } catch (Exception e) {
                 Toast.makeText(context, "couldn't load ticket qr code", Toast.LENGTH_SHORT).show();

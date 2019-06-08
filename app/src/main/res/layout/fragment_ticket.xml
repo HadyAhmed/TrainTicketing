@@ -3,24 +3,68 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".passenger.ui.activity.TicketActivity">
+        android:layout_height="match_parent">
 
-        <ProgressBar
-            android:id="@+id/ticketProgress"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:indeterminate="true" />
+            android:orientation="vertical"
+            tools:context=".passenger.ui.activity.TicketActivity">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/previousRv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/ticket_item" />
-    </LinearLayout>
+            <ProgressBar
+                android:id="@+id/ticketProgress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true" />
+
+            <LinearLayout
+                android:id="@+id/contentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="invisible"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/validTicketTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/raleway_semibold"
+                    android:text="Valid Tickets"
+                    android:textAppearance="?android:textAppearanceLarge" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/valid_ticket_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/ticket_item" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:background="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/invalidTicketsTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/raleway_semibold"
+                    android:text="Previous Tickets"
+                    android:textAppearance="?android:textAppearanceLarge" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/previous_ticket_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/ticket_item" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </layout>

@@ -21,11 +21,15 @@ import com.hadi.trainticketing.passenger.home.model.PassengerViewModel;
 import com.hadi.trainticketing.passenger.home.model.pojo.ticket.TicketHistoryModel;
 import com.hadi.trainticketing.passenger.login.view.PassengerSignInActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TicketFragment extends Fragment implements TicketHistoryAdapter.OnTicketClickListener {
     private static final String TAG = "TicketActivityTag";
     private FragmentTicketBinding ticketBinding;
     // place holder for adapter holding past tickets
-    private TicketHistoryAdapter ticketHistoryAdapter = new TicketHistoryAdapter(this);
+    private TicketHistoryAdapter validTicketAdapter = new TicketHistoryAdapter(this);
+    private TicketHistoryAdapter invalidTicketAdapter = new TicketHistoryAdapter(this);
     private PassengerViewModel passengerViewModel;
     private Context context;
 
@@ -42,7 +46,11 @@ public class TicketFragment extends Fragment implements TicketHistoryAdapter.OnT
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ticketBinding = FragmentTicketBinding.inflate(inflater, container, false);
 
-        ticketBinding.previousRv.setAdapter(ticketHistoryAdapter);
+        Log.d(TAG, "onCreateView: ");
+        ticketBinding.validTicketRv.setAdapter(validTicketAdapter);
+        ticketBinding.validTicketRv.setNestedScrollingEnabled(false);
+        ticketBinding.previousTicketRv.setAdapter(invalidTicketAdapter);
+        ticketBinding.previousTicketRv.setNestedScrollingEnabled(false);
 
         fetchAllTickets();
 
@@ -52,7 +60,6 @@ public class TicketFragment extends Fragment implements TicketHistoryAdapter.OnT
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume: ");
         passengerViewModel.requestTickets(PreferenceManager.getDefaultSharedPreferences(context).getString(PassengerSignInActivity.USER_ID, ""));
     }
 
@@ -60,7 +67,25 @@ public class TicketFragment extends Fragment implements TicketHistoryAdapter.OnT
         passengerViewModel.getTicketsHistory().observe(this, ticketModels -> {
             ticketBinding.ticketProgress.setVisibility(View.INVISIBLE);
             if (ticketModels != null && !ticketModels.isEmpty()) {
-                ticketHistoryAdapter.setTicketHistoryModels(ticketModels);
+                ticketBinding.contentLayout.setVisibility(View.VISIBLE);
+                List<TicketHistoryModel> validTickets = new ArrayList<>();
+                List<TicketHistoryModel> invalidTickets = new ArrayList<>();
+                for (int i = 0; i < ticketModels.size(); i++) {
+                    if (!ticketModels.get(i).isValidated()) {
+                        validTickets.add(ticketModels.get(i));
+                    } else {
+                        invalidTickets.add(ticketModels.get(i));
+                    }
+                }
+                if (invalidTickets.isEmpty()) {
+                    ticketBinding.invalidTicketsTv.setText("no previous tickets available");
+                }
+                if (validTickets.isEmpty()) {
+                    ticketBinding.validTicketTv.setText("no recent tickets available");
+                }
+                validTicketAdapter.setTicketHistoryModels(validTickets);
+                invalidTicketAdapter.setTicketHistoryModels(invalidTickets);
+
             } else {
                 Toast.makeText(context, "no tickets were reserved for now", Toast.LENGTH_SHORT).show();
             }
