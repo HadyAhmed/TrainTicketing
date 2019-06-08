@@ -2,8 +2,8 @@ package com.hadi.trainticketing.datasource.webservice;
 
 import com.google.gson.Gson;
 import com.hadi.trainticketing.passenger.model.pojo.enquire.EnquireResponse;
+import com.hadi.trainticketing.passenger.model.pojo.login.PassengerLoginResponse;
 import com.hadi.trainticketing.passenger.model.pojo.login.SignInFields;
-import com.hadi.trainticketing.passenger.model.pojo.login.SignInResponse;
 import com.hadi.trainticketing.passenger.model.pojo.profile.UserResponse;
 import com.hadi.trainticketing.passenger.model.pojo.reservation.request.ReservationRequest;
 import com.hadi.trainticketing.passenger.model.pojo.reservation.response.reservation.ReservationResult;
@@ -12,6 +12,9 @@ import com.hadi.trainticketing.passenger.model.pojo.signup.SignUpFields;
 import com.hadi.trainticketing.passenger.model.pojo.signup.SignUpResponse;
 import com.hadi.trainticketing.passenger.model.pojo.stations.StationsResponse;
 import com.hadi.trainticketing.passenger.model.pojo.ticket.TicketHistoryResponse;
+import com.hadi.trainticketing.validator.home.pojo.request.ScanBody;
+import com.hadi.trainticketing.validator.home.pojo.response.ScanResponse;
+import com.hadi.trainticketing.validator.login.pojo.EmployeeLoginResponse;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -19,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -42,7 +46,10 @@ public interface WebServices {
             .build();
 
     @POST("user/signin")
-    Call<SignInResponse> getLoginResponse(@Body SignInFields user);
+    Call<PassengerLoginResponse> loginAsPassenger(@Body SignInFields user);
+
+    @POST("employee/signin")
+    Call<EmployeeLoginResponse> loginAsEmpolyee(@Body SignInFields user);
 
     @POST("user/signup")
     Call<SignUpResponse> getSignUpResponse(@Body SignUpFields user);
@@ -70,4 +77,7 @@ public interface WebServices {
 
     @GET("reservation/byUser/{uid}")
     Call<TicketHistoryResponse> getTicketHistory(@Path("uid") String uid);
+
+    @PATCH("reservation/{reservationId}")
+    Call<ScanResponse> scanTicket(@Path("reservationId") String reservationId, @Body ScanBody[] scanBody);
 }

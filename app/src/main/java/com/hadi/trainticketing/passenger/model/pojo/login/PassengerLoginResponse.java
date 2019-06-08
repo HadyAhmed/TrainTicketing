@@ -4,7 +4,7 @@ package com.hadi.trainticketing.passenger.model.pojo.login;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SignInResponse {
+public class PassengerLoginResponse {
 
     @SerializedName("success")
     @Expose

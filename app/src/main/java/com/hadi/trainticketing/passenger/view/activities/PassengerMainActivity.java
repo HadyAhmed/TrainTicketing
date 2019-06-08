@@ -1,6 +1,5 @@
 package com.hadi.trainticketing.passenger.view.activities;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,9 +22,12 @@ import com.hadi.trainticketing.passenger.view.features.EnquireActivity;
 import com.hadi.trainticketing.passenger.view.features.HistoryActivity;
 import com.hadi.trainticketing.passenger.view.features.ReserveActivity;
 import com.hadi.trainticketing.passenger.view.features.TicketActivity;
+import com.hadi.trainticketing.welcome.WelcomeActivity;
 
 public class PassengerMainActivity extends AppCompatActivity
         implements WelcomeAdapter.OnWelcomeItemClickListener, Toolbar.OnMenuItemClickListener {
+
+    private static final String TAG = "PassengerMainActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,7 +75,7 @@ public class PassengerMainActivity extends AppCompatActivity
                     .setPositiveButton("Yes", (dialog, which) -> {
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(PassengerMainActivity.this);
                         preferences.edit().clear().apply();
-                        startActivity(new Intent(PassengerMainActivity.this, PassengerSignInActivity.class));
+                        startActivity(new Intent(PassengerMainActivity.this, WelcomeActivity.class));
                         finish();
                     }).setNegativeButton("Cancel", null)
                     .show();
@@ -87,12 +89,7 @@ public class PassengerMainActivity extends AppCompatActivity
         AlertDialog.Builder builder = new AlertDialog.Builder(PassengerMainActivity.this);
         builder.setTitle("Exit!")
                 .setMessage("Are you sure to Exit?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                }).setNegativeButton("Cancel", null)
+                .setPositiveButton("Yes", (dialog, which) -> finish()).setNegativeButton("Cancel", null)
                 .show();
     }
 }

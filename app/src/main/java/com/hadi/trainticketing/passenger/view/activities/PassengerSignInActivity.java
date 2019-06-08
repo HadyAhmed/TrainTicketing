@@ -8,17 +8,21 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.databinding.LoginActivityBinding;
-import com.hadi.trainticketing.passenger.model.PassengerViewModel;
+import com.hadi.trainticketing.datasource.webservice.WebServices;
+import com.hadi.trainticketing.passenger.model.pojo.login.PassengerLoginResponse;
 import com.hadi.trainticketing.passenger.model.pojo.login.SignInFields;
-import com.hadi.trainticketing.passenger.model.pojo.login.SignInResponse;
 import com.hadi.trainticketing.utils.Utils;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * @author Hady Ahmed
@@ -27,19 +31,17 @@ import com.hadi.trainticketing.utils.Utils;
 public class PassengerSignInActivity extends AppCompatActivity implements View.OnClickListener {
     private LoginActivityBinding activityBinding;
     // preferences key for the user data
+    public static final String IS_SIGNED_AS_PASSENGER = "signInAsPassengerPrefs";
     public static final String IS_SIGNED_IN = "isSignedIn";
     public static final String USER_TOKEN = "user_id_pref_key";
     public static final String USER_ID = "uid";
 
-    private PassengerViewModel viewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         activityBinding = DataBindingUtil.setContentView(this, R.layout.login_activity);
-
-        viewModel = ViewModelProviders.of(this).get(PassengerViewModel.class);
 
         activityBinding.forgetPassBtn.setOnClickListener(this);
         activityBinding.signInBtn.setOnClickListener(this);
@@ -64,33 +66,45 @@ public class PassengerSignInActivity extends AppCompatActivity implements View.O
     }
 
     private void checkForCredentials(SignInFields user) {
-        // progress dialog as message for the user
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Signing In...");
-        progressDialog.show();
-        progressDialog.setCancelable(false);
+        if (!activityBinding.userNameEt.getText().toString().equals("") || !activityBinding.passwordEt.getText().toString().equals("")) {  // progress dialog as message for the user
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Signing In...");
+            progressDialog.show();
+            progressDialog.setCancelable(false);
 
-        viewModel.loginWithCredentials(user)
-                .observe(this, signInResponse -> {
-                    progressDialog.dismiss();
-                    if (signInResponse != null && signInResponse.isSuccess()) {
-                        saveUserInfo(signInResponse);
-                        Toast.makeText(PassengerSignInActivity.this, "Welcome " + signInResponse.getUser().getName(), Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(PassengerSignInActivity.this, PassengerMainActivity.class));
-                        finish();
-                    } else if (signInResponse != null && !signInResponse.isSuccess()) {
-                        Toast.makeText(PassengerSignInActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(PassengerSignInActivity.this, "something went wring with our server side", Toast.LENGTH_SHORT).show();
-                    }
-                });
+            WebServices.serverConnection.create(WebServices.class)
+                    .loginAsPassenger(user)
+                    .enqueue(new Callback<PassengerLoginResponse>() {
+                        @Override
+                        public void onResponse(@NonNull Call<PassengerLoginResponse> call, @NonNull Response<PassengerLoginResponse> response) {
+                            progressDialog.dismiss();
+                            if (response.body() != null && response.body().isSuccess()) {
+                                saveUserInfo(response.body());
+                                startActivity(new Intent(PassengerSignInActivity.this, PassengerMainActivity.class));
+                                finish();
+                            } else {
+                                Toast.makeText(PassengerSignInActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<PassengerLoginResponse> call, @NonNull Throwable t) {
+                            progressDialog.dismiss();
+                            Toast.makeText(PassengerSignInActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+        } else {
+            Toast.makeText(this, "insert all fields", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void saveUserInfo(SignInResponse response) {
+    private void saveUserInfo(PassengerLoginResponse response) {
         // saving data to shared pref if the user selected remember me
         SharedPreferences userPrefs = PreferenceManager.getDefaultSharedPreferences(PassengerSignInActivity.this);
         userPrefs.edit()
                 .putBoolean(PassengerSignInActivity.IS_SIGNED_IN, true)
+                .putBoolean(PassengerSignInActivity.IS_SIGNED_AS_PASSENGER, true)
                 .putString(PassengerSignInActivity.USER_TOKEN, response.getToken())
                 .putString(PassengerSignInActivity.USER_ID, response.getUser().getId())
                 .apply();

@@ -1,29 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/validatorAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/validatorToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="Validator" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <fragment
-            android:id="@+id/validatorMainFragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+
+        <TextView
+            android:id="@+id/scheduleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/validatorAppBar"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/validator_nav_graph" />
-    </RelativeLayout>
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/raleway_semibold"
+            android:text="Scanned tickets :"
+            android:textAppearance="?android:textAppearanceLarge"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/validatorAppBar" />
+
+        <TextView
+            android:id="@+id/scannedTicketsNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/validatorAppBar"
+            android:layout_alignEnd="@id/scheduleTv"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/raleway_medium"
+            android:textAppearance="?android:textAppearanceLarge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scheduleTv"
+            tools:text="20" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/ticketsTv"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/scheduleTv"-->
+        <!--android:fontFamily="@font/raleway_semibold"-->
+        <!--android:padding="16dp"-->
+        <!--android:text="Total Tickets :"-->
+        <!--android:textAppearance="?android:textAppearanceMedium" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tripLabel"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/ticketsTv"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:fontFamily="@font/raleway_semibold"-->
+        <!--android:text="Today's Trips"-->
+        <!--android:textAppearance="?android:textAppearanceLarge" />-->
+
+        <!--<androidx.recyclerview.widget.RecyclerView-->
+        <!--android:id="@+id/tripsRv"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_above="@id/scanTicketBtn"-->
+        <!--android:layout_below="@id/tripLabel"-->
+        <!--tools:itemCount="3"-->
+        <!--tools:listitem="@layout/trip_item" />-->
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/scanTicketBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Scan Ticket"
+            app:cornerRadius="@dimen/medium_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/scanProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/validatorAppBar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -11,7 +11,8 @@ import androidx.fragment.app.Fragment;
 import com.hadi.trainticketing.R;
 import com.hadi.trainticketing.passenger.view.activities.PassengerMainActivity;
 import com.hadi.trainticketing.passenger.view.activities.PassengerSignInActivity;
-import com.hadi.trainticketing.validator.ValidatorLoginActivity;
+import com.hadi.trainticketing.validator.home.ValidatorMainActivity;
+import com.hadi.trainticketing.validator.login.view.ValidatorLoginActivity;
 
 /**
  * This is the entry point for the application where the user will be able to know some
@@ -28,7 +29,11 @@ public class WelcomeActivity extends AppCompatActivity
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (preferences.contains(PassengerSignInActivity.IS_SIGNED_IN)) {
             if (preferences.getBoolean(PassengerSignInActivity.IS_SIGNED_IN, false)) {
-                startActivity(new Intent(this, PassengerMainActivity.class));
+                if (preferences.getBoolean(PassengerSignInActivity.IS_SIGNED_AS_PASSENGER, false)) {
+                    startActivity(new Intent(this, PassengerMainActivity.class));
+                } else {
+                    startActivity(new Intent(this, ValidatorMainActivity.class));
+                }
                 finish();
             }
         }

@@ -58,12 +58,12 @@ public class WelcomeFragment extends Fragment implements ViewPager.OnPageChangeL
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         welcomeBinding = FragmentWelcomeBinding.inflate(inflater, container, false);
 
-        // setup view pager indicator
+        // setup home pager indicator
         welcomeBinding.pageIndicatorView.setAnimationDuration(2000);
         welcomeBinding.pageIndicatorView.setAnimationType(AnimationType.WORM);
         welcomeBinding.pageIndicatorView.setCount(3);
 
-        // setup view pager
+        // setup home pager
         welcomeBinding.viewPager.setAdapter(new ViewPagerAdapter(welcomeContent, context));
         welcomeBinding.viewPager.addOnPageChangeListener(this);
 
@@ -96,7 +96,7 @@ public class WelcomeFragment extends Fragment implements ViewPager.OnPageChangeL
 }
 
 /**
- * this blueprint holds the content data for the user to show up text view
+ * this blueprint holds the content data for the user to show up text home
  * and image resources
  */
 class WelcomeContent {
@@ -122,7 +122,7 @@ class WelcomeContent {
 }
 
 /**
- * adapter for the view pager that handles movements and insert content
+ * adapter for the home pager that handles movements and insert content
  */
 class ViewPagerAdapter extends PagerAdapter {
     private WelcomeContent welcomeContent;

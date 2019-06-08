@@ -9,8 +9,8 @@ import androidx.lifecycle.MutableLiveData;
 import com.hadi.trainticketing.datasource.webservice.WebServices;
 import com.hadi.trainticketing.passenger.model.pojo.enquire.EnquireResponse;
 import com.hadi.trainticketing.passenger.model.pojo.enquire.ResultArray;
+import com.hadi.trainticketing.passenger.model.pojo.login.PassengerLoginResponse;
 import com.hadi.trainticketing.passenger.model.pojo.login.SignInFields;
-import com.hadi.trainticketing.passenger.model.pojo.login.SignInResponse;
 import com.hadi.trainticketing.passenger.model.pojo.profile.UserResponse;
 import com.hadi.trainticketing.passenger.model.pojo.reservation.request.ReservationRequest;
 import com.hadi.trainticketing.passenger.model.pojo.reservation.response.reservation.Reservation;
@@ -33,7 +33,7 @@ import retrofit2.Response;
 
 public class PassengerRepo {
     private static final String TAG = "PassengerRepo";
-    private MutableLiveData<SignInResponse> signInResponse;
+    private MutableLiveData<PassengerLoginResponse> signInResponse;
     private MutableLiveData<SignUpResponse> signUpResponse;
     private MutableLiveData<List<ResultArray>> tickets;
     private MutableLiveData<List<Station>> stations;
@@ -44,21 +44,21 @@ public class PassengerRepo {
 
     private WebServices webServices = WebServices.serverConnection.create(WebServices.class);
 
-    public LiveData<SignInResponse> login(SignInFields signInFields) {
+    public LiveData<PassengerLoginResponse> login(SignInFields signInFields) {
         if (signInResponse == null) {
             signInResponse = new MutableLiveData<>();
         }
-        webServices.getLoginResponse(signInFields)
-                .enqueue(new Callback<SignInResponse>() {
+        webServices.loginAsPassenger(signInFields)
+                .enqueue(new Callback<PassengerLoginResponse>() {
                     @Override
-                    public void onResponse(@NonNull Call<SignInResponse> call, @NonNull Response<SignInResponse> response) {
+                    public void onResponse(@NonNull Call<PassengerLoginResponse> call, @NonNull Response<PassengerLoginResponse> response) {
                         if (response.body() != null && response.isSuccessful()) {
                             signInResponse.setValue(response.body());
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<SignInResponse> call, @NonNull Throwable t) {
+                    public void onFailure(@NonNull Call<PassengerLoginResponse> call, @NonNull Throwable t) {
                         signInResponse.setValue(null);
                         Log.e(TAG, "onFailure: " + t.getMessage());
                     }

@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * this class will hold static data for the application
- * to share it with {@link com.hadi.trainticketing.welcome.WelcomeActivity} for the welcome view pager
+ * to share it with {@link com.hadi.trainticketing.welcome.WelcomeActivity} for the welcome home pager
  * and {@link com.hadi.trainticketing.passenger.view.activities.PassengerMainActivity} for the passenger
  * cards
  *

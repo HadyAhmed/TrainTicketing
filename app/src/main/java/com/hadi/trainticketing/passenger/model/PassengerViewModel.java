@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.hadi.trainticketing.passenger.data.PassengerRepo;
 import com.hadi.trainticketing.passenger.model.pojo.enquire.ResultArray;
+import com.hadi.trainticketing.passenger.model.pojo.login.PassengerLoginResponse;
 import com.hadi.trainticketing.passenger.model.pojo.login.SignInFields;
-import com.hadi.trainticketing.passenger.model.pojo.login.SignInResponse;
 import com.hadi.trainticketing.passenger.model.pojo.profile.UserResponse;
 import com.hadi.trainticketing.passenger.model.pojo.reservation.request.ReservationRequest;
 import com.hadi.trainticketing.passenger.model.pojo.reservation.response.reservation.Reservation;
@@ -28,7 +28,7 @@ public class PassengerViewModel extends ViewModel {
         passengerRepo = new PassengerRepo();
     }
 
-    public LiveData<SignInResponse> loginWithCredentials(SignInFields signInFields) {
+    public LiveData<PassengerLoginResponse> loginWithCredentials(SignInFields signInFields) {
         return passengerRepo.login(signInFields);
     }
 
