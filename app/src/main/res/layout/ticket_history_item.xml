@@ -7,11 +7,11 @@
 
         <variable
             name="ticket"
-            type="com.hadi.trainticketing.passenger.model.pojo.ticket.TicketHistoryModel" />
+            type="com.hadi.trainticketing.passenger.home.model.pojo.ticket.TicketHistoryModel" />
 
         <variable
             name="onTicketClick"
-            type="com.hadi.trainticketing.passenger.adapter.TicketHistoryAdapter.OnTicketClickListener" />
+            type="com.hadi.trainticketing.passenger.home.adapter.TicketHistoryAdapter.OnTicketClickListener" />
 
     </data>
 
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackground"
-            android:onClick="@{()->onTicketClick.sendReservationId(ticket.reservationId)}">
+            android:onClick="@{(v)->onTicketClick.sendReservationId(v,ticket.validated,ticket.reservationId)}">
 
             <TextView
                 android:id="@+id/seatNumberTv"

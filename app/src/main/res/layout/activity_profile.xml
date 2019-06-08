@@ -7,7 +7,7 @@
 
         <variable
             name="user"
-            type="com.hadi.trainticketing.passenger.model.pojo.profile.UserResponse" />
+            type="com.hadi.trainticketing.passenger.home.model.pojo.profile.UserResponse" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

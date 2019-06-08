@@ -7,11 +7,11 @@
 
         <variable
             name="itemVariable"
-            type="com.hadi.trainticketing.passenger.model.PassengerCards" />
+            type="com.hadi.trainticketing.passenger.home.model.PassengerCards" />
 
         <variable
             name="itemClickHandler"
-            type="com.hadi.trainticketing.passenger.adapter.WelcomeAdapter.OnWelcomeItemClickListener" />
+            type="com.hadi.trainticketing.passenger.home.adapter.WelcomeAdapter.OnWelcomeItemClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
-            android:onClick="@{(v)-> itemClickHandler.onWelcomeItemClick(itemVariable.itemPosition)}"
+            android:onClick="@{(v)-> itemClickHandler.onWelcomeItemClick(v,itemVariable.itemPosition)}"
             app:cardBackgroundColor="?attr/selectableItemBackground">
 
             <ImageView

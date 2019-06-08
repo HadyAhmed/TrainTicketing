@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".welcome.WelcomeActivity">
+        <activity android:name=".boarding.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,57 +26,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".passenger.view.activities.PassengerSignInActivity"
+            android:name=".passenger.login.view.PassengerSignInActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".passenger.view.activities.ForgetPasswordActivity" />
         <activity android:name=".validator.login.view.ValidatorLoginActivity" />
+        <activity android:name=".passenger.home.view.PassengerMainActivity" />
         <activity
-            android:name=".passenger.view.activities.PassengerSignUpActivity"
-            android:parentActivityName=".passenger.view.activities.PassengerSignInActivity">
+            android:name=".passenger.home.view.HistoryActivity"
+            android:parentActivityName=".passenger.home.view.PassengerMainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".passenger.view.activities.PassengerSignInActivity" />
+                android:value=".passenger.home.view.PassengerMainActivity" />
         </activity>
-        <activity android:name=".passenger.view.activities.PassengerMainActivity" />
-        <activity
-            android:name=".passenger.view.features.BalanceActivity"
-            android:parentActivityName=".passenger.view.activities.PassengerMainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".passenger.view.activities.PassengerMainActivity" />
-        </activity>
-        <activity
-            android:name=".passenger.view.features.EnquireActivity"
-            android:parentActivityName=".passenger.view.activities.PassengerMainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".passenger.view.activities.PassengerMainActivity" />
-        </activity>
-        <activity
-            android:name=".passenger.view.features.HistoryActivity"
-            android:parentActivityName=".passenger.view.activities.PassengerMainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".passenger.view.activities.PassengerMainActivity" />
-        </activity>
-        <activity
-            android:name=".passenger.view.features.ReserveActivity"
-            android:parentActivityName=".passenger.view.activities.PassengerMainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".passenger.view.activities.PassengerMainActivity" />
-        </activity>
-        <activity
-            android:name=".passenger.view.features.TicketActivity"
-            android:parentActivityName=".passenger.view.activities.PassengerMainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".passenger.view.activities.PassengerMainActivity" />
-        </activity>
-        <activity android:name=".passenger.view.features.AddCreditCardActivity" />
+        <activity android:name=".passenger.home.view.activities.AddCreditCardActivity" />
         <activity android:name=".validator.home.ValidatorMainActivity" />
-        <activity android:name=".passenger.view.activities.PassengerProfilePage" />
-        <activity android:name=".passenger.view.features.TicketQrCodeActivity" />
+        <activity android:name=".passenger.home.view.activities.PassengerProfilePage" />
+        <activity android:name=".passenger.home.view.TicketQrCodeFragment" />
     </application>
 
 </manifest>

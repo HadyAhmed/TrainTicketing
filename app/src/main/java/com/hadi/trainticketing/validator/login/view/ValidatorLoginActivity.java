@@ -14,11 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.hadi.trainticketing.R;
-import com.hadi.trainticketing.databinding.LoginActivityBinding;
+import com.hadi.trainticketing.databinding.FragmentLoginPassengerBinding;
 import com.hadi.trainticketing.datasource.webservice.WebServices;
-import com.hadi.trainticketing.passenger.model.pojo.login.SignInFields;
-import com.hadi.trainticketing.passenger.view.activities.ForgetPasswordActivity;
-import com.hadi.trainticketing.passenger.view.activities.PassengerSignInActivity;
+import com.hadi.trainticketing.passenger.login.pojo.login.SignInFields;
+import com.hadi.trainticketing.passenger.login.view.ForgetPasswordFragment;
+import com.hadi.trainticketing.passenger.login.view.PassengerSignInActivity;
 import com.hadi.trainticketing.validator.home.ValidatorMainActivity;
 import com.hadi.trainticketing.validator.login.pojo.EmployeeLoginResponse;
 
@@ -27,12 +27,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ValidatorLoginActivity extends AppCompatActivity implements View.OnClickListener {
-    private LoginActivityBinding activityBinding;
+    private FragmentLoginPassengerBinding activityBinding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityBinding = DataBindingUtil.setContentView(this, R.layout.login_activity);
+        activityBinding = DataBindingUtil.setContentView(this, R.layout.fragment_login_passenger);
 
         activityBinding.signUpBtn.setVisibility(View.GONE);
         activityBinding.forgetPassBtn.setOnClickListener(this);
@@ -44,7 +44,7 @@ public class ValidatorLoginActivity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         int viewId = v.getId();
         if (viewId == activityBinding.forgetPassBtn.getId()) {
-            startActivity(new Intent(ValidatorLoginActivity.this, ForgetPasswordActivity.class));
+            startActivity(new Intent(ValidatorLoginActivity.this, ForgetPasswordFragment.class));
         } else if (viewId == activityBinding.signInBtn.getId()) {
             checkForLoginCredentials();
         }

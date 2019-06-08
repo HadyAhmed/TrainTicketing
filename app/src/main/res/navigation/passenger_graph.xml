@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/passenger_graph"
+    app:startDestination="@id/passengerMainFragment">
+
+    <fragment
+        android:id="@+id/passengerMainFragment"
+        android:name="com.hadi.trainticketing.passenger.home.view.PassengerMainFragment"
+        android:label="PassengerMainFragment"
+        tools:layout="@layout/fragment_passenger_main">
+        <action
+            android:id="@+id/action_passengerMainFragment_to_enquireFragment"
+            app:destination="@id/enquireFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_passengerMainFragment_to_reservationFragment"
+            app:destination="@id/reservationFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_passengerMainFragment_to_balanceFragment"
+            app:destination="@id/balanceFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_passengerMainFragment_to_ticketFragment"
+            app:destination="@id/ticketFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/enquireFragment"
+        android:name="com.hadi.trainticketing.passenger.home.view.EnquireFragment"
+        android:label="EnquireFragment"
+        tools:layout="@layout/fragment_enquire_layout" />
+    <fragment
+        android:id="@+id/reservationFragment"
+        android:name="com.hadi.trainticketing.passenger.home.view.ReservationMainFragment"
+        android:label="ReservationFragment"
+        tools:layout="@layout/fragment_reservation_main">
+        <action
+            android:id="@+id/action_reservationFragment_to_reservationSeatFragment"
+            app:destination="@id/reservationSeatFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/balanceFragment"
+        android:name="com.hadi.trainticketing.passenger.home.view.BalanceFragment"
+        android:label="BalanceFragment"
+        tools:layout="@layout/fragment_balance" />
+    <fragment
+        android:id="@+id/ticketFragment"
+        android:name="com.hadi.trainticketing.passenger.home.view.TicketFragment"
+        android:label="TicketFragment"
+        tools:layout="@layout/fragment_ticket">
+        <action
+            android:id="@+id/action_ticketFragment_to_passengerMainFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/passengerMainFragment" />
+        <action
+            android:id="@+id/action_ticketFragment_to_ticketQrCodeFragment"
+            app:destination="@id/ticketQrCodeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/reservationSeatFragment"
+        android:name="com.hadi.trainticketing.passenger.home.view.ReservationSeatFragment"
+        android:label="ReservationSeatFragment"
+        tools:layout="@layout/fragment_seat_reservation">
+        <action
+            android:id="@+id/action_reservationSeatFragment_to_ticketFragment"
+            app:destination="@id/ticketFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="seatRequest"
+            app:argType="com.hadi.trainticketing.passenger.home.model.pojo.reservation.response.seats.SeatRequest" />
+    </fragment>
+    <fragment
+        android:id="@+id/ticketQrCodeFragment"
+        android:name="com.hadi.trainticketing.passenger.home.view.TicketQrCodeFragment"
+        android:label="fragment_qr_code"
+        tools:layout="@layout/fragment_qr_code">
+        <argument
+            android:name="reservationId"
+            app:argType="string" />
+    </fragment>
+</navigation>
